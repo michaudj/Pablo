@@ -105,11 +105,14 @@ class Learner():
         self.n_reinf = 0
         self.success = []
         self.sent_len = []
+        self.sentences = set()
         # Change this set into a dictionary where the key is a dictionary of types
         # self.chunks = set()
         self.chunk_dict = {} #encodes the long term memory and is a set of chunks (put the types here!)
         self.behaviour_repertoire = {} # dictionary of where the keys are couples of chunks and the value a list of behavioural values
         self.events = [] # encodes the current list of couples ((chunk,chunk), behaviour) to reinforce
+        self.border_before = True
+        self.border_within = False
         
     def __repr__(self):
         string = 'Learner ' + str(self.ID)
@@ -277,15 +280,18 @@ class Learner():
                 new_s1 = s1.chunk_at_depth(s2)
                 s2_index+=1
                 self.add_chunk(new_s1)
+                if not self.border_within:
+                    self.border_within = stimuli_stream.border_before[s2_index]
             elif response == 0: # Boundary placement
                 # increment the number of reinforcement events by 1
                 self.n_reinf += 1 
                 # check if border is correctly placed
                 is_border = stimuli_stream.border_before[s2_index]
                 #
-                if is_border:
+                if is_border and not self.border_within:
                     #print('Good Unit')
                     # perform positive reinforcement
+                    self.sentences.add(s1)
                     self.reinforce(reinforcement = 'positive')                    
                     # update the success list
                     self.success.append(1)
@@ -302,6 +308,7 @@ class Learner():
                 new_s1 = Chunk(new_s1)
                 #self.chunks.add(new_s1)
                 self.add_chunk(new_s1)
+                self.border_within = False
             else:
                 print('Wrong response format')
                 
@@ -312,7 +319,8 @@ class Learner():
                 # check if border is correctly placed
                 is_border = stimuli_stream.border_before[s2_index]
                 #
-                if is_border:
+                if is_border and not self.border_within:
+                    self.sentences.add(s1)
                     #print('Good Unit')
                     # perform positive reinforcement
                     self.reinforce(reinforcement = 'positive')                    
@@ -331,7 +339,10 @@ class Learner():
                 new_s1 = Chunk(new_s1)
                 #self.chunks.add(new_s1)
                 self.add_chunk(new_s1)
+                self.border_within=False
             else:
+                if not self.border_within:
+                    self.border_within = stimuli_stream.border_before[s2_index]
                 new_s1 = s1.chunk_at_depth(s2,depth=s1.depth+1-response) # needs to be modified
                 s2_index +=1
                 # add the new_s1 chunk to the chunkatory
@@ -383,7 +394,7 @@ class Learner():
     def extract_sentences(self, threshold):
         sentences = set()
         for pair in self.behaviour_repertoire:
-            if self.behaviour_repertoire[pair][0]> threshold:
+            if self.behaviour_repertoire[pair][0]> threshold :
                 sentences.add(pair[0])
         return sentences
         # this function should loop through self.behaviour_repertoire and look for pairs with high first value and create a set of identified sentences with their structures

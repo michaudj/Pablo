@@ -30,11 +30,12 @@ def flatten(lst):
             flat_list.append(item)
     return flat_list
 
-def save_grammar_to_file(learners,filename,threshold=0.8):
+def save_grammar_to_file(learners,filename,threshold=2):
     count_sent = {}
 
     for l in learners:
-        gram = l.extract_sentences(threshold*Learner.positive_reinforcement )
+        gram = l.extract_sentences(threshold)
+        #gram = l.sentences
         for s in gram:
             if s in count_sent:
                 count_sent[s] += 1
@@ -318,7 +319,7 @@ print('Postprocessing')
 
 plot_learning_curve(learners)
 plot_success_norm(learners)
-#save_grammar_to_file(learners, 'testGrammar.xlsx')
+save_grammar_to_file(learners, 'testGrammar.xlsx')
 
 
 end_time = datetime.now()
