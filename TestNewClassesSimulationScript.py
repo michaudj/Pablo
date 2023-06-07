@@ -262,7 +262,7 @@ cfgRC = ProbabilisticGrammar(terminals2, non_terminals2, production_rulesRC,weig
 print('Creating the stimuli stream')
 
 # Create stimuli stream
-stimuli_stream = Raw_input(4500,cfgRCP)
+stimuli_stream = Raw_input(4500,cfgRC)
 
 #############################################################
 #
@@ -272,16 +272,17 @@ stimuli_stream = Raw_input(4500,cfgRCP)
 
 # number of simulations
 n_sim = 100
-n_trials = 2000
+n_trials = 200
 
 print('Initializing learners')
 
 # Select type of chunking mechanism
 #typ = 'right'
 typ = 'flexible'
+border = 'net'
 
 # Create as many learners as number of simulations.
-learners = [Learner(n_trials = n_trials, t=typ) for i in range(n_sim)]
+learners = [Learner(n_trials = n_trials, t=typ, border = border) for i in range(n_sim)]
 
 
 # count = 0
@@ -319,7 +320,7 @@ print('Postprocessing')
 
 plot_learning_curve(learners)
 plot_success_norm(learners)
-save_grammar_to_file(learners, 'testGrammar.xlsx')
+save_grammar_to_file(learners, 'testGrammarN.xlsx')
 
 
 end_time = datetime.now()

@@ -97,10 +97,11 @@ class Learner():
     initial_value_border = 1.
     ID = 0
     
-    def __init__(self, n_trials = 14, t = 'flexible'):
+    def __init__(self, n_trials = 14, t = 'flexible', border = 'next'):
         self.ID = Learner.ID + 1
         Learner.ID +=1
         self.type = t
+        self.border_type = border # or 'default'
         self.n_trials = n_trials
         self.n_reinf = 0
         self.success = []
@@ -288,7 +289,7 @@ class Learner():
                 # check if border is correctly placed
                 is_border = stimuli_stream.border_before[s2_index]
                 #
-                if is_border and not self.border_within:
+                if is_border and not self.border_within and self.border_before:
                     #print('Good Unit')
                     # perform positive reinforcement
                     self.sentences.add(s1)
@@ -304,8 +305,16 @@ class Learner():
                     self.success.append(0)
                     self.sent_len.append(stimuli_stream.length_current_sent(s2_index))
                     # Next beginning of sentence becomes
-                new_s1,s2_index = stimuli_stream.next_beginning_sent(s2_index)
-                new_s1 = Chunk(new_s1)
+                
+                if self.border_type == 'next':
+                    new_s1,s2_index = stimuli_stream.next_beginning_sent(s2_index)
+                    new_s1 = Chunk(new_s1)
+                else:
+                    self.border_before = stimuli_stream.border_before[s2_index]
+                    new_s1,s2_index = s2, s2_index + 1
+                    
+                    
+                
                 #self.chunks.add(new_s1)
                 self.add_chunk(new_s1)
                 self.border_within = False
@@ -319,7 +328,7 @@ class Learner():
                 # check if border is correctly placed
                 is_border = stimuli_stream.border_before[s2_index]
                 #
-                if is_border and not self.border_within:
+                if is_border and not self.border_within and self.border_before:
                     self.sentences.add(s1)
                     #print('Good Unit')
                     # perform positive reinforcement
@@ -335,8 +344,15 @@ class Learner():
                     self.success.append(0)
                     self.sent_len.append(stimuli_stream.length_current_sent(s2_index))
                     # Next beginning of sentence becomes
-                new_s1,s2_index = stimuli_stream.next_beginning_sent(s2_index)
-                new_s1 = Chunk(new_s1)
+                    
+                if self.border_type == 'next':
+                    new_s1,s2_index = stimuli_stream.next_beginning_sent(s2_index)
+                    new_s1 = Chunk(new_s1)
+                else:
+                    self.border_before = stimuli_stream.border_before[s2_index]
+                    new_s1,s2_index = s2,s2_index + 1
+                    
+                
                 #self.chunks.add(new_s1)
                 self.add_chunk(new_s1)
                 self.border_within=False
