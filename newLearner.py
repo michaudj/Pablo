@@ -25,6 +25,14 @@ def flatten(lst):
             flat_list.append(item)
     return flat_list
 
+def add_weights(b_values1,b_values2):
+    a = copy.deepcopy(b_values1)
+    b = copy.deepcopy(b_values2)
+    l = sorted((a, b), key=len)
+    c = l[1].copy()
+    c[:len(l[0])] += l[0]
+    return c
+
 class Chunk():
     
     cache = {}
@@ -123,91 +131,7 @@ class Learner():
     def add_chunk(self, chunk):
         if chunk not in self.chunk_dict:
             self.chunk_dict[chunk] = {}
-        
-    def learn(self,stimuli_stream):
-        #Chunk.clear_cache()
-        # initialize stimuli
-        s1 = Chunk(stimuli_stream.stimuli[0])
-        #self.chunks.add(s1)
-        self.add_chunk(s1)
-        s2_index = 1
-        #for t in range(self.n_trials):
-        while self.n_reinf <= self.n_trials:
-            s1, s2_index = self.respond_new(stimuli_stream, s1, s2_index)
-
             
-    def respond(self,stimuli_stream,s1,s2_index):
-        # get the s2 stimuli and make it a chunk
-        s2 = Chunk(stimuli_stream.stimuli[s2_index])
-        # update chunkatory
-        #self.chunks.add(s2)
-        self.add_chunk(s2)
-        # choose a response for this pair of chunks
-        response = self.choose_behaviour((s1,s2))
-        # add the behaviour to the events list
-        self.events.append(((s1,s2),response))
-        
-        
-        if response == 1: # simple chunk or right chunk
-            # chunk elements
-            new_s1 = s1.chunk_at_depth(s2)
-            s2_index+=1
-            self.add_chunk(new_s1)
-        
-        elif response > 1: # subchunking
-            # subchunk at correct depth
-            new_s1 = s1.chunk_at_depth(s2,depth=response-1)
-            s2_index +=1
-            # add the new_s1 chunk to the chunkatory
-            #self.chunks.add(new_s1)
-            self.add_chunk(new_s1)
-            # collect subchunks used in the subchunking process
-            sub_chunks = s1.get_right_subchunks(response-1)
-            # update the chunkatory with these new chunks
-            #self.chunks.update(sub_chunks)
-            for c in sub_chunks:
-                self.add_chunk(c)
-            # compute the response corresponding to each subchunk
-            resps = range(response-1,0,-1)
-            # create corresponding events 
-            sub_events = [((sub_chunks[i], s2),resps[i]) for i in range(len(resps))]
-            for c in sub_events:
-                self.update_repertoire(c[0])
-            # add these events to the events list used for reinforcement
-            self.events += sub_events
-                        
-        elif response == 0: # Boundary placement
-            # increment the number of reinforcement events by 1
-            self.n_reinf += 1 
-            # check if border is correctly placed
-            is_border = stimuli_stream.border_before[s2_index]
-            #
-            if is_border:
-                #print('Good Unit')
-                # perform positive reinforcement
-                self.reinforce(reinforcement = 'positive')                    
-                # update the success list
-                self.success.append(1)
-                self.sent_len.append(stimuli_stream.length_current_sent(s2_index - 1))
-            else:
-                #print('Bad Unit')
-                # perform negative reinforcement
-                self.reinforce(reinforcement = 'negative')
-                # update the success list
-                self.success.append(0)
-                self.sent_len.append(stimuli_stream.length_current_sent(s2_index))
-                # Next beginning of sentence becomes
-            new_s1,s2_index = stimuli_stream.next_beginning_sent(s2_index)
-            new_s1 = Chunk(new_s1)
-            #self.chunks.add(new_s1)
-            self.add_chunk(new_s1)
-        else:
-            print('Wrong response format')
-            
-
-
-        return new_s1, s2_index
-    
     def update_repertoire(self,couple):
         if couple not in self.behaviour_repertoire:
             if self.type == 'right':
@@ -227,15 +151,95 @@ class Learner():
             self.update_repertoire((s,couple[1]))
         return sub_pairs
     
-    def add_weights(self,b_values1,b_values2):
-        a = copy.deepcopy(b_values1)
-        b = copy.deepcopy(b_values2)
-        l = sorted((a, b), key=len)
-        c = l[1].copy()
-        c[:len(l[0])] += l[0]
-        return c
+
+    def learn(self,stimuli_stream):
+        #Chunk.clear_cache()
+        # initialize stimuli
+        s1 = Chunk(stimuli_stream.stimuli[0])
+        #self.chunks.add(s1)
+        self.add_chunk(s1)
+        s2_index = 1
+        #for t in range(self.n_trials):
+        while self.n_reinf <= self.n_trials:
+            s1, s2_index = self.respond(stimuli_stream, s1, s2_index)
     
-    def choose_behaviour_new(self,couple):
+    def respond(self,stimuli_stream,s1,s2_index):
+        # get the s2 stimuli and make it a chunk
+        s2 = Chunk(stimuli_stream.stimuli[s2_index])
+        # update chunkatory
+        self.add_chunk(s2)
+        # choose a response for this pair of chunks
+        response = self.choose_behaviour((s1,s2))
+        # add the behaviour to the events list
+        self.events.append(((s1,s2),response))
+        #print(self.events)
+        
+        # Add sub-events to the events list. Maybe not here... Consider moving this in the reinforcement part.
+        if self.type == 'flexible':
+            for couple in self.get_sub_couples((s1,s2)):
+                if response < len(self.behaviour_repertoire[couple]):
+                    self.events.append((couple,response))
+                #print(self.events)
+                
+        if response == 0: # boundary placement
+            # increment the number of reinforcement events by 1
+            self.n_reinf += 1 
+            # check if border is correctly placed
+            is_border = stimuli_stream.border_before[s2_index]
+            #
+            if is_border and not self.border_within and self.border_before:
+                #print('Good Unit')
+                # perform positive reinforcement
+                # Store sentence (not cognitively plausible but used for grammar extraction)
+                self.sentences.add(s1)
+                # Perform reinforcement
+                self.reinforce(reinforcement = 'positive')                    
+                # update the success list
+                self.success.append(1)
+                # for postprocessing, store length of the sentence
+                self.sent_len.append(stimuli_stream.length_current_sent(s2_index - 1))
+            else:
+                #print('Bad Unit')
+                # perform negative reinforcement
+                self.reinforce(reinforcement = 'negative')
+                # update the success list
+                self.success.append(0)
+                self.sent_len.append(stimuli_stream.length_current_sent(s2_index))
+            # Next beginning of sentence becomes
+            
+            if self.border_type == 'next':
+                new_s1,s2_index = stimuli_stream.next_beginning_sent(s2_index)
+                new_s1 = Chunk(new_s1)
+            else:
+                self.border_before = stimuli_stream.border_before[s2_index]
+                new_s1,s2_index = s2, s2_index + 1
+                
+            #self.chunks.add(new_s1)
+            self.add_chunk(new_s1)
+            self.border_within = False
+            
+        else: # some type of chunking occurs
+            # Check if there was a border
+            if not self.border_within:
+                self.border_within = stimuli_stream.border_before[s2_index]
+            
+            # Perform chunking at correct level
+            if self.type == 'right':
+                # response is 1 and therefore, chunking occurs
+                new_s1 = s1.chunk_at_depth(s2)   
+            elif self.type == 'flexible':
+                # response >= 1 and chunking or subchunking occurs
+                new_s1 = s1.chunk_at_depth(s2,depth=s1.depth+1-response) 
+            else:
+                print('Wrong type!')
+
+            s2_index+=1
+            self.add_chunk(new_s1)
+            
+        return new_s1, s2_index
+
+
+    def choose_behaviour(self,couple):
         self.update_repertoire(couple)
         b_range = len(self.behaviour_repertoire[couple])
         options = [i for i in range(b_range)]
@@ -245,8 +249,10 @@ class Learner():
         if self.type == 'flexible':
             subpairs = self.get_sub_couples(couple)
             norm_vec = np.array([b_range - 1]+[i for i in range(b_range-1,0,-1)])
+            # Accumulate support from subchunks
             for pair in subpairs:
-                z = self.add_weights(z, self.behaviour_repertoire[pair])
+                z = add_weights(z, self.behaviour_repertoire[pair])
+            # Take the average
             z /= norm_vec
             weights = np.exp(Learner.beta * z)
         elif self.type == 'right':
@@ -257,141 +263,7 @@ class Learner():
         response = random.choices(options,weights/np.sum(weights))
         #print(z)
         #print(response[0])
-        return response[0]
-
-    def respond_new(self,stimuli_stream,s1,s2_index):
-        # get the s2 stimuli and make it a chunk
-        s2 = Chunk(stimuli_stream.stimuli[s2_index])
-        # update chunkatory
-        self.add_chunk(s2)
-        # choose a response for this pair of chunks
-        response = self.choose_behaviour_new((s1,s2))
-        # add the behaviour to the events list
-        self.events.append(((s1,s2),response))
-        #print(self.events)
-        if self.type == 'flexible':
-            for couple in self.get_sub_couples((s1,s2)):
-                if response < len(self.behaviour_repertoire[couple]):
-                    self.events.append((couple,response))
-                #print(self.events)
-                
-        if self.type == 'right':
-            if response == 1: # simple chunk or right chunk
-            # chunk elements
-                new_s1 = s1.chunk_at_depth(s2)
-                s2_index+=1
-                self.add_chunk(new_s1)
-                if not self.border_within:
-                    self.border_within = stimuli_stream.border_before[s2_index]
-            elif response == 0: # Boundary placement
-                # increment the number of reinforcement events by 1
-                self.n_reinf += 1 
-                # check if border is correctly placed
-                is_border = stimuli_stream.border_before[s2_index]
-                #
-                if is_border and not self.border_within and self.border_before:
-                    #print('Good Unit')
-                    # perform positive reinforcement
-                    self.sentences.add(s1)
-                    self.reinforce(reinforcement = 'positive')                    
-                    # update the success list
-                    self.success.append(1)
-                    self.sent_len.append(stimuli_stream.length_current_sent(s2_index - 1))
-                else:
-                    #print('Bad Unit')
-                    # perform negative reinforcement
-                    self.reinforce(reinforcement = 'negative')
-                    # update the success list
-                    self.success.append(0)
-                    self.sent_len.append(stimuli_stream.length_current_sent(s2_index))
-                    # Next beginning of sentence becomes
-                
-                if self.border_type == 'next':
-                    new_s1,s2_index = stimuli_stream.next_beginning_sent(s2_index)
-                    new_s1 = Chunk(new_s1)
-                else:
-                    self.border_before = stimuli_stream.border_before[s2_index]
-                    new_s1,s2_index = s2, s2_index + 1
-                    
-                    
-                
-                #self.chunks.add(new_s1)
-                self.add_chunk(new_s1)
-                self.border_within = False
-            else:
-                print('Wrong response format')
-                
-        elif self.type == 'flexible':
-            if response == 0: # Boundary placement
-                # increment the number of reinforcement events by 1
-                self.n_reinf += 1 
-                # check if border is correctly placed
-                is_border = stimuli_stream.border_before[s2_index]
-                #
-                if is_border and not self.border_within and self.border_before:
-                    self.sentences.add(s1)
-                    #print('Good Unit')
-                    # perform positive reinforcement
-                    self.reinforce(reinforcement = 'positive')                    
-                    # update the success list
-                    self.success.append(1)
-                    self.sent_len.append(stimuli_stream.length_current_sent(s2_index - 1))
-                else:
-                    #print('Bad Unit')
-                    # perform negative reinforcement
-                    self.reinforce(reinforcement = 'negative')
-                    # update the success list
-                    self.success.append(0)
-                    self.sent_len.append(stimuli_stream.length_current_sent(s2_index))
-                    # Next beginning of sentence becomes
-                    
-                if self.border_type == 'next':
-                    new_s1,s2_index = stimuli_stream.next_beginning_sent(s2_index)
-                    new_s1 = Chunk(new_s1)
-                else:
-                    self.border_before = stimuli_stream.border_before[s2_index]
-                    new_s1,s2_index = s2,s2_index + 1
-                    
-                
-                #self.chunks.add(new_s1)
-                self.add_chunk(new_s1)
-                self.border_within=False
-            else:
-                if not self.border_within:
-                    self.border_within = stimuli_stream.border_before[s2_index]
-                new_s1 = s1.chunk_at_depth(s2,depth=s1.depth+1-response) # needs to be modified
-                s2_index +=1
-                # add the new_s1 chunk to the chunkatory
-                #self.chunks.add(new_s1)
-                self.add_chunk(new_s1)
-
-        return new_s1, s2_index
-
-    def choose_behaviour(self, couple):
-        self.update_repertoire(couple)
-        b_range = len(self.behaviour_repertoire[couple])
-        options = [i for i in range(b_range)]
-        z = copy.deepcopy(self.behaviour_repertoire[couple])
-        # Here I need to modify z to collect support from subchunks
-        # Collect support for placing boundary
-        for s in couple[0].get_right_subchunks(couple[0].depth):
-            self.update_repertoire((s,couple[1]))
-            z[0]+= self.behaviour_repertoire[(s,couple[1])][0]
-        #z[0]/= couple[0].depth + 1 # Maybe +1
-        
-        # Collect support for chunking events
-        if self.type == 'flexible':
-            for d in range(1,couple[0].depth+1):
-                sub_chunks = couple[0].get_right_subchunks(d)
-                resps = range(d,0,-1)
-                z[d+1]+= np.sum([self.behaviour_repertoire[(sub_chunks[i],couple[1])][resps[i]] for i in range(len(sub_chunks))] )
-            #z[d+1]/= 1+len(sub_chunks)
-        # Compute the associated weights
-        weights = np.exp(Learner.beta*z)
-        # Choose a response according to the weights.
-        response = random.choices(options,weights/np.sum(weights))
-        return response[0]
-    
+        return response[0]  
     
     def reinforce(self, reinforcement = 'positive'):
         # for each events reinforce behaviour associated to chunk
@@ -401,8 +273,6 @@ class Learner():
             u = Learner.negative_reinforcement
             
         for couple,r in self.events:
-            self.update_repertoire(couple)
-
             self.behaviour_repertoire[couple][r] += Learner.alpha * (u - self.behaviour_repertoire[couple][r])
 
         self.events = []
@@ -414,5 +284,4 @@ class Learner():
                 sentences.add(pair[0])
         return sentences
         # this function should loop through self.behaviour_repertoire and look for pairs with high first value and create a set of identified sentences with their structures
-        
         
