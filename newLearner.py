@@ -10,6 +10,8 @@ import copy
 import re
 import numpy as np
 import random
+#import sys
+#sys.setrecursionlimit(1500)
 
 def modify_element_at_depth(nested_list, depth, new_value):
     for i in range(depth-1):
@@ -172,14 +174,14 @@ class Learner():
         response = self.choose_behaviour((s1,s2))
         # add the behaviour to the events list
         self.events.append(((s1,s2),response))
-        #print(self.events)
         
-        # Add sub-events to the events list. Maybe not here... Consider moving this in the reinforcement part.
-        if self.type == 'flexible':
-            for couple in self.get_sub_couples((s1,s2)):
-                if response < len(self.behaviour_repertoire[couple]):
-                    self.events.append((couple,response))
-                #print(self.events)
+        
+        # # Add sub-events to the events list. Maybe not here... Consider moving this in the reinforcement part.
+        # if self.type == 'flexible':
+        #     for couple in self.get_sub_couples((s1,s2)):
+        #         if response < len(self.behaviour_repertoire[couple]):
+        #             self.events.append((couple,response))
+        #         #print(self.events)
                 
         if response == 0: # boundary placement
             # increment the number of reinforcement events by 1
@@ -273,8 +275,25 @@ class Learner():
             u = Learner.negative_reinforcement
             
         for couple,r in self.events:
-            self.behaviour_repertoire[couple][r] += Learner.alpha * (u - self.behaviour_repertoire[couple][r])
-
+            if self.type == 'right':
+                self.behaviour_repertoire[couple][r] += Learner.alpha * (u - self.behaviour_repertoire[couple][r])
+            elif self.type == 'flexible':
+                #print('reinforcement')
+                Q = self.behaviour_repertoire[couple][r]
+                subevents = [(couple,r)]
+                subpairs = self.get_sub_couples(couple)
+                for pair in subpairs:
+                    if r < len(self.behaviour_repertoire[pair]):
+                        subevents.append((pair,r))
+                        Q += self.behaviour_repertoire[pair][r]
+                #Q /= len(subevents)
+                #print(Q)
+                for p,rr in subevents:
+                    self.behaviour_repertoire[p][rr] += Learner.alpha * (u - Q)
+            else:
+                print('ERROR')
+        
+        # Clear working memory
         self.events = []
         
     def extract_sentences(self, threshold):
@@ -284,4 +303,23 @@ class Learner():
                 sentences.add(pair[0])
         return sentences
         # this function should loop through self.behaviour_repertoire and look for pairs with high first value and create a set of identified sentences with their structures
+        
+    def sentences_weights(self):
+        sent_weight = dict()
+        for pair in self.behaviour_repertoire:
+            if pair[0] in self.sentences:
+                if pair[0] not in sent_weight:
+                    sent_weight[pair] = []
+                b_range = len(self.behaviour_repertoire[pair])
+                z = copy.deepcopy(self.behaviour_repertoire[pair])
+                subpairs = self.get_sub_couples(pair)
+                norm_vec = np.array([b_range - 1]+[i for i in range(b_range-1,0,-1)])
+                # Accumulate support from subchunks
+                for p in subpairs:
+                    z = add_weights(z, self.behaviour_repertoire[p])
+                # Take the average
+                z /= norm_vec
+                sent_weight[pair].append(z[0])
+        return sent_weight
+            
         

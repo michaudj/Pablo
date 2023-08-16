@@ -127,7 +127,7 @@ Learner.ID = 0
 
 # Set the parameters controlling reinforcement learning
 Learner.alpha = 0.1
-Learner.beta = 2.
+Learner.beta = 1.
 Learner.positive_reinforcement = 25.
 Learner.negative_reinforcement = -10.
 
@@ -254,15 +254,7 @@ cfgRC = ProbabilisticGrammar(terminals2, non_terminals2, production_rulesRC,weig
 
 
 
-#############################################################
-#
-#   Creating the stimuli stream
-#
-#############################################################
-print('Creating the stimuli stream')
 
-# Create stimuli stream
-stimuli_stream = Raw_input(4500,cfgRC)
 
 #############################################################
 #
@@ -272,7 +264,17 @@ stimuli_stream = Raw_input(4500,cfgRC)
 
 # number of simulations
 n_sim = 100
-n_trials = 200
+n_trials = 5000
+
+#############################################################
+#
+#   Creating the stimuli stream
+#
+#############################################################
+print('Creating the stimuli stream')
+
+# Create stimuli stream
+stimuli_stream = Raw_input(3*n_trials,cfgRC)
 
 print('Initializing learners')
 
@@ -284,7 +286,7 @@ border = 'net'
 # Create as many learners as number of simulations.
 learners = [Learner(n_trials = n_trials, t=typ, border = border) for i in range(n_sim)]
 
-
+# print('Running simulation')
 # count = 0
 # for l in learners:
 
@@ -320,7 +322,7 @@ print('Postprocessing')
 
 plot_learning_curve(learners)
 plot_success_norm(learners)
-save_grammar_to_file(learners, 'testGrammarN.xlsx')
+save_grammar_to_file(learners, 'testGrammarRC.xlsx')
 
 
 end_time = datetime.now()
