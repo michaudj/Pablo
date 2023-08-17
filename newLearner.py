@@ -10,6 +10,7 @@ import copy
 import re
 import numpy as np
 import random
+from new_raw_input import ProbabilisticGrammar
 #import sys
 #sys.setrecursionlimit(1500)
 
@@ -124,6 +125,12 @@ class Learner():
         self.events = [] # encodes the current list of couples ((chunk,chunk), behaviour) to reinforce
         self.border_before = True
         self.border_within = False
+        # for grammar extraction
+        self.terminals = set()
+        self.non_terminals = set()
+        self.rules = dict()
+        self.weights = dict()
+        self.grammar = None
         
     def __repr__(self):
         string = 'Learner ' + str(self.ID)
@@ -321,5 +328,61 @@ class Learner():
                 z /= norm_vec
                 sent_weight[pair].append(z[0])
         return sent_weight
+    
+    def extract_PCFG(self):
+        # Extract terminals
+        self.terminals = set()
+        for s in self.sentences:
+            #print(set(s.remove_structure()))
+            self.terminals.update(set(s.remove_structure()))
             
+        # Construct rules and non-terminals
+        sentence_list = list(self.sentences)
+        number = 1
+        for sent in sentence_list:
+            number = self.expand('S',sent.structure,number)
+            
+        # Compute weights
+        for key,value in self.rules.items():
+            self.weights[key] = [1/len(self.rules[key]) for i in range(1,len(self.rules[key])+1)]
+            
+        self.grammar = ProbabilisticGrammar(self.terminals, self.non_terminals, self.rules, self.weights)
         
+    
+    def expand(self,symb,structure,number):
+        e1 = structure[0]
+        e2 = structure[1]
+        self.non_terminals.add(symb)
+        if symb not in self.rules:
+            self.rules[symb] = []
+        if (type(e1) != list) and (type(e2) != list):
+            self.rules[symb].append([e1,e2])
+        elif (type(e1) == list) and (type(e2) != list):
+            symbol = 'S'+str(number)
+            number += 1
+            self.rules[symb].append([symbol,e2])
+            number = self.expand(symbol,e1,number)
+            # expand symbol with e1
+        elif (type(e1) != list) and (type(e2) == list):
+            symbol = 'S'+str(number)
+            number += 1
+
+            self.rules[symb].append([e1,symbol])
+            number = self.expand(symbol,e2,number)
+
+            # expand symbol with e2
+        elif (type(e1) == list) and (type(e2) == list):
+            symbol1 = 'S'+str(number)
+
+            number += 1
+            symbol2 = 'S'+str(number)
+
+            number += 1
+            self.rules[symb].append([symbol1,symbol2])
+            number = self.expand(symbol1,e1,number)
+
+            number = self.expand(symbol2,e2,number)
+
+            # expand symbol1 with e1 and expand symbol2 with e2
+        return number
+    
