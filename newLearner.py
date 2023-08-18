@@ -386,3 +386,7 @@ class Learner():
             # expand symbol1 with e1 and expand symbol2 with e2
         return number
     
+    def generate_sentence(self):
+        if self.grammar != None:
+            return self.grammar.generate_sentence('S')
+    

@@ -251,10 +251,59 @@ weightsRC = {
 # Context free grammar
 cfgRC = ProbabilisticGrammar(terminals2, non_terminals2, production_rulesRC,weightsRC)
 
+#############################################################
+#
+#       Yang and Piantadosi grammar
+#
+#############################################################
+
+number_of_verbs = 1
+number_of_nouns = 1
+number_of_adj = 1
+number_of_relpron = 1
+number_of_det = 1
+number_of_prep = 1
+
+verbs = ['v' + str(i) for i in range(1, number_of_verbs+1)]
+nouns = ['n' + str(i) for i in range(1, number_of_nouns+1)]
+adjs = ['a' + str(i) for i in range(1, number_of_adj+1)]
+relpron = ['r' + str(i) for i in range(1, number_of_relpron+1)]
+det = ['d' + str(i) for i in range(1, number_of_det+1)]
+prep = ['p' + str(i) for i in range(1, number_of_prep+1)]
 
 
+terminalsYP = flatten([verbs,nouns,adjs,relpron,det,prep])
+non_terminalsYP = ['S','NP','VP','AP','PP','N','V','A','D','P','rel']
 
+production_rulesYP = {
+    'S': [['NP', 'VP']],
+    'NP': [['N'],['D','N'],['D','AP','N'],['NP','PP']],
+    'VP': [['V'],['V','NP'],['V','rel','S'],['VP','PP']],
+    'AP': [['A'],['A','AP' ] ],
+    'PP': [['P','NP']],
+    'N': [['n' + str(i)] for i in range(1, number_of_nouns+1)],
+    'V': [['v' + str(i)] for i in range(1, number_of_verbs+1)],
+    'A': [['a' + str(i)] for i in range(1, number_of_adj+1)],
+    'D': [['d' + str(i)] for i in range(1, number_of_det+1)],
+    'P': [['p' + str(i)] for i in range(1, number_of_prep+1)],
+    'rel': [['r' + str(i)] for i in range(1, number_of_relpron+1)]
+}
 
+weightsYP = {
+    'S': [1.0],
+    'NP': [.25,.25,.25,.25],
+    'VP': [.25,.25,.25,.25],
+    'AP': [.5,.5 ],
+    'PP': [1],
+    'N': [1/number_of_nouns for i in range(1, number_of_nouns+1)],
+    'V': [1/number_of_verbs for i in range(1, number_of_verbs+1)],
+    'A': [1/number_of_adj for i in range(1, number_of_adj+1)],
+    'D': [1/number_of_det for i in range(1, number_of_det+1)],
+    'P': [1/number_of_prep for i in range(1, number_of_prep+1)],
+    'rel': [1/number_of_relpron for i in range(1, number_of_relpron+1)]  
+    }
+
+cfgYP = ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP,weightsYP)
 
 #############################################################
 #
@@ -264,7 +313,7 @@ cfgRC = ProbabilisticGrammar(terminals2, non_terminals2, production_rulesRC,weig
 
 # number of simulations
 n_sim = 100
-n_trials = 5000
+n_trials = 20000
 
 #############################################################
 #
@@ -274,7 +323,7 @@ n_trials = 5000
 print('Creating the stimuli stream')
 
 # Create stimuli stream
-stimuli_stream = Raw_input(3*n_trials,cfgRC)
+stimuli_stream = Raw_input(3*n_trials,cfgYP)
 
 print('Initializing learners')
 
@@ -321,7 +370,7 @@ print('Postprocessing')
 
 
 plot_learning_curve(learners)
-plot_success_norm(learners)
+#plot_success_norm(learners)
 save_grammar_to_file(learners, 'testGrammarRC.xlsx')
 
 
