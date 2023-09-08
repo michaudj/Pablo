@@ -59,17 +59,14 @@ class Type:
         return self is other
     
     def split(self,pu=0.5,prim=False): # should return two types that combine into the initial type
-        if not prim:
-            if random() < pu:
-                return [self, Type(self.formula+"u"+self.formula )]
-            else:
-                return [Type(self.formula+"o"+self.formula ), self]
-        else:
+        if prim:
             prim_type = Type.create_primitive_type()
-            if random() < pu:
-                return [prim_type, Type(prim_type.formula+"u"+self.formula )]
-            else:
-                return [Type(self.formula+"o"+prim_type.formula ), prim_type]
+        else:
+            prim_type = Type("0")
+        if random() < pu:
+            return [prim_type, Type(prim_type.formula+"u"+self.formula )]
+        else:
+            return [Type(self.formula+"o"+prim_type.formula ), prim_type]
         pass
     
     def is_start(self): # Checks whether the type is expecting something on the left. 
@@ -219,9 +216,9 @@ print(t4.is_primitive())
 print(t5.is_primitive())
 
 tt = Type("0")
-types = tt.split(prim=True)
+types = tt.split()
 print(types)
-ttypes= types[0].split(prim=True) + types[1].split()
+ttypes= types[0].split() + types[1].split()
 print(ttypes)
 reduce_types(ttypes)
 #print(types[0].split())
