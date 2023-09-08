@@ -312,8 +312,8 @@ cfgYP = ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP,we
 #############################################################
 
 # number of simulations
-n_sim = 100
-n_trials = 20000
+n_sim = 10
+n_trials = 50000
 
 #############################################################
 #

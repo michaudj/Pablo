@@ -121,8 +121,10 @@ class Learner():
         # Change this set into a dictionary where the key is a dictionary of types
         # self.chunks = set()
         self.chunk_dict = {} #encodes the long term memory and is a set of chunks (put the types here!)
+        self.typatory = dict() # keys are types and values are related to how good the type is
         self.behaviour_repertoire = {} # dictionary of where the keys are couples of chunks and the value a list of behavioural values
         self.events = [] # encodes the current list of couples ((chunk,chunk), behaviour) to reinforce
+        self.typing_events = [] # encodes the current list of typings (format to be defined)
         self.border_before = True
         self.border_within = False
         # for grammar extraction
@@ -171,12 +173,23 @@ class Learner():
         #for t in range(self.n_trials):
         while self.n_reinf <= self.n_trials:
             s1, s2_index = self.respond(stimuli_stream, s1, s2_index)
+            
+    def assign_type(self,s1,s2):
+        # Check if s1 or s2 are typed
+        # Check if s1 is at the beginning of a sentence
+        # Check compatibility of types
+        # Type inheritance?
+        # Depending on the case associate a type to s1 and/or s2 and update typatory and typings of chunks
+        pass
     
     def respond(self,stimuli_stream,s1,s2_index):
         # get the s2 stimuli and make it a chunk
         s2 = Chunk(stimuli_stream.stimuli[s2_index])
         # update chunkatory
         self.add_chunk(s2)
+        
+        self.assign_type(s1, s2)
+        
         # choose a response for this pair of chunks
         response = self.choose_behaviour((s1,s2))
         # add the behaviour to the events list

@@ -14,10 +14,12 @@ Created on Wed Jan  4 20:22:29 2023
 
 import re
 from itertools import accumulate
+from random import random
 
 class Type:
     # create a cache to store instances of the Type class
     cache = {}
+    prim_ID = 1
     
     # override the __new__ method to check the cache for an existing instance
     def __new__(cls, formula):
@@ -34,9 +36,15 @@ class Type:
             # return the new instance
             return instance
     
-    # initialize the instance with its name, left, and right values
+    # initialize the instance with its formula
     def __init__(self, formula):
         self.formula = formula
+
+    @staticmethod
+    def create_primitive_type():
+        tt = Type( str(Type.prim_ID))
+        Type.prim_ID += 1
+        return tt
         
     def __hash__(self):
         return hash(frozenset(self.formula))
@@ -49,6 +57,24 @@ class Type:
     
     def __eq__(self, other):
         return self is other
+    
+    def split(self,pu=0.5,prim=False): # should return two types that combine into the initial type
+        if not prim:
+            if random() < pu:
+                return [self, Type(self.formula+"u"+self.formula )]
+            else:
+                return [Type(self.formula+"o"+self.formula ), self]
+        else:
+            prim_type = Type.create_primitive_type()
+            if random() < pu:
+                return [prim_type, Type(prim_type.formula+"u"+self.formula )]
+            else:
+                return [Type(self.formula+"o"+prim_type.formula ), prim_type]
+        pass
+    
+    def is_start(self): # Checks whether the type is expecting something on the left. 
+        return len(self.left_compatible_chunks()) == 0
+    
     
     def left_compatible_chunks(self):
         substrings = re.findall(r".*?u", self.formula)
@@ -67,6 +93,9 @@ class Type:
         substrings2 = [re.sub(r"$", r"o", x) for x in substrings1]
         substrings1 = [re.sub(r"$", r"$", x) for x in substrings1]
         return substrings1 + substrings2
+    
+    def is_primitive(self):
+        return (len(self.right_compatible_chunks()) + len(self.left_compatible_chunks())) == 0
     
     
     def is_right_compatible(self, other):
@@ -132,6 +161,11 @@ e = Type(r"d")
 f = Type(r"a")
 g = Type(r"auf")
 h = Type(r"buauf")
+print(b.is_primitive())
+print(d.is_primitive())
+print(e.is_primitive())
+print(f.is_primitive())
+print(h.is_primitive())
 
 print(str(a)+'+'+str(d)+'='+str(a+d))
 print(str(a)+'+'+str(e)+'='+str(a+e))
@@ -156,6 +190,11 @@ def reduce_types(types):
             type2 = remaining_types[i+1]
             # if the two types are compatible, reduce them and update the reduced flag
             if type1.is_compatible(type2):
+                print('add')
+                print(type1)
+                print(type2)
+                print('result')
+                print(type1+type2)
                 remaining_types[i] = type1 + type2
                 del remaining_types[i+1]
                 reduced = True
@@ -163,17 +202,30 @@ def reduce_types(types):
         
         # if the list of types was not reduced, raise a TypeError
         if not reduced:
-            raise TypeError("Cannot reduce types")
+            return remaining_types
     
     # return the remaining type
-    return remaining_types[0]
+    return remaining_types
 
 t1 = Type("1o3")
 t3 = Type("3")
 t2 = Type("1u0o2")
 t5 = Type("4")
 t4 = Type("4u2o3")
+print(t1.is_primitive())
+print(t2.is_primitive())
+print(t3.is_primitive())
+print(t4.is_primitive())
+print(t5.is_primitive())
 
+tt = Type("0")
+types = tt.split(prim=True)
+print(types)
+ttypes= types[0].split(prim=True) + types[1].split()
+print(ttypes)
+reduce_types(ttypes)
+#print(types[0].split())
+#print(types[1].split())
 
-result = reduce_types([t1,t3, t2,t5, t4,t3])
-print(result)  # prints "a\\b\\c\\d"
+#result = reduce_types([t1,t3, t2,t5, t4,t3])
+#print(result)  # prints "a\\b\\c\\d"
