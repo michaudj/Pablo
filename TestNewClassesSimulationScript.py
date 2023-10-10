@@ -141,8 +141,8 @@ print('Defining the grammar')
 
 # definition of the grammar
 # Vocabulary
-number_of_verbs = 2
-number_of_nouns = 2
+number_of_verbs = 5
+number_of_nouns = 5
 number_of_adj = 0
 number_of_relpron = 2
 number_of_det = 0
@@ -312,8 +312,8 @@ cfgYP = ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP,we
 #############################################################
 
 # number of simulations
-n_sim = 10
-n_trials = 50000
+n_sim = 1
+n_trials = 1000
 
 #############################################################
 #
@@ -323,7 +323,7 @@ n_trials = 50000
 print('Creating the stimuli stream')
 
 # Create stimuli stream
-stimuli_stream = Raw_input(3*n_trials,cfgYP)
+stimuli_stream = Raw_input(3*n_trials,cfgNVN)
 
 print('Initializing learners')
 
@@ -377,3 +377,11 @@ save_grammar_to_file(learners, 'testGrammarRC.xlsx')
 end_time = datetime.now()
 print('Duration: {}'.format(end_time - start_time))
 
+# lensent = []
+# for i in range(n_sim):
+#     lensent.append(len(learners[i].sentences))
+    
+# meanlen = np.mean(np.array(lensent))/7**3 
+# print(meanlen)
+#for s in learners[0].sentences:
+#    print(s)
