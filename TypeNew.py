@@ -133,6 +133,15 @@ class Type:
     def is_primitive(self):
         return (len(self.right_compatible_chunks()) + len(self.left_compatible_chunks())) == 0
     
+    def left_type(self):
+        if self.is_primitive():
+            return self.formula
+        elif len(self.right_compatible_chunks()) != 0:
+            print(self.right_compatible_chunks())
+            print(self.formula)
+        elif len(self.left_compatible_chunks()) != 0:
+            print(self.left_compatible_chunks())
+            print(self.formula)
     
     def is_right_compatible(self, other):
         for i, pattern in enumerate(self.right_compatible_chunks()):
@@ -290,6 +299,10 @@ print(a.left_compatible_chunks())
 # print(a.right_compatible_chunks())
 
 b = Type(r"aufubocod")
+print(b.left_type())
+
+
+print('-------------------------------')
 d = Type(r"doe")
 e = Type(r"d")
 f = Type(r"a")

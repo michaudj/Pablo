@@ -1330,7 +1330,7 @@ class Learner():
                                 
                             elif default[1]==2:
                                 t2 = default[0]
-                                [t1,t2] = type_to_split.split(pu=0,prim='New',bad_s2 = self.bad_types(new_s1))
+                                [t1,t2] = type_to_split.split(pu=0,prim='New',bad_s2 = self.bad_types(new_s2))
                             else:
                                 print('Problem here')
                         self.associate_type_to_chunk(new_s1, t1)
