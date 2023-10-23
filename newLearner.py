@@ -28,15 +28,11 @@ def modify_element_at_depth(nested_list, depth, new_value):
         nested_list = nested_list[-1]
     nested_list[-1] = [nested_list[-1],new_value]
     
-def change_element_at_depth(nested_list, depth, new_value):
+def change_element_at_depth(nested_list, depth, new_value): 
     for i in range(depth-1):
         nested_list = nested_list[-1]
     nested_list[-1] = new_value
     
-def change_element_at_depth(nested_list, depth, new_value):
-    for i in range(depth-1):
-        nested_list = nested_list[-1]
-    nested_list[-1] = new_value
     
 def flatten(lst):
     flat_list = []
@@ -56,6 +52,8 @@ def add_weights(b_values1,b_values2):
     return c
 
 def reduce_types(types):
+    
+
     # make a copy of the list of types
     remaining_types = types[:]
     
@@ -87,69 +85,8 @@ def reduce_types(types):
     # return the remaining type
     return remaining_types
 
-class Chunk():
-    
-    cache = {}
-    
-        # override the __new__ method to check the cache for an existing instance
-    def __new__(cls, structure):
-        
-        # check if the key is in the cache
-        if json.dumps(structure) in cls.cache:
-            # if the key is in the cache, return the corresponding instance
-            return cls.cache[json.dumps(structure)]
-        else:
-            # if the key is not in the cache, create a new instance
-            instance = super().__new__(cls)
-            # store the new instance in the cache
-            cls.cache[json.dumps(structure)] = instance
-            # return the new instance
-            return instance
-    
-    def __init__(self, structure):
-        self.structure = structure
-        #self.type_dic = {}
-        self.depth = self.get_depth()
-        
-    def __repr__(self):
-        return str(self.structure)
-    
-    def get_s1(self):
-        return Chunk(self.structure[0])
-    
-    def get_s2(self):
-        return Chunk(self.structure[1])
-    
-    def get_right_subchunks(self, depth):
-        right_subchunks = []
-        nested_list = copy.deepcopy(self.structure)
-        for d in range(depth):
-            nested_list = nested_list[-1]
-            right_subchunks.append(Chunk(nested_list))
-        return right_subchunks
-    
-    def chunk_at_depth(self, other, depth=0):
-        nested_list = copy.deepcopy(self.structure)
-        
-        if depth == 0:
-            return Chunk([nested_list,other.structure])
-        else:
-            modify_element_at_depth(nested_list, depth, other.structure)
-            return Chunk(nested_list)
-    
-    def get_depth(self):
-        st = str(self.structure)
-        match = re.search("]*$",st)
-        return len(match.group(0))
-    
-    def remove_structure(self):
-        if type(self.structure) is str:
-            return self.structure
-        else:
-            return flatten(self.structure)
-    
 
-class TChunk():
+class Chunk():
     
     cache = {}
     
@@ -171,34 +108,63 @@ class TChunk():
     
     def __init__(self, structure):
         self.structure = structure
-        #self.type_dic = {}
         self.depth = self.get_depth()
         
     def __repr__(self):
         return str(self.structure)
     
     def __hash__(self):
-        return hash(frozenset((self.structure)))
+        return hash(frozenset(str(self.structure)))
     
     def get_s1(self):
-        return TChunk(self.structure[0])
+        return Chunk(self.structure[0])
     
     def get_s2(self):
-        return TChunk(self.structure[1])
+        return Chunk(self.structure[1])
     
     def get_right_subchunks(self, depth):
         right_subchunks = []
         nested_list = self.structure[:]
         for d in range(depth):
             nested_list = nested_list[-1]
-            right_subchunks.append(TChunk(nested_list))
+            right_subchunks.append(Chunk(nested_list))
         return right_subchunks
     
     def chunk_at_depth(self, other, depth=0):
-        if type(self.structure)== Type:
-            nested_list = self.structure
+        if type(self.structure)!= list:
+            nested_list = copy.deepcopy(self.structure)
         else:
             nested_list = self.structure[:]
+        
+        if depth == 0:
+            struct = [nested_list,other.structure]
+            return Chunk(struct)
+        else:
+            modify_element_at_depth(nested_list, depth, other.structure)
+            return Chunk(nested_list)
+    
+    def get_depth(self):
+        st = str(self.structure)
+        match = re.search("]*$",st)
+        return len(match.group(0))
+    
+    def remove_structure(self):
+        if type(self.structure) is not list:
+            return self.structure
+        else:
+            return flatten(self.structure)
+    
+
+class TChunk(Chunk):
+    
+    def __init__(self, structure):
+        super().__init__(structure)
+        
+    def chunk_at_depth(self, other, depth=0):
+        if type(self.structure)!= list:
+            nested_list = self.structure
+        else:
+            nested_list = list(self.structure)
         
         if depth == 0:
             return TChunk([nested_list,other.structure])
@@ -207,30 +173,19 @@ class TChunk():
             return TChunk(nested_list)
         
     def change_element_at_depth(self, element, depth=0):
-        if type(self.structure)== Type:
+        if type(self.structure)!= list:
             nested_list = self.structure
         else:
-            nested_list = self.structure[:]
+            nested_list = list(self.structure)
         
         if depth == 0:
             return TChunk(element)
         else:
             change_element_at_depth(nested_list, depth, element)
             return TChunk(nested_list)
-    
-    def get_depth(self):
-        st = str(self.structure)
-        match = re.search("]*$",st)
-        return len(match.group(0))
-    
-    def remove_structure(self):
-        if type(self.structure) is Type:
-            return self.structure
-        else:
-            return flatten(self.structure[:])
         
     def is_sentence(self):
-        if type(self.structure)== Type:
+        if type(self.structure)!= list:
             if self.structure == Type('0'):
                 return True
             else:
@@ -244,28 +199,371 @@ class TChunk():
         else:
             return False
         
-    def list_of_reduced_types(self):
-        if type(self.remove_structure()) == Type:
-            return [self.structure]
+    def reduce(self):
+        if type(self.structure) != list:
+            return self.structure
         else:
-            structure = self.remove_structure()[:]
-            list_of_reduced_types = reduce_types(structure)
-            for chunk in self.get_right_subchunks(self.depth):
-                if type(chunk.structure) is not Type:
-                #print(chunk.structure[0]+chunk.structure[1])
-                    if type(chunk.structure[0]) is Type:
-                        if chunk.structure[0].is_compatible(chunk.structure[1]):
-                            list_of_reduced_types.append(chunk.structure[0]+chunk.structure[1])
-                        else:
-                            print('incompatible subtypes')
-                            list_of_reduced_types.append([chunk.structure[0],chunk.structure[1]])
-                    else:
-                        print('Problem here, need to be fixed')
+            [s1,s2] = self.structure[:]
+            s1 = TChunk(s1)
+            s2 = TChunk(s2)
+            if type(s1.structure) == Type and type(s2.structure)== Type:
+                result = s1.structure + s2.structure
+                return result
+            elif type(s1.structure) != Type and type(s2.structure)== Type:
+                result = s1.reduce() + s2.structure
+                # Weird bug fixed by the following line: if more than one element reduce to 0, creates bug...
+                self = TChunk([s1.structure,s2.structure])
+                return result
+            elif type(s1.structure) == Type and type(s2.structure)!= Type:
+                result = s1.structure + s2.reduce()
+                # Weird bug fixed by the following line: if more than one element reduce to 0, creates bug...
+                self = TChunk([s1.structure,s2.structure])
+                return result
+            else:
+                t1 = s1.reduce()
+                t2 = s2.reduce()
+                result = t1 + t2
+                # Weird bug fixed by the following line: if more than one element reduce to 0, creates bug...
+                self = TChunk([s1.structure,s2.structure])
+
+                return result
+                    
+        
+    def is_consistent(self):
+        if type(self.structure) != list:
+            return True
+        else:
+            [s1,s2] = self.structure[:]
+            s1 = TChunk(s1)
+            s2 = TChunk(s2)
+
+            if type(s1.structure) == Type and type(s2.structure)== Type:
+                return s1.structure.is_compatible(s2.structure)
+            elif type(s1.structure) != Type and type(s2.structure)== Type:
+                if s1.is_consistent():
+                    self = TChunk([s1.structure,s2.structure])
+                    return s1.reduce().is_compatible(s2.structure)
                 else:
-                    list_of_reduced_types.append(chunk.structure)
-                #print(chunk.structure)
-                list_of_reduced_types.reverse()
-            return list_of_reduced_types
+                    return False
+            elif type(s1.structure) == Type and type(s2.structure)!= Type:
+                if s2.is_consistent():
+                    self = TChunk([s1.structure,s2.structure])
+                    return s1.structure.is_compatible(s2.reduce())
+                else:
+                    return False
+            else:
+                if s1.is_consistent() and s2.is_consistent():
+                    self = TChunk([s1.structure,s2.structure])
+                    return s1.reduce().is_compatible(s2.reduce())
+                else:
+                    return False
+       
+    def right_types(self):
+        # Only works if TChunk is consistent!!!
+        list_of_reduced_types = [self.reduce()]
+        
+        for chunk in self.get_right_subchunks(self.depth):
+            list_of_reduced_types.append(chunk.reduce())
+        return list_of_reduced_types
+            
+class VChunk(Chunk):
+    def __init__(self, structure):
+        super().__init__(structure)
+        
+    def chunk_at_depth(self, other, depth=0):
+        if type(self.structure)!= list:
+            nested_list = self.structure
+        else:
+            nested_list = self.structure[:]
+        
+        if depth == 0:
+            return VChunk([nested_list,other.structure])
+        else:
+            modify_element_at_depth(nested_list, depth, other.structure)
+            return VChunk(nested_list)
+        
+    def average(self):
+        if type(self.structure) != list:
+            return self.structure
+        else:
+            [s1,s2] = self.structure[:]
+            s1 = VChunk(s1)
+            s2 = VChunk(s2)
+            if type(s1.structure) != list and type(s2.structure)!= list:
+                result = (s1.structure + s2.structure)/2
+                return result
+            elif type(s1.structure) == list and type(s2.structure)!= list:
+                result = (s1.average() + s2.structure)/2
+                # Weird bug fixed by the following line: if more than one element reduce to 0, creates bug...
+                self = VChunk([s1.structure,s2.structure])
+                return result
+            elif type(s1.structure) != list and type(s2.structure) == list:
+                result = (s1.structure + s2.average())/2
+                # Weird bug fixed by the following line: if more than one element reduce to 0, creates bug...
+                self = VChunk([s1.structure,s2.structure])
+                return result
+            else:
+                t1 = s1.average()
+                t2 = s2.average()
+                result = (t1 + t2)/2
+                # Weird bug fixed by the following line: if more than one element reduce to 0, creates bug...
+                self = VChunk([s1.structure,s2.structure])
+
+                return result
+            
+    def right_values(self):
+        # Only works if TChunk is consistent!!!
+        list_of_reduced_types = [self.average()]
+        
+        for chunk in self.get_right_subchunks(self.depth):
+            list_of_reduced_types.append(chunk.average())
+        return list_of_reduced_types
+
+# class Chunk():
+    
+#     cache = {}
+    
+#         # override the __new__ method to check the cache for an existing instance
+#     def __new__(cls, structure):
+        
+#         # check if the key is in the cache
+#         if json.dumps(structure) in cls.cache:
+#             # if the key is in the cache, return the corresponding instance
+#             return cls.cache[json.dumps(structure)]
+#         else:
+#             # if the key is not in the cache, create a new instance
+#             instance = super().__new__(cls)
+#             # store the new instance in the cache
+#             cls.cache[json.dumps(structure)] = instance
+#             # return the new instance
+#             return instance
+    
+#     def __init__(self, structure):
+#         self.structure = structure
+#         #self.type_dic = {}
+#         self.depth = self.get_depth()
+        
+#     def __repr__(self):
+#         return str(self.structure)
+    
+#     def get_s1(self):
+#         return Chunk(self.structure[0])
+    
+#     def get_s2(self):
+#         return Chunk(self.structure[1])
+    
+#     def get_right_subchunks(self, depth):
+#         right_subchunks = []
+#         nested_list = copy.deepcopy(self.structure)
+#         for d in range(depth):
+#             nested_list = nested_list[-1]
+#             right_subchunks.append(Chunk(nested_list))
+#         return right_subchunks
+    
+#     def chunk_at_depth(self, other, depth=0):
+#         nested_list = copy.deepcopy(self.structure)
+        
+#         if depth == 0:
+#             return Chunk([nested_list,other.structure])
+#         else:
+#             modify_element_at_depth(nested_list, depth, other.structure)
+#             return Chunk(nested_list)
+    
+#     def get_depth(self):
+#         st = str(self.structure)
+#         match = re.search("]*$",st)
+#         return len(match.group(0))
+    
+#     def remove_structure(self):
+#         if type(self.structure) is not list:
+#             return self.structure
+#         else:
+#             return flatten(self.structure)
+    
+
+# class TChunk():
+    
+#     cache = {}
+    
+#         # override the __new__ method to check the cache for an existing instance
+#     def __new__(cls, structure):
+#         key = hash(frozenset(str(structure)))
+
+#         # check if the key is in the cache
+#         if key in cls.cache:
+#             # if the key is in the cache, return the corresponding instance
+#             return cls.cache[key]
+#         else:
+#             # if the key is not in the cache, create a new instance
+#             instance = super().__new__(cls)
+#             # store the new instance in the cache
+#             cls.cache[key] = instance
+#             # return the new instance
+#             return instance
+    
+#     def __init__(self, structure):
+#         self.structure = structure
+#         #self.type_dic = {}
+#         self.depth = self.get_depth()
+        
+#     def __repr__(self):
+#         return str(self.structure)
+    
+#     def __hash__(self):
+#         return hash(frozenset((self.structure)))
+    
+#     def get_s1(self):
+#         return TChunk(self.structure[0])
+    
+#     def get_s2(self):
+#         return TChunk(self.structure[1])
+    
+#     def get_right_subchunks(self, depth):
+#         right_subchunks = []
+#         nested_list = self.structure[:]
+#         for d in range(depth):
+#             nested_list = nested_list[-1]
+#             right_subchunks.append(TChunk(nested_list))
+#         return right_subchunks
+    
+#     def chunk_at_depth(self, other, depth=0):
+#         if type(self.structure)!= list:
+#             nested_list = self.structure
+#         else:
+#             nested_list = self.structure[:]
+        
+#         if depth == 0:
+#             return TChunk([nested_list,other.structure])
+#         else:
+#             modify_element_at_depth(nested_list, depth, other.structure)
+#             return TChunk(nested_list)
+        
+#     def change_element_at_depth(self, element, depth=0):
+#         if type(self.structure)!= list:
+#             nested_list = self.structure
+#         else:
+#             nested_list = self.structure[:]
+        
+#         if depth == 0:
+#             return TChunk(element)
+#         else:
+#             change_element_at_depth(nested_list, depth, element)
+#             return TChunk(nested_list)
+    
+#     def get_depth(self):
+#         st = str(self.structure)
+#         match = re.search("]*$",st)
+#         return len(match.group(0))
+    
+#     def remove_structure(self):
+#         if type(self.structure) != list:
+#             return self.structure
+#         else:
+#             return flatten(self.structure[:])
+        
+#     def is_sentence(self):
+#         if type(self.structure)!= list:
+#             if self.structure == Type('0'):
+#                 return True
+#             else:
+#                 return False
+#         elif type(self.structure) == list:
+#             remaining_type = reduce_types(self.remove_structure()[:])
+#             if len(remaining_type) == 1 and remaining_type[0] == Type('0'):
+#                 return True
+#             else:
+#                 return False
+#         else:
+#             return False
+        
+#     def list_of_reduced_types(self):
+#         if type(self.remove_structure()) != list:
+#             return [self.structure]
+#         else:
+#             structure = self.remove_structure()[:]
+#             list_of_reduced_types = reduce_types(structure)
+#             for chunk in self.get_right_subchunks(self.depth):
+#                 if type(chunk.structure) is not Type:
+#                 #print(chunk.structure[0]+chunk.structure[1])
+#                     if type(chunk.structure[0]) is Type:
+#                         if chunk.structure[0].is_compatible(chunk.structure[1]):
+#                             list_of_reduced_types.append(chunk.structure[0]+chunk.structure[1])
+#                         else:
+#                             print('incompatible subtypes')
+#                             list_of_reduced_types.append([chunk.structure[0],chunk.structure[1]])
+#                     else:
+#                         print('Problem here, need to be fixed')
+#                 else:
+#                     list_of_reduced_types.append(chunk.structure)
+#                 #print(chunk.structure)
+#                 list_of_reduced_types.reverse()
+#             return list_of_reduced_types
+        
+#     def reduce(self):
+#         if type(self.structure) != list:
+#             return self.structure
+#         else:
+#             [s1,s2] = self.structure[:]
+#             s1 = TChunk(s1)
+#             s2 = TChunk(s2)
+#             if type(s1.structure) == Type and type(s2.structure)== Type:
+#                 result = s1.structure + s2.structure
+#                 return result
+#             elif type(s1.structure) != Type and type(s2.structure)== Type:
+#                 result = s1.reduce() + s2.structure
+#                 # Weird bug fixed by the following line: if more than one element reduce to 0, creates bug...
+#                 self = TChunk([s1.structure,s2.structure])
+#                 return result
+#             elif type(s1.structure) == Type and type(s2.structure)!= Type:
+#                 result = s1.structure + s2.reduce()
+#                 # Weird bug fixed by the following line: if more than one element reduce to 0, creates bug...
+#                 self = TChunk([s1.structure,s2.structure])
+#                 return result
+#             else:
+#                 t1 = s1.reduce()
+#                 t2 = s2.reduce()
+#                 result = t1 + t2
+#                 # Weird bug fixed by the following line: if more than one element reduce to 0, creates bug...
+#                 self = TChunk([s1.structure,s2.structure])
+
+#                 return result
+                    
+        
+#     def is_consistent(self):
+#         if type(self.structure) != list:
+#             return True
+#         else:
+#             [s1,s2] = self.structure[:]
+#             s1 = TChunk(s1)
+#             s2 = TChunk(s2)
+
+#             if type(s1.structure) == Type and type(s2.structure)== Type:
+#                 return s1.structure.is_compatible(s2.structure)
+#             elif type(s1.structure) != Type and type(s2.structure)== Type:
+#                 if s1.is_consistent():
+#                     return s1.reduce().is_compatible(s2.structure)
+#                 else:
+#                     return False
+#             elif type(s1.structure) == Type and type(s2.structure)!= Type:
+#                 if s2.is_consistent():
+#                     return s1.structure.is_compatible(s2.reduce())
+#                 else:
+#                     return False
+#             else:
+#                 if s1.is_consistent() and s2.is_consistent():
+#                     return s1.reduce().is_compatible(s2.reduce())
+#                 else:
+#                     return False
+    
+    
+#     def right_types(self):
+#         # Only works if TChunk is consistent!!!
+#         list_of_reduced_types = [self.reduce()]
+        
+#         for chunk in self.get_right_subchunks(self.depth):
+#             list_of_reduced_types.append(chunk.reduce())
+#         return list_of_reduced_types
+            
 
 
 class Type:
@@ -310,15 +608,25 @@ class Type:
     def __eq__(self, other):
         return self is other
     
-    def split(self,pu=0.5,prim=None,bad_s1=None,bad_s2=None): # should return two types that combine into the initial type
+    def split(self,pu=0.5,prim='New',bad_s1=None,bad_s2=None): # should return two types that combine into the initial type
+        print(bad_s1)
         if prim == None:
-            prim_type = Type("0")
+            prim_type = Type('0')
         elif prim == 'New':
             pass
         else:
-            prim_type = prim
+            if not prim.is_primitive():
+                prim = 'New'
+            else:
+                prim_type = prim
+                print(prim_type)
+        print(prim)
             
         if random.random() < pu:
+            if prim == prim:
+                if bad_s1 != None:
+                    if prim in bad_s1:
+                        prim = 'New'
             if prim == 'New':
                 if bad_s1 != None:
                     index = 0
@@ -331,39 +639,34 @@ class Type:
                     prim_type = Type('0')#self.create_primitive_type()
             return [prim_type, Type(prim_type.formula+"u"+self.formula )]
         else:
-            if bad_s2 != None:
-                index = 0
-                while Type(str(index)) in bad_s2:
-                    index += 1
-                prim_type = Type(str(index))
-            elif bad_s1 != None:
-                prim_type = Type("0")
-            else:
-                prim_type = Type("0")
+            if prim == prim:
+                if bad_s2 != None:
+                    if prim in bad_s2:
+                        prim = 'New'
+                    
+            if prim == 'New':
+                if bad_s2 != None:
+                    index = 0
+                    while Type(str(index)) in bad_s2:
+                        index += 1
+                    prim_type = Type(str(index))
+                elif bad_s1 != None:
+                    prim_type = Type('0')
+                else:
+                    prim_type = Type('0')
             return [Type(self.formula+"o"+prim_type.formula ), prim_type]
         pass
     
     def is_start(self): # Checks whether the type is expecting something on the left. 
-        return len(self.left_compatible_chunks_old()) == 0
+        return len(self.left_compatible_chunks()) == 0
+    
+    def get_primitives(self):
+        return re.split(r"u|o",self.formula)
     
     
     def left_compatible_chunks(self):
-        substrings = re.findall(r".*?u", self.formula)
-        substrings = list(accumulate(substrings))
-        #print(substrings)
-        for s in substrings:
-            if len(s) != 2:
-                substrings.remove(s)
-        substrings = [re.sub(r"u$", "$", x) for x in substrings]
-        #print(substrings)
-        substrings1 = [re.sub(r"^", r"^", x) for x in substrings]
-        #print(substrings1)
-        substrings2 = [re.sub(r"^", r"u", x) for x in substrings]
-        #print(substrings2)
-        return substrings1 + substrings2
-    
-    def left_compatible_chunks_old(self):
-        substrings = re.findall(r".*?u", self.formula)
+        #substrings = re.findall(r".*?u", self.formula)
+        substrings = re.findall(r"^"+self.left_type()+"u",self.formula)
         substrings = list(accumulate(substrings))
         #print(substrings)
         substrings = [re.sub(r"u$", "$", x) for x in substrings]
@@ -375,31 +678,33 @@ class Type:
         return substrings1 + substrings2
     
     def right_compatible_chunks(self):
-        substrings = re.findall(r".*?o", self.formula[::-1])
+        #substrings = re.findall(r".*?o", self.formula[::-1])
+        substrings = re.findall(r"o"+self.right_type()+"$",self.formula)
         substrings = list(accumulate(substrings))
-        for s in substrings:
-            if len(s) != 2:
-                substrings.remove(s)
-        substrings = [re.sub(r"o$", "", x) for x in substrings]
-        substrings = [x[::-1] for x in substrings]
+        substrings = [re.sub(r"^o", "", x) for x in substrings]
         substrings1 = [re.sub(r"^", r"^", x) for x in substrings]
         substrings2 = [re.sub(r"$", r"o", x) for x in substrings1]
         substrings1 = [re.sub(r"$", r"$", x) for x in substrings1]
         return substrings1 + substrings2
     
-    def right_compatible_chunks_old(self):
-        substrings = re.findall(r".*?o", self.formula[::-1])
-        substrings = list(accumulate(substrings))
-        substrings = [re.sub(r"o$", "", x) for x in substrings]
-        substrings = [x[::-1] for x in substrings]
-        substrings1 = [re.sub(r"^", r"^", x) for x in substrings]
-        substrings2 = [re.sub(r"$", r"o", x) for x in substrings1]
-        substrings1 = [re.sub(r"$", r"$", x) for x in substrings1]
-        return substrings1 + substrings2
+    def is_empty(self):
+        return len(self.get_primitives()) == 1 and len(self.get_primitives()[0])==0
+    
     
     def is_primitive(self):
-        return (len(self.right_compatible_chunks_old()) + len(self.left_compatible_chunks_old())) == 0
+        if len(self.get_primitives()) == 1 and len(self.get_primitives()[0])!=0:
+            return True
+        else:
+            return False
+        #return (len(self.right_compatible_chunks()) + len(self.left_compatible_chunks())) == 0
     
+    def left_type(self):
+        primitives = self.get_primitives()
+        return primitives[0]
+    
+    def right_type(self):
+        primitives = self.get_primitives()
+        return primitives[-1]
     
     def is_right_compatible(self, other):
         for i, pattern in enumerate(self.right_compatible_chunks()):
@@ -448,7 +753,7 @@ class Type:
             raise TypeError("Incompatible types")
             
     @staticmethod
-    def is_sentence(types):
+    def reduce(types):
         remaining_types = types[:]
         
         # keep trying to reduce the list of types until it contains only one type
@@ -466,11 +771,20 @@ class Type:
                     reduced = True
                     break
         
-        # return the remaining type
-        if reduced and remaining_types[0] == Type('0'):
+            # return the remaining type
+            if not reduced:
+                return remaining_types
+        
+        return remaining_types
+    
+    @staticmethod
+    def is_sentence(types):
+        remaining_types = Type.reduce(types)
+        if len(remaining_types) == 1 and remaining_types[0] == Type('0'):
             return True
         else:
             return False
+
 
 
         
@@ -484,7 +798,7 @@ class Learner():
     initial_value_chunking = -1.
     initial_value_border = 1.
     initial_value_type = 1.
-    good_type_value = 3.
+    good_type_value = 1.
     bad_type_value = 0.
     ID = 0
     
@@ -551,8 +865,8 @@ class Learner():
         #Chunk.clear_cache()
         # initialize stimuli
         s1 = Chunk(stimuli_stream.stimuli[0])
-        self.typed_structure = TChunk('')
-        self.s1_typed = False
+        #self.typed_structure = TChunk('')
+        #self.s1_typed = False
         
         #self.chunks.add(s1)
         self.add_chunk(s1)
@@ -561,9 +875,6 @@ class Learner():
         while self.n_reinf <= self.n_trials:
             s1, s2_index = self.respond(stimuli_stream, s1, s2_index)
             
-            #print(s1)
-            #print(self.typed_structure)
-            #print(self.events)
             
     
     def respond(self,stimuli_stream,s1,s2_index):
@@ -573,23 +884,28 @@ class Learner():
         # update chunkatory
         self.add_chunk(s2)
         
+        
         # Assign types, t1 is stored in self.typed_structure and t2 is stored is returned
         ttt2 = self.assign_type_new(s1,s2)
         
-        print('--------------')
-        print('After type assignment we have')
-        print('t1: '+ str(self.typed_structure))
-        print('t2: '+ str(ttt2))
-        print('--------------')
+        # print('--------------')
+        # print('After type assignment we have')
+        # print('t1: '+ str(self.typed_structure))
+        # print('t2: '+ str(ttt2))
+        # print('--------------')
 
         tt2 = TChunk(ttt2)
-        
-        if self.s1_typed:
-            response = self.choose_typed_behaviour(((s1,s2)), tt2)
-        else:
-            response = self.choose_behaviour((s1,s2))
-            
+        #print(type(tt2))
+        response = self.choose_behaviour((s1,s2))
+        # if self.s1_typed:
+        #     pass
+        #     #response = self.choose_typed_behaviour(((s1,s2)), tt2)
+        # else:
+        #     response = self.choose_behaviour((s1,s2))
+
         self.events.append(((s1,s2),response))
+        print('last events')
+        print(self.events[-1])
         
                 
         if response == 0: # boundary placement
@@ -598,19 +914,19 @@ class Learner():
             self.n_reinf += 1 
             # check if border is correctly placed
             is_border = stimuli_stream.border_before[s2_index]
-            if self.s1_typed:
-                elements = s1.remove_structure()
-                types = self.typed_structure.remove_structure()
-                if type(elements) != list:
-                    self.associate_type_to_chunk(Chunk(elements), types)
-                else:
-                    typings=list(zip(elements,types))
-                    for (chunk,t) in typings:
-                        self.associate_type_to_chunk(Chunk(chunk), t)
-            #
+            # if self.s1_typed:
+            #     elements = s1.remove_structure()
+            #     types = self.typed_structure.remove_structure()
+            #     if type(elements) != list:
+            #         self.associate_type_to_chunk(Chunk(elements), types)
+            #     else:
+            #         typings=list(zip(elements,types))
+            #         for (chunk,t) in typings:
+            #             self.associate_type_to_chunk(Chunk(chunk), t)
+            # #
             #print(self.typed_structure)
-            if tt2.structure.is_start():
-                self.associate_type_to_chunk(s2,tt2.structure)
+            #if tt2.structure.is_start() and not tt2.structure.is_empty():
+            #    self.associate_type_to_chunk(s2,tt2.structure)
             #print(tt2)
             if is_border and not self.border_within and self.border_before:
                 #print('Good Unit')
@@ -619,8 +935,8 @@ class Learner():
                 self.sentences.add(s1)
                 # assign types to elements of s1
                 if not self.s1_typed:
-                    #self.typing_events=[]
-                    self.type_chunk(s1,Type('0'))
+                     self.typing_events=[]
+                     self.type_chunk(s1,Type('0'))
                 #print(self.typing_events)
                 # Perform reinforcement
                 self.reinforce(reinforcement = 'positive')                    
@@ -642,13 +958,13 @@ class Learner():
             if self.border_type == 'next':
                 new_s1,s2_index = stimuli_stream.next_beginning_sent(s2_index)
                 new_s1 = Chunk(new_s1)
-                self.typed_structure = TChunk('')
-                self.s1_typed = False
+                # self.typed_structure = TChunk('')
+                # self.s1_typed = False
             else:
                 self.border_before = stimuli_stream.border_before[s2_index]
                 new_s1,s2_index = s2, s2_index + 1
-                self.typed_structure = TChunk('')
-                self.s1_typed = False
+                # self.typed_structure = TChunk('')
+                # self.s1_typed = False
                 
             #self.chunks.add(new_s1)
             self.add_chunk(new_s1)
@@ -665,15 +981,11 @@ class Learner():
             if self.type == 'right':
                 # response is 1 and therefore, chunking occurs
                 new_s1 = s1.chunk_at_depth(s2)
-                self.typed_structure = self.typed_structure.chunk_at_depth(tt2)
+                #self.typed_structure = self.typed_structure.chunk_at_depth(tt2)
             elif self.type == 'flexible':
                 # response >= 1 and chunking or subchunking occurs
                 new_s1 = s1.chunk_at_depth(s2,depth=s1.depth+1-response) 
-                #print('s1 ' + str(s1))
-                #print('typed s1'+ str(self.typed_structure))
-                #print('s2 '+str(s2))
-                #print('typed s2 ' +str(tt2))
-                self.typed_structure = self.typed_structure.chunk_at_depth(tt2,depth=s1.depth+1-response) 
+                #self.typed_structure = self.typed_structure.chunk_at_depth(tt2,depth=s1.depth+1-response) 
             else:
                 print('Wrong type!')
 
@@ -684,14 +996,22 @@ class Learner():
             
         return new_s1, s2_index
     
-    def get_types_s1(self):
+    def get_types_s1(self,s1):
+        return self.typed_structure.right_types()
+    
+    def get_values_s1(self,s1):
         pass
+       
     
     def assign_type_new2(self,s1,s2):
+        if not self.typed_structure.is_consistent():
+            self.s1_typed = False
         if self.s1_typed:
             #print('s1 typed')
             # That function should return a dictionary of reduced types from self.typed_structure, with their value
-            types_s1 = self.get_types_s1()
+            types = self.get_types_s1()
+            values = self.get_values_s1()
+            types_s1 = dict()
             success = False
             t1 = self.choose_type_from_dict(types_s1)
             default = t1

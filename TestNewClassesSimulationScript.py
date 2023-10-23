@@ -6,7 +6,7 @@ Created on Thu Feb  2 11:00:55 2023
 """
 
 
-from newLearner import Learner
+from TestChunksInheritance import Learner
 from new_raw_input import Raw_input, ProbabilisticGrammar
 import numpy as np
 import matplotlib.pyplot as plt
@@ -312,8 +312,8 @@ cfgYP = ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP,we
 #############################################################
 
 # number of simulations
-n_sim = 1
-n_trials = 1000
+n_sim = 1000
+n_trials = 3000
 
 #############################################################
 #
@@ -330,10 +330,10 @@ print('Initializing learners')
 # Select type of chunking mechanism
 #typ = 'right'
 typ = 'flexible'
-border = 'net'
+border = 'next'
 
 # Create as many learners as number of simulations.
-learners = [Learner(n_trials = n_trials, t=typ, border = border) for i in range(n_sim)]
+learners = [Learner(n_trials = n_trials, border = border) for i in range(n_sim)]
 
 # print('Running simulation')
 # count = 0
@@ -371,7 +371,7 @@ print('Postprocessing')
 
 plot_learning_curve(learners)
 #plot_success_norm(learners)
-save_grammar_to_file(learners, 'testGrammarRC.xlsx')
+#save_grammar_to_file(learners, 'testGrammarRC.xlsx')
 
 
 end_time = datetime.now()

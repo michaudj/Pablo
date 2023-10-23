@@ -84,31 +84,67 @@ class Type:
     def __eq__(self, other):
         return self is other
     
-    def split(self,pu=0.5,prim=None): # should return two types that combine into the initial type
+    def split(self,pu=0.5,prim='New',bad_s1=None,bad_s2=None): # should return two types that combine into the initial type
+        print(bad_s1)
         if prim == None:
-            prim_type = Type("0")
+            prim_type = Type('0')
         elif prim == 'New':
-            prim_type = Type.create_primitive_type()
+            pass
         else:
-            prim_type = prim
+            if not prim.is_primitive():
+                prim = 'New'
+            else:
+                prim_type = prim
+                print(prim_type)
+        print(prim)
             
         if random() < pu:
+            if prim == prim:
+                if bad_s1 != None:
+                    if prim in bad_s1:
+                        prim = 'New'
+            if prim == 'New':
+                if bad_s1 != None:
+                    index = 0
+                    while Type(str(index)) in bad_s1:
+                        index += 1
+                    prim_type = Type(str(index))
+                elif bad_s2 != None:
+                    prim_type = Type("0")
+                else:
+                    prim_type = Type('0')#self.create_primitive_type()
             return [prim_type, Type(prim_type.formula+"u"+self.formula )]
         else:
+            if prim == prim:
+                if bad_s2 != None:
+                    if prim in bad_s2:
+                        prim = 'New'
+                    
+            if prim == 'New':
+                if bad_s2 != None:
+                    index = 0
+                    while Type(str(index)) in bad_s2:
+                        index += 1
+                    prim_type = Type(str(index))
+                elif bad_s1 != None:
+                    prim_type = Type('0')
+                else:
+                    prim_type = Type('0')
             return [Type(self.formula+"o"+prim_type.formula ), prim_type]
         pass
     
     def is_start(self): # Checks whether the type is expecting something on the left. 
         return len(self.left_compatible_chunks()) == 0
     
+    def get_primitives(self):
+        return re.split(r"u|o",self.formula)
+    
     
     def left_compatible_chunks(self):
-        substrings = re.findall(r".*?u", self.formula)
+        #substrings = re.findall(r".*?u", self.formula)
+        substrings = re.findall(r"^"+self.left_type()+"u",self.formula)
         substrings = list(accumulate(substrings))
         #print(substrings)
-        for s in substrings:
-            if len(s) != 2:
-                substrings.remove(s)
         substrings = [re.sub(r"u$", "$", x) for x in substrings]
         #print(substrings)
         substrings1 = [re.sub(r"^", r"^", x) for x in substrings]
@@ -118,30 +154,33 @@ class Type:
         return substrings1 + substrings2
     
     def right_compatible_chunks(self):
-        substrings = re.findall(r".*?o", self.formula[::-1])
+        #substrings = re.findall(r".*?o", self.formula[::-1])
+        substrings = re.findall(r"o"+self.right_type()+"$",self.formula)
         substrings = list(accumulate(substrings))
-        for s in substrings:
-            if len(s) != 2:
-                substrings.remove(s)
-        substrings = [re.sub(r"o$", "", x) for x in substrings]
-        substrings = [x[::-1] for x in substrings]
+        substrings = [re.sub(r"^o", "", x) for x in substrings]
         substrings1 = [re.sub(r"^", r"^", x) for x in substrings]
         substrings2 = [re.sub(r"$", r"o", x) for x in substrings1]
         substrings1 = [re.sub(r"$", r"$", x) for x in substrings1]
         return substrings1 + substrings2
     
+    def is_empty(self):
+        return len(self.get_primitives()) == 1 and len(self.get_primitives()[0])==0
+    
+    
     def is_primitive(self):
-        return (len(self.right_compatible_chunks()) + len(self.left_compatible_chunks())) == 0
+        if len(self.get_primitives()) == 1 and len(self.get_primitives()[0])!=0:
+            return True
+        else:
+            return False
+        #return (len(self.right_compatible_chunks()) + len(self.left_compatible_chunks())) == 0
     
     def left_type(self):
-        if self.is_primitive():
-            return self.formula
-        elif len(self.right_compatible_chunks()) != 0:
-            print(self.right_compatible_chunks())
-            print(self.formula)
-        elif len(self.left_compatible_chunks()) != 0:
-            print(self.left_compatible_chunks())
-            print(self.formula)
+        primitives = self.get_primitives()
+        return primitives[0]
+    
+    def right_type(self):
+        primitives = self.get_primitives()
+        return primitives[-1]
     
     def is_right_compatible(self, other):
         for i, pattern in enumerate(self.right_compatible_chunks()):
@@ -190,7 +229,7 @@ class Type:
             raise TypeError("Incompatible types")
             
     @staticmethod
-    def is_sentence(types):
+    def reduce(types):
         remaining_types = types[:]
         
         # keep trying to reduce the list of types until it contains only one type
@@ -208,8 +247,16 @@ class Type:
                     reduced = True
                     break
         
-        # return the remaining type
-        if reduced and remaining_types[0] == Type('0'):
+            # return the remaining type
+            if not reduced:
+                return remaining_types
+        
+        return remaining_types
+    
+    @staticmethod
+    def is_sentence(types):
+        remaining_types = Type.reduce(types)
+        if len(remaining_types) == 1 and remaining_types[0] == Type('0'):
             return True
         else:
             return False
@@ -249,10 +296,16 @@ class TChunk():
         return hash(frozenset((self.structure)))
     
     def get_s1(self):
-        return TChunk(self.structure[0])
+        [s1,s2] = self.structure
+        s1 = TChunk(s1)
+        s2 = TChunk(s2)
+        return s1
     
     def get_s2(self):
-        return TChunk(self.structure[1])
+        [s1,s2] = self.structure
+        s1 = TChunk(s1)
+        s2 = TChunk(s2)
+        return s2
     
     def get_right_subchunks(self, depth):
         right_subchunks = []
@@ -284,7 +337,72 @@ class TChunk():
             return str(self.structure)
         else:
             return flatten(self.structure)
+        
+    def reduce(self):
+        if type(self.structure) != list:
+            return self.structure
+        else:
+            [s1,s2] = self.structure[:]
+            s1 = TChunk(s1)
+            s2 = TChunk(s2)
+            if type(s1.structure) == Type and type(s2.structure)== Type:
+                result = s1.structure + s2.structure
+                return result
+            elif type(s1.structure) != Type and type(s2.structure)== Type:
+                result = s1.reduce() + s2.structure
+                # Weird bug fixed by the following line: if more than one element reduce to 0, creates bug...
+                self = TChunk([s1.structure,s2.structure])
+                return result
+            elif type(s1.structure) == Type and type(s2.structure)!= Type:
+                result = s1.structure + s2.reduce()
+                # Weird bug fixed by the following line: if more than one element reduce to 0, creates bug...
+                self = TChunk([s1.structure,s2.structure])
+                return result
+            else:
+                t1 = s1.reduce()
+                t2 = s2.reduce()
+                result = t1 + t2
+                # Weird bug fixed by the following line: if more than one element reduce to 0, creates bug...
+                self = TChunk([s1.structure,s2.structure])
 
+                return result
+                    
+        
+    def is_consistent(self):
+        if type(self.structure) != list:
+            return True
+        else:
+            [s1,s2] = self.structure[:]
+            s1 = TChunk(s1)
+            s2 = TChunk(s2)
+
+            if type(s1.structure) == Type and type(s2.structure)== Type:
+                return s1.structure.is_compatible(s2.structure)
+            elif type(s1.structure) != Type and type(s2.structure)== Type:
+                if s1.is_consistent():
+                    return s1.reduce().is_compatible(s2.structure)
+                else:
+                    return False
+            elif type(s1.structure) == Type and type(s2.structure)!= Type:
+                if s2.is_consistent():
+                    return s1.structure.is_compatible(s2.reduce())
+                else:
+                    return False
+            else:
+                if s1.is_consistent() and s2.is_consistent():
+                    return s1.reduce().is_compatible(s2.reduce())
+                else:
+                    return False
+    
+    
+    def right_types(self):
+        # Only works if TChunk is consistent!!!
+        list_of_reduced_types = [self.reduce()]
+        
+        for chunk in self.get_right_subchunks(self.depth):
+            list_of_reduced_types.append(chunk.reduce())
+        return list_of_reduced_types
+        
 
           
 ###############################################################################
@@ -293,26 +411,37 @@ class TChunk():
 #
 ###############################################################################
      
-a = Type(r"aufubocod")
-# print(a)
-print(a.left_compatible_chunks())
-# print(a.right_compatible_chunks())
+a = Type(r"aufubocodd")
+print(a)
+print(a.formula)
+print(re.findall(r"o"+a.right_type()+"$",a.formula))
+print(re.findall(r"^"+a.left_type()+"u",a.formula))
+#print(a.right_compatible_chunks2())
+#print(a.left_compatible_chunks2())
 
-b = Type(r"aufubocod")
+b = Type(r"aufubocodd")
 print(b.left_type())
+print(b.right_type())
+print(b.get_primitives())
 
 
 print('-------------------------------')
-d = Type(r"doe")
-e = Type(r"d")
+d = Type(r"ddoe")
+e = Type(r"dd")
 f = Type(r"a")
 g = Type(r"auf")
 h = Type(r"buauf")
+#print(f.right_compatible_chunks2())
+#print(f.left_compatible_chunks2())
+print(f.right_compatible_chunks())
+print(f.left_compatible_chunks())
 print(b.is_primitive())
 print(d.is_primitive())
 print(e.is_primitive())
 print(f.is_primitive())
 print(h.is_primitive())
+print(h.is_compatible(g))
+print('Compatibility check for ghost types')
 
 print(str(a)+'+'+str(d)+'='+str(a+d))
 print(str(a)+'+'+str(e)+'='+str(a+e))
@@ -359,18 +488,24 @@ def reduce_types(types):
 t1 = Type("1o3")
 t3 = Type("3")
 t2 = Type("1u0o2")
-t5 = Type("4")
+t5 = Type("dd")
 t4 = Type("4u2o3")
+ttt = Type('')
 print(t1.is_primitive())
 print(t2.is_primitive())
 print(t3.is_primitive())
 print(t4.is_primitive())
 print(t5.is_primitive())
+print(ttt.is_primitive())
+print(ttt.is_empty())
+
+print('???????????????????????????????')
 
 tt = Type("0")
 types = tt.split(pu=0.5)
 print(types)
 ttypes= types[0].split(pu=0.5,prim='New') + types[1].split(pu=0.5)
+print(ttypes)
 tctypes = []
 for ttt in ttypes:
     tctypes.append(TChunk(ttt))
@@ -378,8 +513,10 @@ for ttt in ttypes:
 tttc =tctypes[0].chunk_at_depth(tctypes[1])
 tttc2 = tctypes[2].chunk_at_depth(tctypes[3])
 tchunk = tttc.chunk_at_depth(tttc2)
-print(ttypes)
+print(tchunk)
 reduce_types(ttypes)
+print('Reduced?')
+print(Type.reduce(ttypes))
 print(Type.is_sentence(ttypes))
 #print(types[0].split())
 #print(types[1].split())
@@ -391,10 +528,21 @@ tc =TChunk(b)
 print(tc)
 tcc = TChunk(t5)
 print(tcc)
-new_tc =TChunk([tc,tcc])
+new_tc =TChunk([tc.structure,tcc.structure])
+print(new_tc)
+if new_tc.is_consistent():
+    print(new_tc.reduce())
+else:
+    print('incompatible types')
+#print(new_tc.is_consistent())
 print('---------------------')
 
 print(tchunk)
+print('right types')
+print(tchunk)
+print(tchunk.right_types())
+print('Test remove structure')
+print(tchunk.remove_structure())
 print(tchunk.get_right_subchunks(tchunk.depth))
 #print(reduce_types(tchunk.remove_structure()))
 list_of_reduced_types = reduce_types(tchunk.remove_structure())
@@ -407,3 +555,37 @@ for chunk in tchunk.get_right_subchunks(tchunk.depth):
         #print(chunk.structure)
 list_of_reduced_types.reverse()
 print(list_of_reduced_types)
+
+
+print('===================================')
+tt = Type("0")
+types = tt.split(pu=0.5)
+print(types)
+bad_s1 = {Type('0'):-1,Type('1'):-2}
+bad_s2 = {Type('0'):-1,Type('1'):-2,Type('2'):-2}
+ttypes= types[0].split(pu=0.5,prim='New',bad_s1=bad_s1,bad_s2=bad_s2) + types[1].split(pu=0.5)
+print(ttypes)
+tctypes = []
+for ttt in ttypes:
+    tctypes.append(TChunk(ttt))
+    
+tttc =tctypes[0].chunk_at_depth(tctypes[1])
+tttc2 = tctypes[2].chunk_at_depth(tctypes[3])
+tchunk = tttc.chunk_at_depth(tttc2)
+print(ttypes)
+reduce_types(ttypes)
+print('Reduced?')
+print(Type.reduce(ttypes))
+print(Type.is_sentence(ttypes))
+
+print('===================================')
+print(tchunk)
+print(tchunk.get_right_subchunks(tchunk.depth))
+#print(tchunk.is_consistent())
+#print(tchunk)
+#print(tchunk.reduce())
+#print(tchunk)
+print('right types version 1')
+print(tchunk.right_types())
+
+#TChunk(2)
