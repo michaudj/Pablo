@@ -6,7 +6,7 @@ Created on Thu Feb  2 11:00:55 2023
 """
 
 
-from TestChunksInheritance import Learner
+from TestChunksInheritance import Learner,TypeLearner
 from new_raw_input import Raw_input, ProbabilisticGrammar
 import numpy as np
 import matplotlib.pyplot as plt
@@ -130,6 +130,17 @@ Learner.alpha = 0.1
 Learner.beta = 1.
 Learner.positive_reinforcement = 25.
 Learner.negative_reinforcement = -10.
+
+# Set the initial learning parameters
+TypeLearner.initial_value_border = 1.
+TypeLearner.initial_value_chunking = -1.
+TypeLearner.ID = 0
+
+# Set the parameters controlling reinforcement learning
+TypeLearner.alpha = 0.1
+TypeLearner.beta = 1.
+TypeLearner.positive_reinforcement = 25.
+TypeLearner.negative_reinforcement = -10.
 
 ###############################################################
 #
@@ -312,7 +323,7 @@ cfgYP = ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP,we
 #############################################################
 
 # number of simulations
-n_sim = 1000
+n_sim = 100
 n_trials = 3000
 
 #############################################################
@@ -333,7 +344,7 @@ typ = 'flexible'
 border = 'next'
 
 # Create as many learners as number of simulations.
-learners = [Learner(n_trials = n_trials, border = border) for i in range(n_sim)]
+learners = [TypeLearner(n_trials = n_trials, border = border) for i in range(n_sim)]
 
 # print('Running simulation')
 # count = 0

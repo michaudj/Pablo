@@ -13,7 +13,7 @@ import random
 from new_raw_input import ProbabilisticGrammar
 
 from itertools import accumulate
-import types
+
 #import sys
 #sys.setrecursionlimit(1500)
 
@@ -28,11 +28,7 @@ def change_element_at_depth(nested_list, depth, new_value):
     for i in range(depth-1):
         nested_list = nested_list[-1]
     nested_list[-1] = new_value
-    
-def change_element_at_depth(nested_list, depth, new_value):
-    for i in range(depth-1):
-        nested_list = nested_list[-1]
-    nested_list[-1] = new_value
+
     
 def flatten(lst):
     flat_list = []
@@ -236,38 +232,38 @@ class Type:
         else:
             raise TypeError("Incompatible types")
             
-    @staticmethod
-    def reduce(types):
-        remaining_types = types[:]
+    # @staticmethod
+    # def reduce(types):
+    #     remaining_types = types[:]
         
-        # keep trying to reduce the list of types until it contains only one type
-        while len(remaining_types) > 1:
-            # set the reduced flag to False
-            reduced = False
+    #     # keep trying to reduce the list of types until it contains only one type
+    #     while len(remaining_types) > 1:
+    #         # set the reduced flag to False
+    #         reduced = False
             
-            # iterate over the remaining types
-            for i, type1 in enumerate(remaining_types[:-1]):
-                type2 = remaining_types[i+1]
-                # if the two types are compatible, reduce them and update the reduced flag
-                if type1.is_compatible(type2):
-                    remaining_types[i] = type1 + type2
-                    del remaining_types[i+1]
-                    reduced = True
-                    break
+    #         # iterate over the remaining types
+    #         for i, type1 in enumerate(remaining_types[:-1]):
+    #             type2 = remaining_types[i+1]
+    #             # if the two types are compatible, reduce them and update the reduced flag
+    #             if type1.is_compatible(type2):
+    #                 remaining_types[i] = type1 + type2
+    #                 del remaining_types[i+1]
+    #                 reduced = True
+    #                 break
         
-            # return the remaining type
-            if not reduced:
-                return remaining_types
+    #         # return the remaining type
+    #         if not reduced:
+    #             return remaining_types
         
-        return remaining_types
+    #     return remaining_types
     
-    @staticmethod
-    def is_sentence(types):
-        remaining_types = Type.reduce(types)
-        if len(remaining_types) == 1 and remaining_types[0] == Type('0'):
-            return True
-        else:
-            return False
+    # @staticmethod
+    # def is_sentence(types):
+    #     remaining_types = Type.reduce(types)
+    #     if len(remaining_types) == 1 and remaining_types[0] == Type('0'):
+    #         return True
+    #     else:
+    #         return False
 
 class Stimuli():
     
@@ -281,14 +277,16 @@ class Stimuli():
     
     def longstr(self):
         return '('+str(self.content) + ', t:'+str(self.type)+', v:'+str(self.value)+')'
-
-    
+   
     def retype(self,new_type,new_value):
         self.type = new_type
         self.value = new_value
         
-    def copy(self):
-        return Stimuli(self.content,t=self.type,v=self.value)
+    def get_type(self):
+        return Type(self.type)
+        
+    # def copy(self):
+    #     return Stimuli(self.content,t=self.type,v=self.value)
         
 class SChunk():
 
@@ -319,12 +317,6 @@ class SChunk():
     
     def chunk_at_depth(self, other, depth=0):
         nested_list = deepcopy(self.structure)
-        # if type(self.structure)!= list:
-        #     nested_list = self.structure
-        # else:
-        #     #nested_list = copy.deepcopy(self.structure)
-        #     nested_list = list(self.structure)
-        
         if depth == 0:
             struct = [nested_list,other.structure]
             return SChunk(struct)
@@ -344,28 +336,28 @@ class SChunk():
             return flatten(self.structure)
         
     def get_list_types(self):
-        return [Type(self.remove_structure()[i].type) for i in range(len(self.remove_structure()))]
+        return [self.remove_structure()[i].get_type() for i in range(len(self.remove_structure()))]
     
     def get_list_values(self):
         return [self.remove_structure()[i].value for i in range(len(self.remove_structure()))]
         
     def reduce(self):
         if type(self.structure) != list:
-            return Type(self.structure.type)
+            return self.structure.get_type()
         else:
             [s1,s2] = self.structure[:]
             s1 = SChunk(s1)
             s2 = SChunk(s2)
             if type(s1.structure) != list and type(s2.structure) != list:
-                result = Type(s1.structure.type) + Type(s2.structure.type)
+                result = s1.structure.get_type() + s2.structure.get_type()
                 return result
             elif type(s1.structure) == list and type(s2.structure)!= list:
-                result = s1.reduce() + Type(s2.structure.type)
+                result = s1.reduce() + s2.structure.get_type()
                 # Weird bug fixed by the following line: if more than one element reduce to 0, creates bug...
                 self = SChunk([s1.structure,s2.structure])
                 return result
             elif type(s1.structure) != list and type(s2.structure) == list:
-                result = Type(s1.structure.type) + s2.reduce()
+                result = s1.structure.get_type() + s2.reduce()
                 # Weird bug fixed by the following line: if more than one element reduce to 0, creates bug...
                 self = SChunk([s1.structure,s2.structure])
                 return result
@@ -380,24 +372,27 @@ class SChunk():
             
     def is_consistent(self):
         if type(self.structure) != list:
-            return True
+            if self.structure.get_type().is_empty():
+                return False
+            else:
+                return True
         else:
             [s1,s2] = self.structure[:]
             s1 = SChunk(s1)
             s2 = SChunk(s2)
 
             if type(s1.structure) != list and type(s2.structure) != list:
-                return Type(s1.structure.type).is_compatible(Type(s2.structure.type))
+                return s1.structure.get_type().is_compatible(s2.structure.get_type())
             elif type(s1.structure) == list and type(s2.structure)!= list:
                 if s1.is_consistent():
                     self = SChunk([s1.structure,s2.structure])
-                    return s1.reduce().is_compatible(Type(s2.structure.type))
+                    return s1.reduce().is_compatible(s2.structure.get_type())
                 else:
                     return False
             elif type(s1.structure) != list and type(s2.structure)== list:
                 if s2.is_consistent():
                     self = SChunk([s1.structure,s2.structure])
-                    return Type(s1.structure.type).is_compatible(s2.reduce())
+                    return s1.structure.get_type().is_compatible(s2.reduce())
                 else:
                     return False
             else:
@@ -466,7 +461,6 @@ class SChunk():
 ####################################################
 
 
-
 class Learner():
     
     alpha = 0.2
@@ -475,10 +469,6 @@ class Learner():
     negative_reinforcement = -1.
     initial_value_chunking = -1.
     initial_value_border = 1.
-    
-    initial_value_type = 1.
-    good_type_value = 1.
-    bad_type_value = 0.
     
     ID = 0
     
@@ -491,8 +481,7 @@ class Learner():
         self.success = []
         self.sent_len = []
         self.sentences = set()
-        # Change this set into a dictionary where the key is a dictionary of types
-        # self.chunks = set()
+
         
         self.behaviour_repertoire = {} # dictionary of where the keys are couples of chunks and the value a list of behavioural values
         self.events = [] # encodes the current list of couples ((chunk,chunk), behaviour) to reinforce
@@ -509,33 +498,15 @@ class Learner():
         self.weights = dict()
         self.grammar = None
         
-        self.s1_typed = False
-        self.stimulus_types_dict = dict() #keys are strings represented a single stimulus and values are dictionary with types and values associated to them.
-        self.typatory = dict() # keys are types and values are related to how good the type is
-        self.typing_events = [] # encodes the current list of typings (format to be defined)
-        self.typed_structure = None # This will hold the current typing of the sentence. From it, types to be reinforced will be recovert.
-        
         
     def __repr__(self):
-        string = 'Learner ' + str(self.ID)
-        
-        return string
+        return 'Learner ' + str(self.ID)
 
-     
-    #Not needed for flexible learner
-    def add_chunk(self, chunk): # chunk must be a string
-        if chunk not in self.stimulus_types_dict:
-            self.stimulus_types_dict[chunk] = {}
-            
-    def update_stimulus_type_association(self,s):
-        if type(s.structure) != list:
-            self.add_chunk(str(s))
             
     def update_repertoire(self,couple): # couple must be a couple of SChunks
         #print('call of update repertoire')
         substantial_couple = (str(couple[0]),str(couple[1]))
         if substantial_couple not in self.behaviour_repertoire:
-            #print('repertoire initialization')
             values = [Learner.initial_value_border]
             values += [Learner.initial_value_chunking for i in range(couple[0].get_depth()+1)]
             self.behaviour_repertoire[substantial_couple] =np.array(values)# np.array([Learner.initial_value_border] + [Learner.initial_value_chunking for i in range(couple[0].depth+1)])
@@ -544,7 +515,6 @@ class Learner():
     def get_sub_couples(self, couple):
         sub_pairs = []
         for s in couple[0].get_right_subchunks(couple[0].get_depth()):
-            self.update_stimulus_type_association(s)
 
             sub_pairs.append((s,couple[1]))
             self.update_repertoire((s,couple[1]))
@@ -554,12 +524,6 @@ class Learner():
     def learn(self,stimuli_stream):
         # initialize stimuli
         s1 = SChunk(stimuli_stream.stimuli[0])
-        self.stimuli.append(s1)
-        #self.typed_structure = TChunk('')
-        #self.s1_typed = False
-        
-        #self.chunks.add(s1)
-        self.update_stimulus_type_association(s1)
         s2_index = 1
         #for t in range(self.n_trials):
         while self.n_reinf <= self.n_trials:
@@ -570,14 +534,8 @@ class Learner():
     def respond(self,stimuli_stream,s1,s2_index):
         # get the s2 stimuli and make it a chunk
         s2 = SChunk(stimuli_stream.stimuli[s2_index])
-        self.stimuli.append(s2)
-        # update chunkatory
-        self.update_stimulus_type_association(s2)
-        
 
         response = self.choose_behaviour((s1,s2))
-        #print(self.behaviour_repertoire[(str(s1),str(s2))])
-        self.decisions.append(response)
 
         self.events.append(((s1,s2),response))
         
@@ -594,8 +552,6 @@ class Learner():
                 # perform positive reinforcement
                 # Store sentence (not cognitively plausible but used for grammar extraction)
                 self.sentences.add(str(s1))
-
-                #print(self.typing_events)
                 # Perform reinforcement
                 self.reinforce(reinforcement = 'positive')                    
                 # update the success list
@@ -607,15 +563,454 @@ class Learner():
                 # perform negative reinforcement
                 self.reinforce(reinforcement = 'negative')
                 # update the success list
+                self.success.append(0)
+                self.sent_len.append(stimuli_stream.length_current_sent(s2_index))
+            # Next beginning of sentence becomes
+            if self.border_type == 'next':
+                new_s1,s2_index = stimuli_stream.next_beginning_sent(s2_index)
+                new_s1 = SChunk(new_s1)
+            else:
+                self.border_before = stimuli_stream.border_before[s2_index]
+                new_s1,s2_index = s2, s2_index + 1
 
-                    
+            self.border_within = False
+              
+        else: # some type of chunking occurs
+            # Check if there was a border
+            if not self.border_within:
+                self.border_within = stimuli_stream.border_before[s2_index]
+            
+            # Perform chunking at correct level
+            new_s1 = s1.chunk_at_depth(s2,depth=s1.get_depth()+1-response) 
+            s2_index+=1      
+        return new_s1, s2_index
+    
+    def choose_behaviour(self,couple):
+        substantial_couple = (str(couple[0]),str(couple[1]))
+        self.update_repertoire(couple)
+        b_range = len(self.behaviour_repertoire[substantial_couple])
+        options = [i for i in range(b_range)]
+        z = deepcopy(self.behaviour_repertoire[substantial_couple])
+        subpairs = self.get_sub_couples(couple)
+        
+        norm_vec = np.array([b_range - 1]+[i for i in range(b_range-1,0,-1)])
+        # Accumulate support from subchunks
+        for pair in subpairs:
+            substantial_pair = (str(pair[0]),str(pair[1]))
+            lenp = len(self.behaviour_repertoire[substantial_pair])
+            z[:lenp] += self.behaviour_repertoire[substantial_pair]
+        # Take the average
+        z /= norm_vec
+        weights = np.exp(Learner.beta * z)
+
+        response = random.choices(options,weights/np.sum(weights))
+        return response[0]  
+    
+
+    def reinforce(self, reinforcement = 'positive'):
+        #print('call of reinforce')
+        # for each events reinforce behaviour associated to chunk
+        if reinforcement == 'positive':
+            u = Learner.positive_reinforcement
+        elif reinforcement == 'negative':
+            u = Learner.negative_reinforcement
+        
+        for couple,r in self.events:
+            substantial_couple= (str(couple[0]),str(couple[1]))
+            #print('reinforcement')
+            Q = self.behaviour_repertoire[substantial_couple][r]
+            subevents = [(couple,r)]
+            subpairs = self.get_sub_couples(couple)
+            for pair in subpairs:
+                substantial_pair = (str(pair[0]),str(pair[1]))
+                self.update_repertoire(pair)
+                if r < len(self.behaviour_repertoire[substantial_pair]):
+                    subevents.append((pair,r))
+                    Q += self.behaviour_repertoire[substantial_pair][r]
+
+        for p,rr in subevents:
+            substantial_p = (str(p[0]),str(p[1]))
+            self.behaviour_repertoire[substantial_p][rr] += Learner.alpha * (u - Q)
+
+        # Clear working memory
+        self.events = []
+
+
+class TypeLearner(Learner):
+    initial_value_type = 1.
+    good_type_value = 1.
+    bad_type_value = 0.
+
+    
+    def __init__(self, n_trials = 14, border = 'next'):
+        super().__init__(n_trials =n_trials, border = border)
+        
+        self.s1_typed = False
+        self.stimulus_types_dict = dict() #keys are strings represented a single stimulus and values are dictionary with types and values associated to them.
+        self.typatory = dict() # keys are types and values are related to how good the type is
+        self.typing_events = [] # encodes the current list of typings (format to be defined)
+
+        
+     
+    def add_chunk(self, chunk): # chunk must be a string
+        if chunk not in self.stimulus_types_dict:
+            self.stimulus_types_dict[chunk] = {}
+            
+    def update_stimulus_type_association(self,s):
+        if type(s.structure) != list:
+            self.add_chunk(str(s))
+                         
+    def get_sub_couples(self, couple):
+        sub_pairs = []
+        for s in couple[0].get_right_subchunks(couple[0].get_depth()):
+            self.update_stimulus_type_association(s)
+
+            sub_pairs.append((s,couple[1]))
+            self.update_repertoire((s,couple[1]))
+        return sub_pairs
+    
+    def good_types(self,chunk):
+        if chunk in self.stimulus_types_dict:
+            good_types = dict()
+            for t,v in self.stimulus_types_dict[str(chunk)].items():
+                if v >= TypeLearner.good_type_value:
+                    good_types[t] = v
+            if len(good_types) == 0:
+                return None
+            else:
+                return good_types
+        else:
+            return None
+    
+        
+    def bad_types(self,chunk):
+        if chunk in self.stimulus_types_dict:
+            good_types = dict()
+            for t,v in self.stimulus_types_dict[str(chunk)].items():
+                if v <= TypeLearner.bad_type_value:
+                    good_types[t] = v
+            if len(good_types) == 0:
+                return None
+            else:
+                return good_types
+        else:
+            return None
+        
+    def good_starting_types(self,chunk):
+        good_types = self.good_types(str(chunk))
+        if good_types != None:
+            good_start_types = dict()
+            for t,v in good_types.items():
+                if t.is_start():
+                    good_start_types[t]=v
+            if len(good_start_types) == 0:
+                return None
+            else:
+                return good_start_types
+        else:
+            return None
+            
+        
+    def show_good_types(self):
+        for key, dic in self.stimulus_types_dict.items():
+            gt = self.good_types(key)
+            if gt != None:
+                print(key)
+                print(gt)
+                
+    def show_bad_types(self):
+        for key, dic in self.stimulus_types_dict.items():
+            gt = self.bad_types(key)
+            if gt != None:
+                print(key)
+                print(gt)
+                
+    def show_good_starting_types(self):
+        for key, dic in self.stimulus_types_dict.items():
+            gst = self.good_starting_types(key)
+            if gst != None:
+                print(key)
+                print(gst)
+                
+    def associate_type_to_chunk(self,chunk,t): # Need to be updated
+        self.typing_events.append((chunk,t))
+        if t not in self.typatory:
+            self.typatory[t] = {str(chunk)}
+        else:
+            self.typatory[t].add(str(chunk))
+        if t not in self.stimulus_types_dict[str(chunk)]:
+            self.stimulus_types_dict[str(chunk)][t] = TypeLearner.initial_value_type
+            
+
+    # should be ok
+    def merge_dicts(self,dic1,dic2):
+        merge_dict = dict()
+        for t,v in dic1.items():
+            merge_dict[(1,t)] = v
+        for t,v in dic2.items():
+            merge_dict[(2,t)] = v
+        return merge_dict
+    
+    def choose_type_from_dict(self,dico):
+        keys = list(dico.keys())
+        values = np.array(list(dico.values()))
+        weights = np.exp(TypeLearner.beta * values)
+        response = random.choices(keys,weights/np.sum(weights))
+        #print(response)
+        return response[0]
+    
+    def compatible_t2(self,s2):
+        pass
+
+    def assign_types(self,s1,s2):
+        # print(type(s1.structure))
+        if s1.is_consistent(): # This means that s1 is typed and reduce to something.
+            types_s1 = s1.right_types_dict()
+            t1 = self.choose_type_from_dict(types_s1)
+            default = t1
+            success = False
+            while not success and len(types_s1)!= 0:
+                success, t2 = self.compatible_t2(s2)
+                if not success:
+                    del types_s1[t1]
+                    if len(types_s1)!=0:
+                        t1 = self.choose_type_from_dict(types_s1)
+            
+            # Choose dominant type
+            # Test whether there is a compatible type for t2 and assign it if possible
+            # Default case, assign new type to s2
+            pass
+        else:
+            pass
+        pass
+    
+    def type_chunk(self,s1,type_to_split):
+        # Update typing event here
+        #self.typing_events.append((s1,type_to_split))
+        structure = s1.remove_structure()
+        types = dict()
+
+        # extract possible types by looping over the element of structure
+        for s in structure:
+            types[str(s)] = self.good_types(str(s))
+        pass
+        # Check if any of the elements are typed
+        anytypes = False
+        for key,value in types.items():
+            if value != None:
+                anytypes = True
+                break
+        
+        if not anytypes:
+            if type(s1.structure) is list:
+                new_s1 = s1.get_s1()
+                new_s2 = s1.get_s2()
+                [t1,t2] = type_to_split.split()
+                self.type_chunk(new_s1,t1)
+                self.type_chunk(new_s2,t2)
+            else:
+                self.associate_type_to_chunk(s1, type_to_split)
+                
+        else:
+            # Check from bottom up if there is a possible typing
+            if type(s1.structure) is not str:
+                new_s1 = s1.get_s1()
+                new_s2 = s1.get_s2()
+                # Check if s1 and/or s2 are primitive
+                if type(new_s1.structure) == str and type(new_s2.structure) == str:
+                    #print('both are primitive')
+                    # 1 typed, 2 typed, both typed?
+                    if types[new_s1.structure]==None and types[new_s2.structure]!=None:
+                        #print('Case 1')
+                        success = False
+                        t2 = self.choose_type_from_dict(types[new_s2.structure])
+                        default = t2
+                        while not success and len(types[new_s2.structure])!=0:
+                            success, t1 = self.choose_compatible_t1(t2,new_s1,type_to_split)
+                            if not success:
+                                del types[new_s2.structure][t2]
+                                if len(types[new_s2.structure])!=0:
+                                    t2 = self.choose_type_from_dict(types[new_s2.structure])
+                        if not success:
+                            # POSSIBLY NEW TYPES
+                            [t1,t2] = type_to_split.split(pu=0,prim='New')
+                        self.associate_type_to_chunk(new_s1, t1)
+                        self.associate_type_to_chunk(new_s2, t2)
+        
+                    elif types[new_s1.structure]!=None and types[new_s2.structure]==None:
+                        #print('Case 2')
+                        success = False
+                        t1 = self.choose_type_from_dict(types[new_s1.structure])
+                        default = t1
+                        while not success and len(types[new_s1.structure])!=0:
+                            success, t2 = self.choose_compatible_t2(t1,new_s2,type_to_split)
+                            if not success:
+                                del types[new_s1.structure][t1]
+                                if len(types[new_s1.structure])!=0:
+                                    t1 = self.choose_type_from_dict(types[new_s1.structure])
+                        if not success:
+                            # POSSIBLY NEW TYPES
+                            [t1,t2] = type_to_split.split(pu=1,prim='New')
+                        self.associate_type_to_chunk(new_s1, t1)
+                        self.associate_type_to_chunk(new_s2, t2)
+                    else:
+                        #print('Case 3')
+                        success = False
+                        merge = self.merge_dicts(types[new_s1.structure], types[new_s2.structure])
+                        (index,t) = self.choose_type_from_dict(merge)
+                        default = (t,index)
+                        while not success and len(merge) != 0:
+                            if index == 1:
+                                t1 = t
+                                success, t2 = self.choose_compatible_t2(t1,new_s2,type_to_split)
+                                if not success:
+                                    del merge[(index,t)]
+                                    if len(merge) != 0:
+                                        (index,t) = self.choose_type_from_dict(merge)
+                            elif index ==2:
+                                t2 = t
+                                success, t1 = self.choose_compatible_t1(t2,new_s1,type_to_split)
+                                if not success:
+                                    del merge[(index,t)]
+                                    if len(merge) != 0:
+                                        (index,t) = self.choose_type_from_dict(merge)
+                            else:  
+                                print('Problem here')
+                        if not success:
+                            # Possibly new types
+                            if default[1]==1:
+                                t1 = default[0]
+                                [t1,t2] = type_to_split.split(pu=1,prim='New',bad_s1=self.bad_types(new_s1))
+                                
+                            elif default[1]==2:
+                                t2 = default[0]
+                                [t1,t2] = type_to_split.split(pu=0,prim='New',bad_s2 = self.bad_types(new_s2))
+                            else:
+                                print('Problem here')
+                        self.associate_type_to_chunk(new_s1, t1)
+                        self.associate_type_to_chunk(new_s2, t2)       
+                        # Merge dict, choose dominant, loop through
+                        pass
+                elif type(new_s1.structure) == str and type(new_s2.structure) != str:
+                    #print('s1 primitive, s2 complex')
+                    # where are the typings
+                    #print(types)
+                    #print(new_s1)
+                    if types[new_s1.structure] != None:
+                        # success = False
+                        t1 = self.choose_type_from_dict(types[new_s1.structure])
+                        [t1,t2] = type_to_split.split(pu=1,prim=t1)
+                        self.associate_type_to_chunk(new_s1, t1)
+                        self.type_chunk(new_s2,t2)
+                    else:
+                        [t1,t2] = type_to_split.split()
+                        self.associate_type_to_chunk(new_s1,t1)
+                        self.type_chunk(new_s2,t2)
+                elif type(new_s2.structure) == str and type(new_s1.structure) != str:
+                    #print('s2 primitive, s1 complex')
+                    if types[new_s2.structure] != None:
+                        # success = False
+                        #print('Case 1')
+                        t2 = self.choose_type_from_dict(types[new_s2.structure])
+                        [t1,t2] = type_to_split.split(pu=0,prim=t2)
+                        #print(t1)
+                        #print(t2)
+                        self.associate_type_to_chunk(new_s2, t2)
+                        #print(self.typing_events)
+                        self.type_chunk(new_s1,t1)
+                    else:
+                        #print('Case 2')
+                        [t1,t2] = type_to_split.split()
+                        self.associate_type_to_chunk(new_s2,t2)
+                        self.type_chunk(new_s1,t1)
+                else:
+                    #print('both are complex')
+                    [t1,t2] = type_to_split.split()
+                    self.type_chunk(new_s2,t2)
+                    self.type_chunk(new_s1,t1)
+
+    def learn(self,stimuli_stream):
+        # initialize stimuli
+        s1 = SChunk(Stimuli(stimuli_stream.stimuli[0]))
+        # print(type(s1.structure))
+
+        self.s1_typed = False
+        
+        #self.chunks.add(s1)
+        self.update_stimulus_type_association(s1)
+        s2_index = 1
+        #for t in range(self.n_trials):
+        while self.n_reinf <= self.n_trials:
+            s1, s2_index = self.respond(stimuli_stream, s1, s2_index)
+
+            
+    
+    def respond(self,stimuli_stream,s1,s2_index):
+        # get the s2 stimuli and make it a chunk
+        s2 = SChunk(Stimuli(stimuli_stream.stimuli[s2_index]))
+
+        # update chunkatory
+        self.update_stimulus_type_association(s2)
+        
+        self.assign_types(s1,s2)
+        
+        #################################
+        # assignment of types
+        #################################
+        
+        response = self.choose_behaviour((s1,s2)) # Should be modified to take into account types in the decision
+
+
+        self.events.append(((s1,s2),response))
+        
+                
+        if response == 0: # boundary placement
+            #print('Border')
+            # increment the number of reinforcement events by 1
+            self.n_reinf += 1 
+            # check if border is correctly placed
+            is_border = stimuli_stream.border_before[s2_index]
+
+            if is_border and not self.border_within and self.border_before:
+                #print('Good Unit')
+                # perform positive reinforcement
+                # Store sentence (not cognitively plausible but used for grammar extraction)
+                self.sentences.add(str(s1))
+                
+                #################################
+                # type sentence if new comes here
+                #################################
+
+
+                # Perform reinforcement
+                self.reinforce(reinforcement = 'positive')  
+                
+                #################################
+                # reinforcement of types
+                #################################
+                
+                # self.reinforce_typings() To be defined                  
+                # update the success list
+                self.success.append(1)
+                # for postprocessing, store length of the sentence
+                self.sent_len.append(stimuli_stream.length_current_sent(s2_index - 1))
+            else:
+                #print('Bad Unit')
+                # perform negative reinforcement
+                self.reinforce(reinforcement = 'negative')
+                # update the success list
+                
+                #################################
+                # reinforcement of types
+                #################################
+
                 self.success.append(0)
                 self.sent_len.append(stimuli_stream.length_current_sent(s2_index))
             # Next beginning of sentence becomes
             
             if self.border_type == 'next':
                 new_s1,s2_index = stimuli_stream.next_beginning_sent(s2_index)
-                new_s1 = SChunk(new_s1)
+                new_s1 = SChunk(Stimuli(new_s1))
                 # self.typed_structure = TChunk('')
                 # self.s1_typed = False
             else:
@@ -629,10 +1024,7 @@ class Learner():
 
             self.border_within = False
             
-            self.stimuli.append(new_s1)
-            
-
-            
+              
         else: # some type of chunking occurs
             # Check if there was a border
             if not self.border_within:
@@ -653,7 +1045,6 @@ class Learner():
         options = [i for i in range(b_range)]
         z = deepcopy(self.behaviour_repertoire[substantial_couple])
 
-
         subpairs = self.get_sub_couples(couple)
         
         norm_vec = np.array([b_range - 1]+[i for i in range(b_range-1,0,-1)])
@@ -664,55 +1055,22 @@ class Learner():
             z[:lenp] += self.behaviour_repertoire[substantial_pair]
             # Take the average
         z /= norm_vec
+        
+        #################################
+        # Support from assigned types comes here
+        #################################
+        
         weights = np.exp(Learner.beta * z)
 
-            
         response = random.choices(options,weights/np.sum(weights))
         return response[0]  
     
 
-    def reinforce(self, reinforcement = 'positive'):
-        #print('call of reinforce')
-        # for each events reinforce behaviour associated to chunk
-        if reinforcement == 'positive':
-            u = Learner.positive_reinforcement
-        elif reinforcement == 'negative':
-            u = Learner.negative_reinforcement
-        
-        #for e in self.events:
-        #    print(e)
-        for couple,r in self.events:
-            substantial_couple= (str(couple[0]),str(couple[1]))
-            #print('reinforcement')
-            Q = self.behaviour_repertoire[substantial_couple][r]
-            subevents = [(couple,r)]
-            subpairs = self.get_sub_couples(couple)
-            for pair in subpairs:
-                substantial_pair = (str(pair[0]),str(pair[1]))
-                self.update_repertoire(pair)
-                if r < len(self.behaviour_repertoire[substantial_pair]):
-                    subevents.append((pair,r))
-                    Q += self.behaviour_repertoire[substantial_pair][r]
-            #Q /= len(subevents)
 
-        for p,rr in subevents:
-            substantial_p = (str(p[0]),str(p[1]))
-            self.behaviour_repertoire[substantial_p][rr] += Learner.alpha * (u - Q)
-
-                
-        
-        # Clear working memory
-        self.events = []
-        self.stimuli = []
-        self.decisions = []
-
-        
+    def reinforce_typings(self):
+        pass
     
-    # def get_types_s1(self,s1):
-    #     return self.typed_structure.right_types()
-    
-    # def get_values_s1(self,s1):
-    #     pass
+
        
     
     # def assign_type_new2(self,s1,s2):
@@ -1061,249 +1419,13 @@ class Learner():
 
 
         
-    # def good_types(self,chunk):
-    #     if chunk in self.chunk_dict:
-    #         good_types = dict()
-    #         for t,v in self.chunk_dict[chunk].items():
-    #             if v >= Learner.good_type_value:
-    #                 good_types[t] = v
-    #         if len(good_types) == 0:
-    #             return None
-    #         else:
-    #             return good_types
-    #     else:
-    #         return None
-    
-        
-    # def bad_types(self,chunk):
-    #     if chunk in self.chunk_dict:
-    #         good_types = dict()
-    #         for t,v in self.chunk_dict[chunk].items():
-    #             if v <= Learner.bad_type_value:
-    #                 good_types[t] = v
-    #         if len(good_types) == 0:
-    #             return None
-    #         else:
-    #             return good_types
-    #     else:
-    #         return None
-        
-    # def good_starting_types(self,chunk):
-    #     good_types = self.good_types(chunk)
-    #     if good_types != None:
-    #         good_start_types = dict()
-    #         for t,v in good_types.items():
-    #             if t.is_start():
-    #                 good_start_types[t]=v
-    #         if len(good_start_types) == 0:
-    #             return None
-    #         else:
-    #             return good_start_types
-    #     else:
-    #         return None
-            
-        
-    # def show_good_types(self):
-    #     for key, dic in self.chunk_dict.items():
-    #         gt = self.good_types(key)
-    #         if gt != None:
-    #             print(key)
-    #             print(gt)
-                
-    # def show_bad_types(self):
-    #     for key, dic in self.chunk_dict.items():
-    #         gt = self.bad_types(key)
-    #         if gt != None:
-    #             print(key)
-    #             print(gt)
-                
-    # def show_good_starting_types(self):
-    #     for key, dic in self.chunk_dict.items():
-    #         gst = self.good_starting_types(key)
-    #         if gst != None:
-    #             print(key)
-    #             print(gst)
 
 
 
-            
-    # def associate_type_to_chunk(self,chunk,t):
-    #     self.typing_events.append((chunk,t))
-    #     if t not in self.typatory:
-    #         self.typatory[t] = {chunk}
-    #     else:
-    #         self.typatory[t].add(chunk)
-    #     if t not in self.chunk_dict[chunk]:
-    #         self.chunk_dict[chunk][t] = Learner.initial_value_type
-            
 
     
-    # def merge_dicts(self,dic1,dic2):
-    #     merge_dict = dict()
-    #     for t,v in dic1.items():
-    #         merge_dict[(1,t)] = v
-    #     for t,v in dic2.items():
-    #         merge_dict[(2,t)] = v
-    #     return merge_dict
     
-    # def choose_type_from_dict(self,dico):
-    #     keys = list(dico.keys())
-    #     values = np.array(list(dico.values()))
-    #     weights = np.exp(Learner.beta * values)
-    #     response = random.choices(keys,weights/np.sum(weights))
-    #     #print(response)
-    #     return response[0]
-    
-    
-    
-    # def type_chunk(self,s1,type_to_split):
-    #     # Update typing event here
-    #     #self.typing_events.append((s1,type_to_split))
-    #     structure = s1.remove_structure()
-    #     types = dict()
-    #     if type(structure)==str:
-    #         # extract possible types
-    #         types[structure] = self.good_types(s1)
-    #         pass
-    #     else:
-    #         # extract possible types by looping over the element of structure
-    #         for s in structure:
-    #             types[s] = self.good_types(Chunk(s))
-    #         pass
-    #     # Check if any of the elements are typed
-    #     anytypes = False
-    #     for key,value in types.items():
-    #         if value != None:
-    #             anytypes = True
-    #             break
-        
-    #     if not anytypes:
-    #         if type(s1.structure) is not str:
-    #             new_s1 = s1.get_s1()
-    #             new_s2 = s1.get_s2()
-    #             [t1,t2] = type_to_split.split()
-    #             self.type_chunk(new_s1,t1)
-    #             self.type_chunk(new_s2,t2)
-    #         else:
-    #             self.associate_type_to_chunk(s1, type_to_split)
-                
-    #     else:
-    #         # Check from bottom up if there is a possible typing
-    #         if type(s1.structure) is not str:
-    #             new_s1 = s1.get_s1()
-    #             new_s2 = s1.get_s2()
-    #             # Check if s1 and/or s2 are primitive
-    #             if type(new_s1.structure) == str and type(new_s2.structure) == str:
-    #                 #print('both are primitive')
-    #                 # 1 typed, 2 typed, both typed?
-    #                 if types[new_s1.structure]==None and types[new_s2.structure]!=None:
-    #                     #print('Case 1')
-    #                     success = False
-    #                     t2 = self.choose_type_from_dict(types[new_s2.structure])
-    #                     default = t2
-    #                     while not success and len(types[new_s2.structure])!=0:
-    #                         success, t1 = self.choose_compatible_t1(t2,new_s1,type_to_split)
-    #                         if not success:
-    #                             del types[new_s2.structure][t2]
-    #                             if len(types[new_s2.structure])!=0:
-    #                                 t2 = self.choose_type_from_dict(types[new_s2.structure])
-    #                     if not success:
-    #                         # POSSIBLY NEW TYPES
-    #                         [t1,t2] = type_to_split.split(pu=0,prim='New')
-    #                     self.associate_type_to_chunk(new_s1, t1)
-    #                     self.associate_type_to_chunk(new_s2, t2)
-        
-    #                 elif types[new_s1.structure]!=None and types[new_s2.structure]==None:
-    #                     #print('Case 2')
-    #                     success = False
-    #                     t1 = self.choose_type_from_dict(types[new_s1.structure])
-    #                     default = t1
-    #                     while not success and len(types[new_s1.structure])!=0:
-    #                         success, t2 = self.choose_compatible_t2(t1,new_s2,type_to_split)
-    #                         if not success:
-    #                             del types[new_s1.structure][t1]
-    #                             if len(types[new_s1.structure])!=0:
-    #                                 t1 = self.choose_type_from_dict(types[new_s1.structure])
-    #                     if not success:
-    #                         # POSSIBLY NEW TYPES
-    #                         [t1,t2] = type_to_split.split(pu=1,prim='New')
-    #                     self.associate_type_to_chunk(new_s1, t1)
-    #                     self.associate_type_to_chunk(new_s2, t2)
-    #                 else:
-    #                     #print('Case 3')
-    #                     success = False
-    #                     merge = self.merge_dicts(types[new_s1.structure], types[new_s2.structure])
-    #                     (index,t) = self.choose_type_from_dict(merge)
-    #                     default = (t,index)
-    #                     while not success and len(merge) != 0:
-    #                         if index == 1:
-    #                             t1 = t
-    #                             success, t2 = self.choose_compatible_t2(t1,new_s2,type_to_split)
-    #                             if not success:
-    #                                 del merge[(index,t)]
-    #                                 if len(merge) != 0:
-    #                                     (index,t) = self.choose_type_from_dict(merge)
-    #                         elif index ==2:
-    #                             t2 = t
-    #                             success, t1 = self.choose_compatible_t1(t2,new_s1,type_to_split)
-    #                             if not success:
-    #                                 del merge[(index,t)]
-    #                                 if len(merge) != 0:
-    #                                     (index,t) = self.choose_type_from_dict(merge)
-    #                         else:  
-    #                             print('Problem here')
-    #                     if not success:
-    #                         # Possibly new types
-    #                         if default[1]==1:
-    #                             t1 = default[0]
-    #                             [t1,t2] = type_to_split.split(pu=1,prim='New',bad_s1=self.bad_types(new_s1))
-                                
-    #                         elif default[1]==2:
-    #                             t2 = default[0]
-    #                             [t1,t2] = type_to_split.split(pu=0,prim='New',bad_s2 = self.bad_types(new_s2))
-    #                         else:
-    #                             print('Problem here')
-    #                     self.associate_type_to_chunk(new_s1, t1)
-    #                     self.associate_type_to_chunk(new_s2, t2)       
-    #                     # Merge dict, choose dominant, loop through
-    #                     pass
-    #             elif type(new_s1.structure) == str and type(new_s2.structure) != str:
-    #                 #print('s1 primitive, s2 complex')
-    #                 # where are the typings
-    #                 #print(types)
-    #                 #print(new_s1)
-    #                 if types[new_s1.structure] != None:
-    #                     # success = False
-    #                     t1 = self.choose_type_from_dict(types[new_s1.structure])
-    #                     [t1,t2] = type_to_split.split(pu=1,prim=t1)
-    #                     self.associate_type_to_chunk(new_s1, t1)
-    #                     self.type_chunk(new_s2,t2)
-    #                 else:
-    #                     [t1,t2] = type_to_split.split()
-    #                     self.associate_type_to_chunk(new_s1,t1)
-    #                     self.type_chunk(new_s2,t2)
-    #             elif type(new_s2.structure) == str and type(new_s1.structure) != str:
-    #                 #print('s2 primitive, s1 complex')
-    #                 if types[new_s2.structure] != None:
-    #                     # success = False
-    #                     #print('Case 1')
-    #                     t2 = self.choose_type_from_dict(types[new_s2.structure])
-    #                     [t1,t2] = type_to_split.split(pu=0,prim=t2)
-    #                     #print(t1)
-    #                     #print(t2)
-    #                     self.associate_type_to_chunk(new_s2, t2)
-    #                     #print(self.typing_events)
-    #                     self.type_chunk(new_s1,t1)
-    #                 else:
-    #                     #print('Case 2')
-    #                     [t1,t2] = type_to_split.split()
-    #                     self.associate_type_to_chunk(new_s2,t2)
-    #                     self.type_chunk(new_s1,t1)
-    #             else:
-    #                 #print('both are complex')
-    #                 [t1,t2] = type_to_split.split()
-    #                 self.type_chunk(new_s2,t2)
-    #                 self.type_chunk(new_s1,t1)
+
             
 
         
@@ -1410,68 +1532,68 @@ class Learner():
 
 
         
-print('-------------------------------------')
-print('-------     Test      ---------------')
-print('-------------------------------------')
+# print('-------------------------------------')
+# print('-------     Test      ---------------')
+# print('-------------------------------------')
 
-s1 = Stimuli('n1','',0)
-s2 = Stimuli('v1','',0)
-s3 = Stimuli('n2','',0)
-s4 = Stimuli('n1','',0)
-s5 = Stimuli('n1','',0)
-s6 = Stimuli('v1','',0)
-s7 = Stimuli('n2','',0)
-s8 = Stimuli('n1','',0)
-stimulis = [s1,s2,s3,s4]
-print([stimulis[i].content for i in range(len(stimulis))])
-type_association = dict(zip([stimulis[i].content for i in range(len(stimulis))],[stimulis[i].type for i in range(len(stimulis))]))
+# s1 = Stimuli('n1','',0)
+# s2 = Stimuli('v1','',0)
+# s3 = Stimuli('n2','',0)
+# s4 = Stimuli('n1','',0)
+# s5 = Stimuli('n1','',0)
+# s6 = Stimuli('v1','',0)
+# s7 = Stimuli('n2','',0)
+# s8 = Stimuli('n1','',0)
+# stimulis = [s1,s2,s3,s4]
+# print([stimulis[i].content for i in range(len(stimulis))])
+# type_association = dict(zip([stimulis[i].content for i in range(len(stimulis))],[stimulis[i].type for i in range(len(stimulis))]))
 
-c1 = SChunk(s1)
-c2 = SChunk(s2)
-c3 = c1.chunk_at_depth(c2)
-c4 = SChunk(s3)
-c5 = c3.chunk_at_depth(c4,depth=1)
+# c1 = SChunk(s1)
+# c2 = SChunk(s2)
+# c3 = c1.chunk_at_depth(c2)
+# c4 = SChunk(s3)
+# c5 = c3.chunk_at_depth(c4,depth=1)
 
-c6 = SChunk(s5)
-c7 = SChunk(s6)
-c8 = c6.chunk_at_depth(c7)
-c9 = SChunk(s7)
-c10 = c8.chunk_at_depth(c9,depth=1)
-print(c1)
-print(c2)
-print(c3)
-print(c5)
+# c6 = SChunk(s5)
+# c7 = SChunk(s6)
+# c8 = c6.chunk_at_depth(c7)
+# c9 = SChunk(s7)
+# c10 = c8.chunk_at_depth(c9,depth=1)
+# print(c1)
+# print(c2)
+# print(c3)
+# print(c5)
 
-print('test equality')
-print(c1.structure.content==c6.structure.content)
-c1.structure.content = 'n10'
-print(c1.structure.content==c6.structure.content)
+# print('test equality')
+# print(c1.structure.content==c6.structure.content)
+# c1.structure.content = 'n10'
+# print(c1.structure.content==c6.structure.content)
 
-print(c5.get_list_types())
-print(c5.get_list_values())
+# print(c5.get_list_types())
+# print(c5.get_list_values())
 
-ttypes = ['1','1u0o1','1']
-values = [1,2,3]
+# ttypes = ['1','1u0o1','1']
+# values = [1,2,3]
 
 
-print("retyping")
-structure = c5.remove_structure()
-for i in range(len(structure)):
-    structure[i].retype(ttypes[i],values[i])
+# print("retyping")
+# structure = c5.remove_structure()
+# for i in range(len(structure)):
+#     structure[i].retype(ttypes[i],values[i])
     
-print(c5)
+# print(c5)
 
-print(c5.get_list_types())
-print(c5.get_list_values())
-print(c5.reduce())
+# print(c5.get_list_types())
+# print(c5.get_list_values())
+# print(c5.reduce())
 
-print('test right subchunks')
-rc = c5.get_right_subchunks(c5.depth)
-print(rc)
-rc[-1].structure.content = 'n12'
-print(rc)
+# print('test right subchunks')
+# rc = c5.get_right_subchunks(c5.depth)
+# print(rc)
+# rc[-1].structure.content = 'n12'
+# print(rc)
 
-print(c5.structure)
+# print(c5.structure)
 
 
 
