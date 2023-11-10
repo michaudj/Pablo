@@ -180,6 +180,143 @@ weightsNVN = {
 cfgNVN = ProbabilisticGrammar(terminals2, non_terminals2, production_rulesNVN,weightsNVN)
 # Context free grammar
 
+###############################################################
+#
+#       NVN language with pro-drop
+#
+###############################################################
+
+print('Defining the grammar')
+
+# definition of the grammar
+# Vocabulary
+number_of_verbs = 2
+number_of_nouns = 2
+number_of_adj = 0
+number_of_relpron = 2
+number_of_det = 0
+
+verbs = ['v' + str(i) for i in range(1, number_of_verbs+1)]
+nouns = ['n' + str(i) for i in range(1, number_of_nouns+1)]
+adjs = ['a' + str(i) for i in range(1, number_of_adj+1)]
+relpron = ['r' + str(i) for i in range(1, number_of_relpron+1)]
+det = ['d' + str(i) for i in range(1, number_of_det+1)]
+
+terminals2 = flatten([verbs,nouns,adjs,relpron,det])
+non_terminals2 = ['S', 'N','NP','VP','V','RelCl']
+
+
+
+# Grammatical rules
+production_rulesNVNPD = {
+    'S': [['N', 'VP','N'],['VP','N']],
+    'VP': [['V']],
+    'N': [['n' + str(i)] for i in range(1, number_of_nouns+1)],
+    'V': [['v' + str(i)] for i in range(1, number_of_verbs+1)]
+}
+
+weightsNVNPD = {
+    'S': [.5,.5],
+    'VP': [1],
+    'N': [1/number_of_nouns for i in range(1, number_of_nouns+1)],
+    'V': [1/number_of_verbs for i in range(1, number_of_verbs+1)]    
+    }
+
+cfgNVNPD = ProbabilisticGrammar(terminals2, non_terminals2, production_rulesNVNPD,weightsNVNPD)
+# Context free grammar
+
+###############################################################
+#
+#       NVN/NNV language 
+#
+###############################################################
+
+print('Defining the grammar')
+
+# definition of the grammar
+# Vocabulary
+number_of_verbs = 2
+number_of_nouns = 2
+number_of_adj = 0
+number_of_relpron = 2
+number_of_det = 0
+
+verbs = ['v' + str(i) for i in range(1, number_of_verbs+1)]
+nouns = ['n' + str(i) for i in range(1, number_of_nouns+1)]
+adjs = ['a' + str(i) for i in range(1, number_of_adj+1)]
+relpron = ['r' + str(i) for i in range(1, number_of_relpron+1)]
+det = ['d' + str(i) for i in range(1, number_of_det+1)]
+
+terminals2 = flatten([verbs,nouns,adjs,relpron,det])
+non_terminals2 = ['S', 'N','NP','VP','V','RelCl']
+
+
+
+# Grammatical rules
+production_rulesNVNWOV = {
+    'S': [['N', 'VP','N'],['N','N','VP']],
+    'VP': [['V']],
+    'N': [['n' + str(i)] for i in range(1, number_of_nouns+1)],
+    'V': [['v' + str(i)] for i in range(1, number_of_verbs+1)]
+}
+
+weightsNVNWOV = {
+    'S': [.5,.5],
+    'VP': [1],
+    'N': [1/number_of_nouns for i in range(1, number_of_nouns+1)],
+    'V': [1/number_of_verbs for i in range(1, number_of_verbs+1)]    
+    }
+
+cfgNVNWOV = ProbabilisticGrammar(terminals2, non_terminals2, production_rulesNVNWOV,weightsNVNWOV)
+# Context free grammar
+
+###############################################################
+#
+#       NVN/NNVPD language 
+#
+###############################################################
+
+print('Defining the grammar')
+
+# definition of the grammar
+# Vocabulary
+number_of_verbs = 2
+number_of_nouns = 2
+number_of_adj = 0
+number_of_relpron = 2
+number_of_det = 0
+
+verbs = ['v' + str(i) for i in range(1, number_of_verbs+1)]
+nouns = ['n' + str(i) for i in range(1, number_of_nouns+1)]
+adjs = ['a' + str(i) for i in range(1, number_of_adj+1)]
+relpron = ['r' + str(i) for i in range(1, number_of_relpron+1)]
+det = ['d' + str(i) for i in range(1, number_of_det+1)]
+
+terminals2 = flatten([verbs,nouns,adjs,relpron,det])
+non_terminals2 = ['S', 'N','NP','VP','V','RelCl']
+
+
+
+# Grammatical rules
+production_rulesNVNWOV = {
+    'S': [['N', 'VP','N'],['N','N','VP'],[ 'VP','N'],['N', 'VP']],
+    'VP': [['V']],
+    'N': [['n' + str(i)] for i in range(1, number_of_nouns+1)],
+    'V': [['v' + str(i)] for i in range(1, number_of_verbs+1)]
+}
+
+weightsNVNWOV = {
+    'S': [.25,.25,.25,.25],
+    'VP': [1],
+    'N': [1/number_of_nouns for i in range(1, number_of_nouns+1)],
+    'V': [1/number_of_verbs for i in range(1, number_of_verbs+1)]    
+    }
+
+cfgNVNWOVPD = ProbabilisticGrammar(terminals2, non_terminals2, production_rulesNVNWOV,weightsNVNWOV)
+# Context free grammar
+
+
+
 
 ###############################################################
 #
@@ -305,6 +442,61 @@ weightsYP = {
 
 cfgYP = ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP,weightsYP)
 
+
+#############################################################
+#
+#       Yang and Piantadosi grammar
+#
+#############################################################
+
+number_of_verbs = 1
+number_of_nouns = 1
+number_of_adj = 1
+number_of_relpron = 1
+number_of_det = 1
+number_of_prep = 1
+
+verbs = ['v' + str(i) for i in range(1, number_of_verbs+1)]
+nouns = ['n' + str(i) for i in range(1, number_of_nouns+1)]
+adjs = ['a' + str(i) for i in range(1, number_of_adj+1)]
+relpron = ['r' + str(i) for i in range(1, number_of_relpron+1)]
+det = ['d' + str(i) for i in range(1, number_of_det+1)]
+prep = ['p' + str(i) for i in range(1, number_of_prep+1)]
+
+
+terminalsYP = flatten([verbs,nouns,adjs,relpron,det,prep])
+non_terminalsYP = ['S','NP','VP','AP','PP','N','V','A','D','P','rel']
+
+production_rulesYP = {
+    'S': [['NP', 'VP']],
+    'NP': [['N'],['D','N'],['D','AP','N'],['NP','PP']],
+    'VP': [['V'],['V','NP'],['V','rel','S'],['VP','PP']],
+    'AP': [['A'],['A','AP' ] ],
+    'PP': [['P','NP']],
+    'N': [['n' + str(i)] for i in range(1, number_of_nouns+1)],
+    'V': [['v' + str(i)] for i in range(1, number_of_verbs+1)],
+    'A': [['a' + str(i)] for i in range(1, number_of_adj+1)],
+    'D': [['d' + str(i)] for i in range(1, number_of_det+1)],
+    'P': [['p' + str(i)] for i in range(1, number_of_prep+1)],
+    'rel': [['r' + str(i)] for i in range(1, number_of_relpron+1)]
+}
+
+weightsYP = {
+    'S': [1.0],
+    'NP': [.25,.25,.25,.25],
+    'VP': [.25,.25,.25,.25],
+    'AP': [.5,.5 ],
+    'PP': [1],
+    'N': [1/number_of_nouns for i in range(1, number_of_nouns+1)],
+    'V': [1/number_of_verbs for i in range(1, number_of_verbs+1)],
+    'A': [1/number_of_adj for i in range(1, number_of_adj+1)],
+    'D': [1/number_of_det for i in range(1, number_of_det+1)],
+    'P': [1/number_of_prep for i in range(1, number_of_prep+1)],
+    'rel': [1/number_of_relpron for i in range(1, number_of_relpron+1)]  
+    }
+
+cfgYP2 = ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP,weightsYP)
+
 #############################################################
 #
 #       Initializing the learners
@@ -312,8 +504,8 @@ cfgYP = ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP,we
 #############################################################
 
 # number of simulations
-n_sim = 10
-n_trials = 50000
+n_sim = 50
+n_trials = 10000
 
 #############################################################
 #
@@ -323,7 +515,7 @@ n_trials = 50000
 print('Creating the stimuli stream')
 
 # Create stimuli stream
-stimuli_stream = Raw_input(3*n_trials,cfgYP)
+stimuli_stream = Raw_input(3*n_trials,cfgNVNWOVPD)
 
 print('Initializing learners')
 
