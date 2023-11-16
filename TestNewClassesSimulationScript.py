@@ -272,6 +272,60 @@ cfgNVNWOV = ProbabilisticGrammar(terminals2, non_terminals2, production_rulesNVN
 
 ###############################################################
 #
+#       NVN/NVNN language WITH MONO-AND DITRANSITIVE VERBS
+#
+###############################################################
+
+print('Defining the grammar')
+
+# definition of the grammar
+# Vocabulary
+number_of_monotransitive_verbs = 1
+number_of_ditransitive_verbs = 1
+number_of_nouns = 1
+number_of_adj = 0
+number_of_relpron = 1
+number_of_det = 0
+
+monotransitive_verbs = ['mv' + str(i) for i in range(1, number_of_monotransitive_verbs+1)]
+ditransitive_verbs = ['dv' + str(i) for i in range(1, number_of_ditransitive_verbs+1)]
+nouns = ['n' + str(i) for i in range(1, number_of_nouns+1)]
+adjs = ['a' + str(i) for i in range(1, number_of_adj+1)]
+relpron = ['r' + str(i) for i in range(1, number_of_relpron+1)]
+det = ['d' + str(i) for i in range(1, number_of_det+1)]
+
+terminals2 = flatten([monotransitive_verbs,ditransitive_verbs,nouns,adjs,relpron,det])
+non_terminals2 = ['S', 'N','NP','VP','V','RelCl','MV','DV']
+
+
+
+# Grammatical rules
+production_rulesNVNWOV = {
+    'S': [['N', 'VP']],
+    'VP': [['MV','NP'],['DV','NP','NP']],
+    'NP':[['N'],['NP','RelCl']],
+    'RelCl':[['R','VP']],
+    'R': [['r' + str(i)] for i in range(1, number_of_relpron+1)],
+    'N': [['n' + str(i)] for i in range(1, number_of_nouns+1)],
+    'MV': [['mv' + str(i)] for i in range(1, number_of_monotransitive_verbs+1)],
+    'DV': [['dv' + str(i)] for i in range(1, number_of_ditransitive_verbs+1)]
+}
+
+weightsNVNWOV = {
+    'S': [1],
+    'VP': [0,1],
+    'NP': [0.85,0.15],
+    'RelCl':[1],
+    'R': [1/number_of_nouns for i in range(1, number_of_nouns+1)],
+    'N': [1/number_of_relpron for i in range(1, number_of_relpron+1)],
+    'MV': [1/number_of_monotransitive_verbs for i in range(1, number_of_monotransitive_verbs+1)], 
+    'DV': [1/number_of_ditransitive_verbs for i in range(1, number_of_ditransitive_verbs+1)] 
+    }
+
+cfgNVNNVNN = ProbabilisticGrammar(terminals2, non_terminals2, production_rulesNVNWOV,weightsNVNWOV)
+# Context free grammar
+###############################################################
+#
 #       NVN/NNVPD language 
 #
 ###############################################################
@@ -445,7 +499,7 @@ cfgYP = ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP,we
 
 #############################################################
 #
-#       Yang and Piantadosi grammar
+#       Yang and Piantadosi grammar 2 (reduced)
 #
 #############################################################
 
@@ -469,8 +523,12 @@ non_terminalsYP = ['S','NP','VP','AP','PP','N','V','A','D','P','rel']
 
 production_rulesYP = {
     'S': [['NP', 'VP']],
-    'NP': [['N'],['D','N'],['D','AP','N'],['NP','PP']],
-    'VP': [['V'],['V','NP'],['V','rel','S'],['VP','PP']],
+    'NP': [['N'],['D','N'],#['D','AP','N'],['NP','PP']
+           ],
+    'VP': [#['V'],
+           ['V','NP'],
+           ['V','rel','S']#['VP','PP']
+           ],
     'AP': [['A'],['A','AP' ] ],
     'PP': [['P','NP']],
     'N': [['n' + str(i)] for i in range(1, number_of_nouns+1)],
@@ -483,8 +541,8 @@ production_rulesYP = {
 
 weightsYP = {
     'S': [1.0],
-    'NP': [.25,.25,.25,.25],
-    'VP': [.25,.25,.25,.25],
+    'NP': [.5,.5],
+    'VP': [.75,.25],
     'AP': [.5,.5 ],
     'PP': [1],
     'N': [1/number_of_nouns for i in range(1, number_of_nouns+1)],
@@ -499,13 +557,71 @@ cfgYP2 = ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP,w
 
 #############################################################
 #
+#       Yang and Piantadosi grammar 2 (reduced) with prodrop
+#
+#############################################################
+
+number_of_verbs = 1
+number_of_nouns = 1
+number_of_adj = 1
+number_of_relpron = 1
+number_of_det = 1
+number_of_prep = 1
+
+verbs = ['v' + str(i) for i in range(1, number_of_verbs+1)]
+nouns = ['n' + str(i) for i in range(1, number_of_nouns+1)]
+adjs = ['a' + str(i) for i in range(1, number_of_adj+1)]
+relpron = ['r' + str(i) for i in range(1, number_of_relpron+1)]
+det = ['d' + str(i) for i in range(1, number_of_det+1)]
+prep = ['p' + str(i) for i in range(1, number_of_prep+1)]
+
+
+terminalsYP = flatten([verbs,nouns,adjs,relpron,det,prep])
+non_terminalsYP = ['S','NP','VP','AP','PP','N','V','A','D','P','rel']
+
+production_rulesYP = {
+    'S': [['NP', 'VP'],['VP']],
+    'NP': [['N'],#['D','N'],['D','AP','N'],['NP','PP']
+           ],
+    'VP': [#['V'],
+           ['V','NP'],
+           ['V','rel','S'],#['VP','PP']
+           ],
+    'AP': [['A'],['A','AP' ] ],
+    'PP': [['P','NP']],
+    'N': [['n' + str(i)] for i in range(1, number_of_nouns+1)],
+    'V': [['v' + str(i)] for i in range(1, number_of_verbs+1)],
+    'A': [['a' + str(i)] for i in range(1, number_of_adj+1)],
+    'D': [['d' + str(i)] for i in range(1, number_of_det+1)],
+    'P': [['p' + str(i)] for i in range(1, number_of_prep+1)],
+    'rel': [['r' + str(i)] for i in range(1, number_of_relpron+1)]
+}
+
+weightsYP = {
+    'S': [0.5,0.5],
+    'NP': [1.0],
+    'VP': [.75,.25],
+    'AP': [.5,.5 ],
+    'PP': [1],
+    'N': [1/number_of_nouns for i in range(1, number_of_nouns+1)],
+    'V': [1/number_of_verbs for i in range(1, number_of_verbs+1)],
+    'A': [1/number_of_adj for i in range(1, number_of_adj+1)],
+    'D': [1/number_of_det for i in range(1, number_of_det+1)],
+    'P': [1/number_of_prep for i in range(1, number_of_prep+1)],
+    'rel': [1/number_of_relpron for i in range(1, number_of_relpron+1)]  
+    }
+ 
+cfgYP2PD = ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP,weightsYP)
+
+#############################################################
+#
 #       Initializing the learners
 #
 #############################################################
 
 # number of simulations
 n_sim = 50
-n_trials = 10000
+n_trials = 1000
 
 #############################################################
 #
@@ -515,7 +631,7 @@ n_trials = 10000
 print('Creating the stimuli stream')
 
 # Create stimuli stream
-stimuli_stream = Raw_input(3*n_trials,cfgNVNWOVPD)
+stimuli_stream = Raw_input(3*n_trials,cfgNVNNVNN)
 
 print('Initializing learners')
 
