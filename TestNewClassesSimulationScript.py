@@ -127,7 +127,7 @@ Learner.ID = 0
 
 # Set the parameters controlling reinforcement learning
 Learner.alpha = 0.1
-Learner.beta = 1.
+Learner.beta = 2
 Learner.positive_reinforcement = 25.
 Learner.negative_reinforcement = -10.
 
@@ -296,56 +296,51 @@ relpron = ['r' + str(i) for i in range(1, number_of_relpron+1)]
 det = ['d' + str(i) for i in range(1, number_of_det+1)]
 prep = ['p' + str(i) for i in range(1, number_of_prep+1)]
 
-terminals2 = flatten([monotransitive_verbs,ditransitive_verbs,nouns,adjs,relpron,det])
-non_terminals2 = ['S', 'N','NP','VP','V','RelCl','MV','DV']
+terminals2 = flatten([monotransitive_verbs,ditransitive_verbs,nouns,adjs,relpron,det,prep])
+non_terminals2 = ['S', 'N','NP','VP','V','RelCl','MV','DV','NPV','AP','PP','R','A','D','P']
 
 
 
 # Grammatical rules
-production_rulesNVNWOV = {
+production_rulesNVNNVNN = {
     'S': [['NPV', 'VP']],
     'VP': [['MV','NPV'],['DV','NPV','NPV']],
     'NPV':[['NP'],['NP','RelCl'],['NP','RelCl','RelCl']],
     'RelCl':[['R','MV','NP'],['R','DV','NP','NP']],
-    'NP': [['N'],['D','N'],['D','AP','N'],['NP','PP']],
+    'NP': [['N'],#['D','N']#,['D','AP','N'],['AP','N'],['N','PP'],['D','N','PP'],['D','AP','N','PP'],['AP','N','PP']
+           ],
     'AP': [['A'],['A','A' ]],
     'PP': [['P','N']],
     'R': [['r' + str(i)] for i in range(1, number_of_relpron+1)],
     'N': [['n' + str(i)] for i in range(1, number_of_nouns+1)],
     'MV': [['mv' + str(i)] for i in range(1, number_of_monotransitive_verbs+1)],
-    'DV': [['dv' + str(i)] for i in range(1, number_of_ditransitive_verbs+1)]
+    'DV': [['dv' + str(i)] for i in range(1, number_of_ditransitive_verbs+1)],
     'A': [['a' + str(i)] for i in range(1, number_of_adj+1)],
     'D': [['d' + str(i)] for i in range(1, number_of_det+1)],
-    'P': [['p' + str(i)] for i in range(1, number_of_prep+1)],
+    'P': [['p' + str(i)] for i in range(1, number_of_prep+1)]
 }
 
 
-# production_rulesYP = {
-#     'S': [['NP', 'VP']],
-#     'NP': [['N'],['D','N'],['D','AP','N'],['NP','PP']],
-#     'VP': [['V'],['V','NP'],['V','rel','S'],['VP','PP']],
-#     'AP': [['A'],['A','AP' ] ],
-#     'PP': [['P','NP']],
-#     'N': [['n' + str(i)] for i in range(1, number_of_nouns+1)],
-#     'V': [['v' + str(i)] for i in range(1, number_of_verbs+1)],
-#     'A': [['a' + str(i)] for i in range(1, number_of_adj+1)],
-#     'D': [['d' + str(i)] for i in range(1, number_of_det+1)],
-#     'P': [['p' + str(i)] for i in range(1, number_of_prep+1)],
-#     'rel': [['r' + str(i)] for i in range(1, number_of_relpron+1)]
-# }
 
-weightsNVNWOV = {
+weightsNVNNVNN = {
     'S': [1],
     'VP': [0.5,0.5],
-    'NP': [0.6,0.3,0.1],
-    'RelCl':[0.7,0.3],
-    'R': [1/number_of_nouns for i in range(1, number_of_nouns+1)],
-    'N': [1/number_of_relpron for i in range(1, number_of_relpron+1)],
+    'NPV': [.5,.3,.2],
+    'RelCl':[0.5,0.5],
+    'NP': [1#.5,.5#,.25,.05,.05,.05,.05,.05
+           ],
+    'AP': [.5,.5],
+    'PP': [1], 
+    'R': [1/number_of_relpron for i in range(1, number_of_relpron+1)],
+    'N': [1/number_of_nouns for i in range(1, number_of_nouns+1)],
     'MV': [1/number_of_monotransitive_verbs for i in range(1, number_of_monotransitive_verbs+1)], 
-    'DV': [1/number_of_ditransitive_verbs for i in range(1, number_of_ditransitive_verbs+1)] 
+    'DV': [1/number_of_ditransitive_verbs for i in range(1, number_of_ditransitive_verbs+1)], 
+    'A': [1/number_of_adj for i in range(1, number_of_adj+1)],
+    'D': [1/number_of_det for i in range(1, number_of_det+1)],
+    'P': [1/number_of_prep for i in range(1, number_of_prep+1)]
     }
 
-cfgNVNNVNN = ProbabilisticGrammar(terminals2, non_terminals2, production_rulesNVNWOV,weightsNVNWOV)
+cfgNVNNVNN = ProbabilisticGrammar(terminals2, non_terminals2, production_rulesNVNNVNN,weightsNVNNVNN)
 # Context free grammar
 ###############################################################
 #
@@ -439,6 +434,7 @@ weightsRCPZipf = {
 cfgRCP = ProbabilisticGrammar(terminals2, non_terminals2, production_rulesRCP,weightsRCPZipf)
 
 
+
 ###############################################################
 #
 #       NVN + relative clauses without relative pronouns language
@@ -447,7 +443,8 @@ cfgRCP = ProbabilisticGrammar(terminals2, non_terminals2, production_rulesRCP,we
 
 # Grammatical rules
 production_rulesRC = {
-    'S': [['N', 'VP'],['N','VP','RelCl'],['N','VP','RelCl','RelCl']],
+    'S': [['N', 'VP'],['N','VP','RelCl'],['N','VP','RelCl','RelCl']
+          ],
     'VP': [['V','N']],
     'RelCl': [['VP'] ],
     'N': [['n' + str(i)] for i in range(1, number_of_nouns+1)],
@@ -455,7 +452,8 @@ production_rulesRC = {
 }
 
 weightsRC = {
-    'S': [0.5, 0.25 ,0.25 ],
+    'S': [.5 ,0.25 ,0.25
+          ],
     'VP': [1],
     'RelCl': [1],
     'N': [1/number_of_nouns for i in range(1, number_of_nouns+1)],
@@ -641,7 +639,7 @@ cfgYP2PD = ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP
 
 #############################################################
 #
-#       Yang and Piantadosi grammar (level of reduction) with mono-and ditransitives
+#       Yang and Piantadosi grammar (level of reduction)
 #
 #############################################################
 
@@ -665,8 +663,8 @@ non_terminalsYP = ['S','NP','VP','AP','PP','N','V','A','D','P','rel']
 
 production_rulesYP = {
     'S': [['NP', 'VP']],
-    'NP': [['N'],['D','N'],['D','AP','N'],['NP','PP']],
-    'VP': [['V'],['V','NP'],['V','rel','S'],['VP','PP']],
+    'NP': [['N'],['D','N']],#,['D','AP','N'],['NP','PP']],
+    'VP': [['V','NP']],#,['V','rel','S'],['VP','PP']],
     'AP': [['A'],['A','AP' ] ],
     'PP': [['P','NP']],
     'N': [['n' + str(i)] for i in range(1, number_of_nouns+1)],
@@ -679,10 +677,10 @@ production_rulesYP = {
 
 weightsYP = {
     'S': [1.0],
-    'NP': [.25,.25,.25,.25],
-    'VP': [.25,.25,.25,.25],
+    'NP': [.5,.5],
+    'VP': [1],
     'AP': [.5,.5 ],
-    'PP': [1],
+    'PP': [1,0],
     'N': [1/number_of_nouns for i in range(1, number_of_nouns+1)],
     'V': [1/number_of_verbs for i in range(1, number_of_verbs+1)],
     'A': [1/number_of_adj for i in range(1, number_of_adj+1)],
@@ -691,7 +689,7 @@ weightsYP = {
     'rel': [1/number_of_relpron for i in range(1, number_of_relpron+1)]  
     }
 
-cfgYP = ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP,weightsYP)
+cfgYPred = ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP,weightsYP)
 
 
 #############################################################
@@ -702,7 +700,7 @@ cfgYP = ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP,we
 
 # number of simulations
 n_sim = 50
-n_trials = 20000
+n_trials = 200
 
 #############################################################
 #
@@ -712,7 +710,7 @@ n_trials = 20000
 print('Creating the stimuli stream')
 
 # Create stimuli stream
-stimuli_stream = Raw_input(3*n_trials,cfgNVNNVNN)
+stimuli_stream = Raw_input(3*n_trials,cfgYPred)
 
 print('Initializing learners')
 
