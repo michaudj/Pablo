@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
 """
+Created on Mon Nov 20 10:29:27 2023
+
+@author: jmd01
+"""
+
+# -*- coding: utf-8 -*-
+"""
 Created on Thu Feb  2 11:00:55 2023
 
 @author: jmd01
@@ -69,6 +76,14 @@ def get_success_and_length(learners):
     success /= n_sim
     sent_len /= n_sim
     return success, sent_len
+
+def get_learning_time(learners):
+    success, sent_len = get_success_and_length(learners)
+    x_data = np.linspace(0,len(success),len(success))
+    y_data = success
+    popt,pcov = scipy.optimize.curve_fit(logistic,x_data,y_data,maxfev=10000)
+    return 2*popt[-1]
+
     
 def plot_learning_curve(learners):
     # Process the result    
@@ -140,12 +155,12 @@ Learner.ID = 0
 
 # Set the parameters controlling reinforcement learning
 Learner.alpha = 0.1
-Learner.beta = 1.9
+Learner.beta = .5
 Learner.positive_reinforcement = 25.
 Learner.negative_reinforcement = -10.
 
 RWLearner.alpha = 0.1
-RWLearner.beta = 1.9
+#RWLearner.beta = 1.9
 RWLearner.positive_reinforcement = 25.
 RWLearner.negative_reinforcement = -10.
 
@@ -361,36 +376,35 @@ print('Initializing learners')
 typ = 'flexible'
 border = 'nxt'
 
-# Create as many learners as number of simulations.
-learners = [RWLearner(n_trials = n_trials, border = border) for i in range(n_sim)]
+betas = np.linspace(0.3,2.9,27)
+learning_times = []
 
-learner = RWLearner(n_trials = n_trials, border = border)
-learner.learn_with_snapshot(stimuli_stream, 'test.xlsx', [1000,2000,3000,4000], 5)
-# print('Running simulation')
-# count = 0
-# for l in learners:
+for beta in betas:
+    Learner.beta = beta
+    print('beta = '+ str(beta))
 
-#     count += 1
-#     print(count)
-#     l.learn(stimuli_stream)
+    # Create as many learners as number of simulations.
+    learners = [Learner(n_trials = n_trials, border = border) for i in range(n_sim)]
 
 #############################################################
 #
 #       Running the simulation in parallel
 #
 #############################################################    
-print('Running the simulation in parallel')
+    print('Running the simulation in parallel')
 
-# # Run the simulation in parallel
-with cf.ThreadPoolExecutor() as executor:
-    print("Number of worker threads:", executor._max_workers)
-    results = [executor.submit(run_simulation, l) for l in learners]
+    # # Run the simulation in parallel
+    with cf.ThreadPoolExecutor() as executor:
+        print("Number of worker threads:", executor._max_workers)
+        results = [executor.submit(run_simulation, l) for l in learners]
     
-    # Iterate over the results as they become available
-    for future in cf.as_completed(results):
-        result = future.result()
+        # Iterate over the results as they become available
+        for future in cf.as_completed(results):
+            result = future.result()
         # Combine the result with other results as necessary
-
+    lt = get_learning_time(learners) 
+    print('Learning time: '+str(lt))
+    learning_times.append(lt)
     
 #############################################################
 #
@@ -399,8 +413,10 @@ with cf.ThreadPoolExecutor() as executor:
 #############################################################
 print('Postprocessing')
 
-
-plot_learning_curve(learners)
+plt.plot(betas,learning_times)
+plt.xlabel('beta')
+plt.ylabel('learning time')
+#plot_learning_curve(learners)
 #plot_success_norm(learners)
 #save_grammar_to_file(learners, 'testGrammarRC.xlsx')
 
