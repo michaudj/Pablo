@@ -127,7 +127,7 @@ Learner.ID = 0
 
 # Set the parameters controlling reinforcement learning
 Learner.alpha = 0.1
-Learner.beta = 2
+Learner.beta = 1.
 Learner.positive_reinforcement = 25.
 Learner.negative_reinforcement = -10.
 
@@ -663,10 +663,10 @@ non_terminalsYP = ['S','NP','VP','AP','PP','N','V','A','D','P','rel']
 
 production_rulesYP = {
     'S': [['NP', 'VP']],
-    'NP': [['N'],['D','N']],#,['D','AP','N'],['NP','PP']],
-    'VP': [['V','NP']],#,['V','rel','S'],['VP','PP']],
-    'AP': [['A'],['A','AP' ] ],
-    'PP': [['P','NP']],
+    'NP': [['N'],['D','N'],['D','AP','N'],['N','PP']],
+    'VP': [['V','NP'],['V','rel','V','NP']],
+    'AP': [['A'],['A','A' ] ],
+    'PP': [['P','N']],
     'N': [['n' + str(i)] for i in range(1, number_of_nouns+1)],
     'V': [['v' + str(i)] for i in range(1, number_of_verbs+1)],
     'A': [['a' + str(i)] for i in range(1, number_of_adj+1)],
@@ -677,10 +677,10 @@ production_rulesYP = {
 
 weightsYP = {
     'S': [1.0],
-    'NP': [.5,.5],
-    'VP': [1],
+    'NP': [.25,.25,.25,.25],
+    'VP': [1/2,1/2],
     'AP': [.5,.5 ],
-    'PP': [1,0],
+    'PP': [1.0],
     'N': [1/number_of_nouns for i in range(1, number_of_nouns+1)],
     'V': [1/number_of_verbs for i in range(1, number_of_verbs+1)],
     'A': [1/number_of_adj for i in range(1, number_of_adj+1)],
@@ -691,7 +691,135 @@ weightsYP = {
 
 cfgYPred = ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP,weightsYP)
 
+#############################################################
+#
+#       Yang and Piantadosi grammar (level of reduction) with mono and ditransitive verbs
+#
+#############################################################
 
+number_of_verbs = 1
+number_of_nouns = 1
+number_of_adj = 1
+number_of_relpron = 1
+number_of_det = 1
+number_of_prep = 1
+number_of_monotransitive_verbs = 1
+number_of_ditransitive_verbs = 1
+
+verbs = ['v' + str(i) for i in range(1, number_of_verbs+1)]
+nouns = ['n' + str(i) for i in range(1, number_of_nouns+1)]
+adjs = ['a' + str(i) for i in range(1, number_of_adj+1)]
+relpron = ['r' + str(i) for i in range(1, number_of_relpron+1)]
+det = ['d' + str(i) for i in range(1, number_of_det+1)]
+prep = ['p' + str(i) for i in range(1, number_of_prep+1)]
+monotransitive_verbs = ['mv' + str(i) for i in range(1, number_of_monotransitive_verbs+1)]
+ditransitive_verbs = ['dv' + str(i) for i in range(1, number_of_ditransitive_verbs+1)]
+
+
+
+terminalsYP = flatten([monotransitive_verbs,ditransitive_verbs,nouns,adjs,relpron,det,prep])
+non_terminalsYP = ['S', 'N','NP','VP','V','RelCl','MV','DV','NPV','AP','PP','R','A','D','P']
+
+
+
+production_rulesYP = {
+    'S': [['NP', 'VP']],
+    'NP': [['N'],['D','N'],['D','AP','N'],['N','PP']],
+    'VP': [['MV','NP'],['MV','NP','rel','MV','NP'],['DV','NP','NP'],['DV','NP','rel','MV','NP','NP']],
+    'AP': [['A'],['A','A' ] ],
+    'PP': [['P','N']],
+    'N': [['n' + str(i)] for i in range(1, number_of_nouns+1)],
+    'V': [['v' + str(i)] for i in range(1, number_of_verbs+1)],
+    'A': [['a' + str(i)] for i in range(1, number_of_adj+1)],
+    'D': [['d' + str(i)] for i in range(1, number_of_det+1)],
+    'P': [['p' + str(i)] for i in range(1, number_of_prep+1)],
+    'rel': [['r' + str(i)] for i in range(1, number_of_relpron+1)],
+    'MV': [['mv' + str(i)] for i in range(1, number_of_monotransitive_verbs+1)],
+    'DV': [['dv' + str(i)] for i in range(1, number_of_ditransitive_verbs+1)]
+}
+
+weightsYP = {
+    'S': [1.0],
+    'NP': [.25,.25,.25,.25],
+    'VP': [.4,.1,.4,.1],
+    'AP': [.5,.5 ],
+    'PP': [1.0],
+    'N': [1/number_of_nouns for i in range(1, number_of_nouns+1)],
+    'V': [1/number_of_verbs for i in range(1, number_of_verbs+1)],
+    'A': [1/number_of_adj for i in range(1, number_of_adj+1)],
+    'D': [1/number_of_det for i in range(1, number_of_det+1)],
+    'P': [1/number_of_prep for i in range(1, number_of_prep+1)],
+    'rel': [1/number_of_relpron for i in range(1, number_of_relpron+1)],
+    'MV': [1/number_of_monotransitive_verbs for i in range(1, number_of_monotransitive_verbs+1)],
+    'DV': [1/number_of_ditransitive_verbs for i in range(1, number_of_ditransitive_verbs+1)]
+    }
+
+cfgYPredMD = ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP,weightsYP)
+
+#############################################################
+#
+#       Simple grammar with mono and ditransitive verbs
+#
+#############################################################
+
+number_of_verbs = 1
+number_of_nouns = 1
+number_of_adj = 1
+number_of_relpron = 1
+number_of_det = 1
+number_of_prep = 1
+number_of_monotransitive_verbs = 1
+number_of_ditransitive_verbs = 1
+
+verbs = ['v' + str(i) for i in range(1, number_of_verbs+1)]
+nouns = ['n' + str(i) for i in range(1, number_of_nouns+1)]
+adjs = ['a' + str(i) for i in range(1, number_of_adj+1)]
+relpron = ['r' + str(i) for i in range(1, number_of_relpron+1)]
+det = ['d' + str(i) for i in range(1, number_of_det+1)]
+prep = ['p' + str(i) for i in range(1, number_of_prep+1)]
+monotransitive_verbs = ['mv' + str(i) for i in range(1, number_of_monotransitive_verbs+1)]
+ditransitive_verbs = ['dv' + str(i) for i in range(1, number_of_ditransitive_verbs+1)]
+
+
+
+terminalsYP = flatten([monotransitive_verbs,ditransitive_verbs,nouns,adjs,relpron,det,prep])
+non_terminalsYP = ['S', 'N','NP','VP','V','RelCl','MV','DV','NPV','AP','PP','R','A','D','P']
+
+
+
+production_rulesYP = {
+    'S': [['NP', 'VP']],
+    'NP': [['N']],#,['D','N'],['D','AP','N'],['N','PP']],
+    'VP': [['MV','NP'],['DV','NP','NP']],
+    'AP': [['A'],['A','A' ] ],
+    'PP': [['P','N']],
+    'N': [['n' + str(i)] for i in range(1, number_of_nouns+1)],
+    'V': [['v' + str(i)] for i in range(1, number_of_verbs+1)],
+    'A': [['a' + str(i)] for i in range(1, number_of_adj+1)],
+    'D': [['d' + str(i)] for i in range(1, number_of_det+1)],
+    'P': [['p' + str(i)] for i in range(1, number_of_prep+1)],
+    'rel': [['r' + str(i)] for i in range(1, number_of_relpron+1)],
+    'MV': [['mv' + str(i)] for i in range(1, number_of_monotransitive_verbs+1)],
+    'DV': [['dv' + str(i)] for i in range(1, number_of_ditransitive_verbs+1)]
+}
+
+weightsYP = {
+    'S': [1.0],
+    'NP': [1],
+    'VP': [.5,.5],
+    'AP': [.5,.5 ],
+    'PP': [1.0],
+    'N': [1/number_of_nouns for i in range(1, number_of_nouns+1)],
+    'V': [1/number_of_verbs for i in range(1, number_of_verbs+1)],
+    'A': [1/number_of_adj for i in range(1, number_of_adj+1)],
+    'D': [1/number_of_det for i in range(1, number_of_det+1)],
+    'P': [1/number_of_prep for i in range(1, number_of_prep+1)],
+    'rel': [1/number_of_relpron for i in range(1, number_of_relpron+1)],
+    'MV': [1/number_of_monotransitive_verbs for i in range(1, number_of_monotransitive_verbs+1)],
+    'DV': [1/number_of_ditransitive_verbs for i in range(1, number_of_ditransitive_verbs+1)]
+    }
+
+cfgNVNMD = ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP,weightsYP)
 #############################################################
 #
 #       Initializing the learners
@@ -699,8 +827,8 @@ cfgYPred = ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP
 #############################################################
 
 # number of simulations
-n_sim = 50
-n_trials = 200
+n_sim = 10
+n_trials = 2500000 
 
 #############################################################
 #
@@ -710,7 +838,7 @@ n_trials = 200
 print('Creating the stimuli stream')
 
 # Create stimuli stream
-stimuli_stream = Raw_input(3*n_trials,cfgYPred)
+stimuli_stream = Raw_input(15*n_trials,cfgYPredMD)
 
 print('Initializing learners')
 
