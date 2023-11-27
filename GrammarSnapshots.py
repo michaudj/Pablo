@@ -104,6 +104,9 @@ Learner.beta = 1.9
 Learner.positive_reinforcement = 25.
 Learner.negative_reinforcement = -10.
 
+RWLearner.initial_value_border = 1.
+RWLearner.initial_value_chunking = -1.
+
 RWLearner.alpha = 0.1
 RWLearner.beta = 1.9
 RWLearner.positive_reinforcement = 25.
@@ -290,9 +293,8 @@ cfgYP = ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP,we
 #
 #############################################################
 
-# number of simulations
-n_sim = 100
-n_trials = 2000
+
+n_trials = 5000
 
 #############################################################
 #
@@ -304,84 +306,30 @@ print('Creating the stimuli stream')
 # Create stimuli stream
 stimuli_stream = Raw_input(3*n_trials,cfgNVN)
 
-print('Initializing learners')
-
-# Select type of chunking mechanism
-#typ = 'right'
-typ = 'flexible'
-border = 'nxt'
-
-# Create as many learners as number of simulations.
-learnersC = [Learner(n_trials = n_trials, border = 'cont') for i in range(n_sim)]
-learnersN = [Learner(n_trials = n_trials, border = 'next') for i in range(n_sim)]
-RWlearnersC = [RWLearner(n_trials = n_trials, border = 'cont') for i in range(n_sim)]
-RWlearnersN = [RWLearner(n_trials = n_trials, border = 'next') for i in range(n_sim)]
-
-#learner = RWLearner(n_trials = n_trials, border = border)
-#learner.learn_with_snapshot(stimuli_stream, 'test.xlsx', [1000,2000,3000,4000], 5)
-
-
 #############################################################
 #
-#       Running the simulation in parallel
-#
-#############################################################    
-print('Running the simulation in parallel')
-
-print('Q-learning with continuous border')
-# # Run the simulation in parallel
-with cf.ThreadPoolExecutor() as executor:
-    print("Number of worker threads:", executor._max_workers)
-    results = [executor.submit(run_simulation, l) for l in learnersC]
-    
-    # Iterate over the results as they become available
-    for future in cf.as_completed(results):
-        result = future.result()
-        # Combine the result with other results as necessary
-        
-# # Run the simulation in parallel
-print('Q-learning with next sentence condition')
-with cf.ThreadPoolExecutor() as executor:
-    print("Number of worker threads:", executor._max_workers)
-    results = [executor.submit(run_simulation, l) for l in learnersN]
-    
-    # Iterate over the results as they become available
-    for future in cf.as_completed(results):
-        result = future.result()
-        
-# # Run the simulation in parallel
-print('RW Q-learning with continuous condition')
-with cf.ThreadPoolExecutor() as executor:
-    print("Number of worker threads:", executor._max_workers)
-    results = [executor.submit(run_simulation, l) for l in RWlearnersC]
-    
-    # Iterate over the results as they become available
-    for future in cf.as_completed(results):
-        result = future.result()
-        
-# # Run the simulation in parallel
-print('RW Q-learning with next sentence condition')
-with cf.ThreadPoolExecutor() as executor:
-    print("Number of worker threads:", executor._max_workers)
-    results = [executor.submit(run_simulation, l) for l in RWlearnersN]
-    
-    # Iterate over the results as they become available
-    for future in cf.as_completed(results):
-        result = future.result()
-    
-#############################################################
-#
-#       Postprocessing
+#   Learning snapshots
 #
 #############################################################
-print('Postprocessing')
 
+print('Running the model')
 
-plot_learning_curve(learnersC,learnersN,RWlearnersC,RWlearnersN)
-print(get_averaged_final_index(learnersC))
-print(get_averaged_final_index(learnersN))
-print(get_averaged_final_index(RWlearnersC))
-print(get_averaged_final_index(RWlearnersN))
+print('Q-learning, continuous')
+learner = Learner(n_trials = n_trials, border = 'cont')
+learner.learn_with_snapshot(stimuli_stream, 'QLearnerC.xlsx', [1000,2000,3000,4000], 5)
+
+print('Q-learning, next sentence')
+learner = Learner(n_trials = n_trials, border = 'next')
+learner.learn_with_snapshot(stimuli_stream, 'QLearnerN.xlsx', [1000,2000,3000,4000], 5)
+
+print('RW Q-learning, continuous')
+learner = RWLearner(n_trials = n_trials, border = 'cont')
+learner.learn_with_snapshot(stimuli_stream, 'RWQLearnerC.xlsx', [1000,2000,3000,4000], 5)
+
+print('RW Q-learning, next sentence')
+learner = RWLearner(n_trials = n_trials, border = 'next')
+learner.learn_with_snapshot(stimuli_stream, 'RWQLearnerN.xlsx', [1000,2000,3000,4000], 5)
+
 
 
 end_time = datetime.now()
