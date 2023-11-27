@@ -6,8 +6,8 @@ Created on Thu Feb  2 11:00:55 2023
 """
 
 
-from TestChunksInheritance import Learner,TypeLearner,RWLearner
-from new_raw_input import Raw_input, ProbabilisticGrammar
+from MyLearners import Learner,RWLearner
+from Raw_input import Raw_input, ProbabilisticGrammar
 import numpy as np
 import matplotlib.pyplot as plt
 import concurrent.futures as cf
@@ -15,10 +15,14 @@ from datetime import datetime
 import pandas as pd
 start_time = datetime.now()
 import scipy
-# do your work here
 
-def logistic(x,L,k,x0):
-    return  L/(1+np.exp(-k*(x-x0))) 
+plt.rcParams.update({
+    "text.usetex": True,
+    "font.family": "Helvetica"
+})
+
+def logistic(x,k,x0):
+    return  1/(1+np.exp(-k*(x-x0))) 
 
 
 def run_simulation(l):
@@ -34,30 +38,30 @@ def flatten(lst):
             flat_list.append(item)
     return flat_list
 
-def save_grammar_to_file(learners,filename,threshold=2):
-    count_sent = {}
+# def save_grammar_to_file(learners,filename,threshold=2):
+#     count_sent = {}
 
-    for l in learners:
-        gram = l.extract_sentences(threshold)
-        #gram = l.sentences
-        for s in gram:
-            if s in count_sent:
-                count_sent[s] += 1
-            else:
-                count_sent[s] = 1
-    if len(set(gram))==0:
-        print('No sentence identified yet...')
-        return -1
+#     for l in learners:
+#         gram = l.extract_sentences(threshold)
+#         #gram = l.sentences
+#         for s in gram:
+#             if s in count_sent:
+#                 count_sent[s] += 1
+#             else:
+#                 count_sent[s] = 1
+#     if len(set(gram))==0:
+#         print('No sentence identified yet...')
+#         return -1
                 
-    data = []          
-    for s in set(gram):
-        data.append({"Sentence": str(s.remove_structure()), "Parsing": str(s), "Count": count_sent[s]})
+#     data = []          
+#     for s in set(gram):
+#         data.append({"Sentence": str(s.remove_structure()), "Parsing": str(s), "Count": count_sent[s]})
 
-    df = pd.DataFrame(data)
-    df_sorted = df.sort_values(by='Sentence', key=lambda x: x.str.len(),inplace=True)
-    df_sorted = df.reindex(df_sorted)
-    df_sorted = df_sorted.reset_index(drop=True)
-    df_sorted.to_excel(filename)
+#     df = pd.DataFrame(data)
+#     df_sorted = df.sort_values(by='Sentence', key=lambda x: x.str.len(),inplace=True)
+#     df_sorted = df.reindex(df_sorted)
+#     df_sorted = df_sorted.reset_index(drop=True)
+#     df_sorted.to_excel(filename)
     
 def get_success_and_length(learners):
     success = 0.*np.array(learners[0].success)
@@ -70,60 +74,65 @@ def get_success_and_length(learners):
     sent_len /= n_sim
     return success, sent_len
     
-def plot_learning_curve(learners):
-    # Process the result    
-    success, sent_len = get_success_and_length(learners)
+def plot_learning_curve(learnersC,learnersN,RWlearnersC,RWlearnersN):
+    # Process the result   
+    colors = ['b','g','m','c']
+    ll = [learnersC,learnersN,RWlearnersC,RWlearnersN]
+    lab = ['Q-learner, cont','Q-learner, next','RW Q-learner, cont', 'RW Q-learner, next']
+    for i in range(4):
+        success, sent_len = get_success_and_length(ll[i])
     
-    trial_vec = range(learners[0].n_trials+1)
-    x_data = np.linspace(0,len(success),len(success))
-    y_data = success
-    popt,pcov = scipy.optimize.curve_fit(logistic,x_data,y_data,maxfev=10000)
-    print('Optimal parameters')
-    print(popt)
-    print('learning time')
-    print(2*popt[-1])
-    print(np.diag(pcov)[-1])
-    plt.plot(x_data,logistic(x_data,*popt),'k')
-    plt.axvline(x = 2*popt[-1],color = 'k')
-    # Plot the results
-    plt.scatter(trial_vec,success,s = 1,c=sent_len)
-    plt.xlabel('# of reinforcement')
-    plt.ylabel('frequency of correct identifications')
-    plt.colorbar()
+        trial_vec = range(ll[i][0].n_trials+1)
+        x_data = np.linspace(0,len(success),len(success))
+        y_data = success
+        popt,pcov = scipy.optimize.curve_fit(logistic,x_data,y_data,maxfev=10000)
+        print('Optimal parameters')
+        print(popt)
+        print('learning time')
+        print(2*popt[-1])
+        print(np.diag(pcov)[-1])
+        plt.plot(x_data,logistic(x_data,*popt),'k:', label='_nolegend_')
+        #plt.axvline(x = 2*popt[-1],color = 'k')
+        # Plot the results
+        plt.scatter(trial_vec,success,s = 2,c=colors[i],label = lab[i])
+        plt.xlabel('Number of reinforcement')
+        plt.ylabel('Frequency of correct identifications')
+    #plt.colorbar()
+    plt.legend()
     plt.show()
     
-def success_by_length(learners):
-    filtered_success = {}
-    length_filtered = {}
-    for l in learners:
-        filtered_success[l] = {length: np.array([result if length_ == length else 0 for result, length_ in zip(l.success, l.sent_len)]) for length in set(l.sent_len)}
-        length_filtered[l] = {length: np.array([1 if length_ == length else 0 for result, length_ in zip(l.success, l.sent_len)]) for length in set(l.sent_len)}
-    count = {}
-    successes = {}
-    for i in learners:
-        for leng in filtered_success[learners[0]]:
-            if leng not in count:
-                count[leng]=0*filtered_success[learners[0]][leng]
-            count[leng]+=length_filtered[i][leng]
-            if leng not in successes:
-                successes[leng] = 0*filtered_success[learners[0]][leng]
-            successes[leng] += filtered_success[i][leng]
+# def success_by_length(learners):
+#     filtered_success = {}
+#     length_filtered = {}
+#     for l in learners:
+#         filtered_success[l] = {length: np.array([result if length_ == length else 0 for result, length_ in zip(l.success, l.sent_len)]) for length in set(l.sent_len)}
+#         length_filtered[l] = {length: np.array([1 if length_ == length else 0 for result, length_ in zip(l.success, l.sent_len)]) for length in set(l.sent_len)}
+#     count = {}
+#     successes = {}
+#     for i in learners:
+#         for leng in filtered_success[learners[0]]:
+#             if leng not in count:
+#                 count[leng]=0*filtered_success[learners[0]][leng]
+#             count[leng]+=length_filtered[i][leng]
+#             if leng not in successes:
+#                 successes[leng] = 0*filtered_success[learners[0]][leng]
+#             successes[leng] += filtered_success[i][leng]
             
 
 
-    successes_norm = {}
-    for leng in successes:
-        successes_norm[leng] = successes[leng]/count[leng]
+#     successes_norm = {}
+#     for leng in successes:
+#         successes_norm[leng] = successes[leng]/count[leng]
 
         
     
-    return successes_norm
+#     return successes_norm
 
-def plot_success_norm(learners):
-    successes_norm = success_by_length(learners)
-    for key in successes_norm:
-        plt.plot(successes_norm[key], '.', markersize=1)
-    plt.show()
+# def plot_success_norm(learners):
+#     successes_norm = success_by_length(learners)
+#     for key in successes_norm:
+#         plt.plot(successes_norm[key], '.', markersize=1)
+#     plt.show()
     
 
 
@@ -149,16 +158,6 @@ RWLearner.beta = 1.9
 RWLearner.positive_reinforcement = 25.
 RWLearner.negative_reinforcement = -10.
 
-# Set the initial learning parameters
-TypeLearner.initial_value_border = 1.
-TypeLearner.initial_value_chunking = -1.
-TypeLearner.ID = 0
-
-# Set the parameters controlling reinforcement learning
-TypeLearner.alpha = 0.1
-TypeLearner.beta = .5
-TypeLearner.positive_reinforcement = 25.
-TypeLearner.negative_reinforcement = -10.
 
 ###############################################################
 #
@@ -342,7 +341,7 @@ cfgYP = ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP,we
 
 # number of simulations
 n_sim = 100
-n_trials = 5000
+n_trials = 2000
 
 #############################################################
 #
@@ -362,17 +361,14 @@ typ = 'flexible'
 border = 'nxt'
 
 # Create as many learners as number of simulations.
-learners = [RWLearner(n_trials = n_trials, border = border) for i in range(n_sim)]
+learnersC = [Learner(n_trials = n_trials, border = 'cont') for i in range(n_sim)]
+learnersN = [Learner(n_trials = n_trials, border = 'next') for i in range(n_sim)]
+RWlearnersC = [RWLearner(n_trials = n_trials, border = 'cont') for i in range(n_sim)]
+RWlearnersN = [RWLearner(n_trials = n_trials, border = 'next') for i in range(n_sim)]
 
-learner = RWLearner(n_trials = n_trials, border = border)
-learner.learn_with_snapshot(stimuli_stream, 'test.xlsx', [1000,2000,3000,4000], 5)
-# print('Running simulation')
-# count = 0
-# for l in learners:
+#learner = RWLearner(n_trials = n_trials, border = border)
+#learner.learn_with_snapshot(stimuli_stream, 'test.xlsx', [1000,2000,3000,4000], 5)
 
-#     count += 1
-#     print(count)
-#     l.learn(stimuli_stream)
 
 #############################################################
 #
@@ -381,16 +377,45 @@ learner.learn_with_snapshot(stimuli_stream, 'test.xlsx', [1000,2000,3000,4000], 
 #############################################################    
 print('Running the simulation in parallel')
 
+print('Q-learning with continuous border')
 # # Run the simulation in parallel
 with cf.ThreadPoolExecutor() as executor:
     print("Number of worker threads:", executor._max_workers)
-    results = [executor.submit(run_simulation, l) for l in learners]
+    results = [executor.submit(run_simulation, l) for l in learnersC]
     
     # Iterate over the results as they become available
     for future in cf.as_completed(results):
         result = future.result()
         # Combine the result with other results as necessary
-
+# # Run the simulation in parallel
+print('Q-learning with next sentence condition')
+with cf.ThreadPoolExecutor() as executor:
+    print("Number of worker threads:", executor._max_workers)
+    results = [executor.submit(run_simulation, l) for l in learnersN]
+    
+    # Iterate over the results as they become available
+    for future in cf.as_completed(results):
+        result = future.result()
+        
+# # Run the simulation in parallel
+print('RW Q-learning with continuous condition')
+with cf.ThreadPoolExecutor() as executor:
+    print("Number of worker threads:", executor._max_workers)
+    results = [executor.submit(run_simulation, l) for l in RWlearnersC]
+    
+    # Iterate over the results as they become available
+    for future in cf.as_completed(results):
+        result = future.result()
+        
+# # Run the simulation in parallel
+print('RW Q-learning with next sentence condition')
+with cf.ThreadPoolExecutor() as executor:
+    print("Number of worker threads:", executor._max_workers)
+    results = [executor.submit(run_simulation, l) for l in RWlearnersN]
+    
+    # Iterate over the results as they become available
+    for future in cf.as_completed(results):
+        result = future.result()
     
 #############################################################
 #
@@ -400,7 +425,10 @@ with cf.ThreadPoolExecutor() as executor:
 print('Postprocessing')
 
 
-plot_learning_curve(learners)
+plot_learning_curve(learnersC,learnersN,RWlearnersC,RWlearnersN)
+#plot_learning_curve(learnersN)
+#plot_learning_curve(RWlearnersC)
+#plot_learning_curve(RWlearnersN)
 #plot_success_norm(learners)
 #save_grammar_to_file(learners, 'testGrammarRC.xlsx')
 
