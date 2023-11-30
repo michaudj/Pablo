@@ -282,7 +282,7 @@ cfgYP = ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP,we
 
 # number of simulations
 n_sim = 100
-n_trials = 1000
+n_trials = 2000
 
 #############################################################
 #
@@ -342,7 +342,7 @@ print('Postprocessing')
 
 #plt.plot(betas,learning_times)
 plt.plot(betas,learning_times)
-plt.xlabel('$\beta$')
+plt.xlabel('$$\beta$$')
 plt.ylabel('learning time')
 #plot_learning_curve(learners)
 #plot_success_norm(learners)

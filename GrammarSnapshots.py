@@ -313,22 +313,23 @@ stimuli_stream = Raw_input(3*n_trials,cfgNVN)
 #############################################################
 
 print('Running the model')
+snaptid = [300,600,900,2000,4000]
 
 print('Q-learning, continuous')
 learner = Learner(n_trials = n_trials, border = 'cont')
-learner.learn_with_snapshot(stimuli_stream, 'QLearnerC.xlsx', [1000,2000,3000,4000], 5)
+learner.learn_with_snapshot(stimuli_stream, 'QLearnerC.xlsx', snaptid, 5)
 
 print('Q-learning, next sentence')
 learner = Learner(n_trials = n_trials, border = 'next')
-learner.learn_with_snapshot(stimuli_stream, 'QLearnerN.xlsx', [1000,2000,3000,4000], 5)
+learner.learn_with_snapshot(stimuli_stream, 'QLearnerN.xlsx', snaptid, 5)
 
 print('RW Q-learning, continuous')
 learner = RWLearner(n_trials = n_trials, border = 'cont')
-learner.learn_with_snapshot(stimuli_stream, 'RWQLearnerC.xlsx', [1000,2000,3000,4000], 5)
+learner.learn_with_snapshot(stimuli_stream, 'RWQLearnerC.xlsx', snaptid, 5)
 
 print('RW Q-learning, next sentence')
 learner = RWLearner(n_trials = n_trials, border = 'next')
-learner.learn_with_snapshot(stimuli_stream, 'RWQLearnerN.xlsx', [1000,2000,3000,4000], 5)
+learner.learn_with_snapshot(stimuli_stream, 'RWQLearnerN.xlsx', snaptid, 5)
 
 
 
