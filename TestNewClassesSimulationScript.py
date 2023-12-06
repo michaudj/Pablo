@@ -73,10 +73,10 @@ def plot_learning_curve(learners):
     trial_vec = range(learners[0].n_trials+1)
 
     # Plot the results
-    plt.scatter(trial_vec,success,s = 1,c=sent_len)
+    plt.scatter(trial_vec,success,s = 1,c='blue')#sent_len)
     plt.xlabel('# of reinforcement')
     plt.ylabel('frequency of correct identifications')
-    plt.colorbar()
+    #plt.colorbar()
     plt.show()
     
 def success_by_length(learners):
@@ -698,7 +698,7 @@ cfgYPred = ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP
 #############################################################
 
 number_of_verbs = 1
-number_of_nouns = 1
+number_of_nouns = 5
 number_of_adj = 1
 number_of_relpron = 1
 number_of_det = 1
@@ -718,14 +718,14 @@ ditransitive_verbs = ['dv' + str(i) for i in range(1, number_of_ditransitive_ver
 
 
 terminalsYP = flatten([monotransitive_verbs,ditransitive_verbs,nouns,adjs,relpron,det,prep])
-non_terminalsYP = ['S', 'N','NP','VP','V','RelCl','MV','DV','NPV','AP','PP','R','A','D','P']
+non_terminalsYP = ['S', 'N','NP','VP','V','rel','MV','DV','NPV','AP','PP','R','A','D','P']
 
 
 
 production_rulesYP = {
     'S': [['NP', 'VP']],
-    'NP': [['N'],['D','N'],['D','AP','N'],['N','PP']],
-    'VP': [['MV','NP'],['MV','NP','rel','MV','NP'],['DV','NP','NP'],['DV','NP','rel','MV','NP','NP']],
+    'NP': [['N']],#,['D','N'],['D','AP','N'],['N','PP']],
+    'VP': [['MV','NP'],['MV','NP','rel','MV','NP'],['DV','NP','NP'],['DV','NP','NP','rel','MV','NP']],
     'AP': [['A'],['A','A' ] ],
     'PP': [['P','N']],
     'N': [['n' + str(i)] for i in range(1, number_of_nouns+1)],
@@ -740,8 +740,8 @@ production_rulesYP = {
 
 weightsYP = {
     'S': [1.0],
-    'NP': [.25,.25,.25,.25],
-    'VP': [.4,.1,.4,.1],
+    'NP': [1.],
+    'VP': [.3,.2,.3,.2],
     'AP': [.5,.5 ],
     'PP': [1.0],
     'N': [1/number_of_nouns for i in range(1, number_of_nouns+1)],
@@ -763,7 +763,7 @@ cfgYPredMD = ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rules
 #############################################################
 
 number_of_verbs = 1
-number_of_nouns = 1
+number_of_nouns = 5
 number_of_adj = 1
 number_of_relpron = 1
 number_of_det = 1
@@ -827,8 +827,8 @@ cfgNVNMD = ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP
 #############################################################
 
 # number of simulations
-n_sim = 10
-n_trials = 2500000 
+n_sim = 20
+n_trials = 100000
 
 #############################################################
 #
@@ -885,7 +885,7 @@ print('Postprocessing')
 
 
 plot_learning_curve(learners)
-#plot_success_norm(learners)
+plot_success_norm(learners)
 save_grammar_to_file(learners, 'testGrammarRC.xlsx')
 
 
