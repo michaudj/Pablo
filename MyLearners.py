@@ -143,6 +143,7 @@ class Learner():
         self.success = []
         self.sent_len = []
         self.sentences = set()
+        self.sent_dict = dict()
 
         
         self.behaviour_repertoire = {} # dictionary of where the keys are couples of chunks and the value a list of behavioural values
@@ -165,6 +166,17 @@ class Learner():
         
     def __repr__(self):
         return 'Learner ' + str(self.ID)
+    
+    def update_sent_dict(self,s1):
+        unparsed_s1 = str(s1.remove_structure())
+        parsing_s1 = str(s1)
+        if unparsed_s1 not in self.sent_dict:
+            self.sent_dict[unparsed_s1]={parsing_s1:1}
+        else:
+            if parsing_s1 not in self.sent_dict[unparsed_s1]:
+                self.sent_dict[unparsed_s1][parsing_s1] = 1
+            else:
+                self.sent_dict[unparsed_s1][parsing_s1] += 1
 
             
     def update_repertoire(self,couple): # couple must be a couple of SChunks
@@ -236,7 +248,9 @@ class Learner():
                 #print('Good Unit')
                 # perform positive reinforcement
                 # Store sentence (not cognitively plausible but used for grammar extraction)
-                self.sentences.add(str(s1))
+                if self.n_reinf > 500000:
+                    self.sentences.add(str(s1))
+                    self.update_sent_dict(s1)
                 # Perform reinforcement
                 self.reinforce(reinforcement = 'positive')                    
                 # update the success list
