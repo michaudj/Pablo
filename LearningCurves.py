@@ -82,7 +82,7 @@ def plot_learning_curve(learnersC,learnersN,RWlearnersC,RWlearnersN):
         plt.ylabel('Fraction of correct responses')
     #plt.colorbar()
     plt.legend()
-    plt.savefig('LearningCurves.eps',format='eps')
+    plt.savefig('LearningCurves.pdf')
     plt.show()
     
     

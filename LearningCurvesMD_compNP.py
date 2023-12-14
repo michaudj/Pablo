@@ -109,7 +109,7 @@ def plot_learning_curve(learnersC,learnersN,RWlearnersC,RWlearnersN):
         plt.ylabel('Fraction of correct responses')
     #plt.colorbar()
     plt.legend()
-    plt.savefig('LearningCurveComplNP.eps',format='eps')
+    plt.savefig('LearningCurveComplNP.pdf')
     plt.show()
     
     
@@ -202,7 +202,7 @@ non_terminalsYP = ['S', 'N','NP','VP','V','rel','MV','DV','AP','PP','A','D','P']
 production_rulesYP = {
     'S': [['NP', 'VP']],
     'NP': [['N'],['D','N']],#['D','AP','N'],['N','PP']],
-    'VP': [['MV','NP'],['MV','NP','rel','MV','NP'],['DV','NP','NP'],['DV','NP','rel','MV','NP','NP']],
+    'VP': [['MV','NP'],['MV','NP','rel','MV','NP'],['DV','NP','NP'],['DV','NP','NP','rel','MV','NP']],
     'AP': [['A'],['A','A' ] ],
     'PP': [['P','N']],
     'N': [['n' + str(i)] for i in range(1, number_of_nouns+1)],
@@ -240,7 +240,7 @@ cfgYPredMD = ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rules
 #############################################################
 
 number_of_verbs = 1
-number_of_nouns = 5
+number_of_nouns = 1
 number_of_adj = 1
 number_of_relpron = 1
 number_of_det = 1

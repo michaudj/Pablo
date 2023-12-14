@@ -248,7 +248,7 @@ class Learner():
                 #print('Good Unit')
                 # perform positive reinforcement
                 # Store sentence (not cognitively plausible but used for grammar extraction)
-                if self.n_reinf > 500000:
+                if self.n_reinf > 60000:
                     self.sentences.add(str(s1))
                     self.update_sent_dict(s1)
                 # Perform reinforcement
