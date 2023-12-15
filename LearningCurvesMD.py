@@ -137,6 +137,7 @@ def plot_learning_curve_length(learners):
         ax1.plot(successes_norm[key], '.', markersize=1,label='len = '+str(key))
     ax1.legend()
     ax1.set_xlabel('Number of trials')
+    plt.savefig('LearningCurveMD.pdf')
     plt.show()
     
 ###############################################################
