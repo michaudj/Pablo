@@ -147,6 +147,7 @@ class Learner():
 
         
         self.behaviour_repertoire = {} # dictionary of where the keys are couples of chunks and the value a list of behavioural values
+        self.couple_str_to_couple = dict()
         self.events = [] # encodes the current list of couples ((chunk,chunk), behaviour) to reinforce
         self.stimuli = []
         self.decisions = []
@@ -186,6 +187,8 @@ class Learner():
             values = [Learner.initial_value_border]
             values += [Learner.initial_value_chunking for i in range(couple[0].get_depth()+1)]
             self.behaviour_repertoire[substantial_couple] =np.array(values)# np.array([Learner.initial_value_border] + [Learner.initial_value_chunking for i in range(couple[0].depth+1)])
+        if substantial_couple not in self.couple_str_to_couple:
+            self.couple_str_to_couple[substantial_couple] = couple
 
                 
     def get_sub_couples(self, couple):
@@ -220,7 +223,8 @@ class Learner():
                 if self.n_reinf in snap_times:
                     df = self.extract_grammatical_information(threshold)
                     df.to_excel(f,sheet_name=str(self.n_reinf))
-
+                    df = self.extract_grammatical_information_tilde()
+                    df.to_excel(f,sheet_name=str(self.n_reinf)+'tilde')
     
     def respond(self,stimuli_stream,s1,s2_index):
         # get the s2 stimuli and make it a chunk
@@ -231,7 +235,7 @@ class Learner():
             
         #s2 = SChunk(stimuli_stream.stimuli[s2_index])
 
-        response = self.choose_behaviour((s1,s2))
+        response = self.choose_behaviour2((s1,s2))
 
         self.events.append(((s1,s2),response))
         
@@ -305,6 +309,31 @@ class Learner():
         response = random.choices(options,weights/np.sum(weights))
         return response[0]  
     
+    def choose_behaviour2(self,couple):
+        self.update_repertoire(couple)
+        substantial_couple = (str(couple[0]),str(couple[1]))
+        b_range = len(self.behaviour_repertoire[substantial_couple])
+        z = self.Q_tilde(couple)
+        weights = np.exp(Learner.beta * z)
+        options = [i for i in range(b_range)]
+        response = random.choices(options,weights/np.sum(weights))
+        return response[0]  
+    
+    def Q_tilde(self,couple):
+        substantial_couple = (str(couple[0]),str(couple[1]))
+        b_range = len(self.behaviour_repertoire[substantial_couple])
+        z = deepcopy(self.behaviour_repertoire[substantial_couple])
+        subpairs = self.get_sub_couples(couple)
+        
+        norm_vec = np.array([b_range - 1]+[i for i in range(b_range-1,0,-1)])
+        # Accumulate support from subchunks
+        for pair in subpairs:
+            substantial_pair = (str(pair[0]),str(pair[1]))
+            lenp = len(self.behaviour_repertoire[substantial_pair])
+            z[:lenp] += self.behaviour_repertoire[substantial_pair]
+        # Take the average
+        z /= norm_vec
+        return z 
 
     def reinforce(self, reinforcement = 'positive'):
         #print('call of reinforce')
@@ -343,6 +372,17 @@ class Learner():
             if max(value)>threshold:
                 grammar.append((key[0],key[1],list(value).index(max(value)),max(value)))
         df = pd.DataFrame(grammar, columns = ['s1','s2','Index','Value'])
+        return df
+    
+    def extract_grammatical_information_tilde(self):
+        grammar = list()
+        for key,value in self.behaviour_repertoire.items():
+            z = self.Q_tilde(self.couple_str_to_couple[key])
+            weights = np.exp(Learner.beta * z)
+            weights /= np.sum(weights)
+            #grammar.append((key[0],key[1],list(weights).index(max(weights)),max(weights),list(value).index(max(value)),max(value)))
+            grammar.append((key[0],key[1],value,weights))
+        df = pd.DataFrame(grammar, columns = ['s1','s2','Q','proba'])
         return df
 
 
