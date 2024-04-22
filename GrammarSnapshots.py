@@ -294,7 +294,8 @@ cfgYP = ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP,we
 #############################################################
 
 
-n_trials = 5000
+n_trials =5000
+n_test = 100
 
 #############################################################
 #
@@ -305,6 +306,7 @@ print('Creating the stimuli stream')
 
 # Create stimuli stream
 stimuli_stream = Raw_input(3*n_trials,cfgNVN)
+test_stimuli_stream = Raw_input(2*n_test,cfgNVN)
 
 #############################################################
 #
@@ -314,23 +316,27 @@ stimuli_stream = Raw_input(3*n_trials,cfgNVN)
 
 print('Running the model')
 snaptid = [300,600,900,2000,4000]
+#snaptid = [100]
 
 print('Q-learning, continuous')
 learner = Learner(n_trials = n_trials, border = 'cont')
-learner.learn_with_snapshot(stimuli_stream, 'QLearnerC2.xlsx', snaptid, 5)
+learner.learn_with_snapshot(stimuli_stream,test_stimuli_stream,n_test, 'QLearnerC2.xlsx', snaptid, 5)
+
+
 
 print('Q-learning, next sentence')
 learner = Learner(n_trials = n_trials, border = 'next')
-learner.learn_with_snapshot(stimuli_stream, 'QLearnerN2.xlsx', snaptid, 5)
+learner.learn_with_snapshot(stimuli_stream,test_stimuli_stream,n_test, 'QLearnerN2.xlsx', snaptid, 5)
+
 
 print('RW Q-learning, continuous')
 learner = RWLearner(n_trials = n_trials, border = 'cont')
-learner.learn_with_snapshot(stimuli_stream, 'RWQLearnerC2.xlsx', snaptid, 5)
+learner.learn_with_snapshot(stimuli_stream,test_stimuli_stream,n_test, 'RWQLearnerC2.xlsx', snaptid, 5)
+
 
 print('RW Q-learning, next sentence')
 learner = RWLearner(n_trials = n_trials, border = 'next')
-learner.learn_with_snapshot(stimuli_stream, 'RWQLearnerN2.xlsx', snaptid, 5)
-
+learner.learn_with_snapshot(stimuli_stream,test_stimuli_stream,n_test, 'RWQLearnerN2.xlsx', snaptid, 5)
 
 
 end_time = datetime.now()

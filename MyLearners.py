@@ -140,9 +140,11 @@ class Learner():
         self.border_type = border # or 'default'
         self.n_trials = n_trials
         self.n_reinf = 0
+        self.n_test = 0
         self.success = []
+        self.test_success = []
         self.sent_len = []
-        self.sentences = set()
+        self.sentences = []
         self.sent_dict = dict()
 
         
@@ -209,22 +211,103 @@ class Learner():
             s1, s2_index = self.respond(stimuli_stream, s1, s2_index)
             # under condition save snapshot to file
         self.final_index = s2_index
+        
+    def test(self,stimuli_stream,n_sent):
+        self.test_success = []
+        self.sentences = []
+        self.sent_dict = dict()
+        s1 = SChunk(stimuli_stream.stimuli[0])
+        s2_index = 1
+        for i in range(int(len(stimuli_stream.stimuli)/2)+1):
+            s1, s2_index = self.respond_without_learning(stimuli_stream, s1, s2_index)
+        print(len(self.sentences))
+        
+    def extract_test_sentences(self):
+        df = pd.DataFrame(self.sentences, columns = ['parsed sentences'])
+        return df
+            
 
-    def learn_with_snapshot(self,stimuli_stream,filename,snap_times,threshold):
+    def learn_with_snapshot(self,stimuli_stream,test_stimuli_stream,n_sent,filename,snap_times,threshold):
         # initialize stimuli
         s1 = SChunk(stimuli_stream.stimuli[0])
         s2_index = 1
         #for t in range(self.n_trials):
+        done_snap = []
         with pd.ExcelWriter(filename) as f:
             dff = pd.DataFrame([(self.alpha, self.beta,self.positive_reinforcement,self.negative_reinforcement,self.initial_value_border,self.initial_value_chunking)],columns=['alpha','beta','positive reinforcement','negative reinforcement','initial value border','initial value chunking'])
             dff.to_excel(f,sheet_name='parameters')
             while self.n_reinf <= self.n_trials:
                 s1, s2_index = self.respond(stimuli_stream, s1, s2_index)
-                if self.n_reinf in snap_times:
+                if self.n_reinf in snap_times and self.n_reinf not in done_snap:
+                    done_snap.append(self.n_reinf)
+                    print('begin test')
+                    print(self.n_reinf)
+                    self.test(test_stimuli_stream,n_sent)
+                    dftst = self.extract_test_sentences()
+                    dftst.to_excel(f,sheet_name=str(self.n_reinf)+'test')
+                    print('End test')
                     df = self.extract_grammatical_information(threshold)
                     df.to_excel(f,sheet_name=str(self.n_reinf))
                     df = self.extract_grammatical_information_tilde()
                     df.to_excel(f,sheet_name=str(self.n_reinf)+'tilde')
+    
+    def respond_without_learning(self,stimuli_stream,s1,s2_index):
+        # get the s2 stimuli and make it a chunk
+        try:
+            s2 = SChunk(stimuli_stream.stimuli[s2_index])
+        except IndexError:
+            sys.exit("Index doesn't exist. End of input reached before learning is finished.")
+            
+
+        response = self.choose_behaviour2((s1,s2))
+                
+        if response == 0: # boundary placement
+            #print('Border')
+            # increment the number of reinforcement events by 1
+            self.n_test += 1 
+            # check if border is correctly placed
+            is_border = stimuli_stream.border_before[s2_index]
+
+            if is_border and not self.border_within and self.border_before:
+                #print('Good Unit')
+                # perform positive reinforcement
+                # Store sentence (not cognitively plausible but used for grammar extraction)
+                
+                self.sentences.append(s1)
+                self.update_sent_dict(s1)
+                # Perform reinforcement
+                #self.reinforce(reinforcement = 'positive')                    
+                # update the success list
+                self.test_success.append(1)
+                # for postprocessing, store length of the sentence
+                # self.sent_len.append(stimuli_stream.length_current_sent(s2_index - 1))
+            else:
+                #print('Bad Unit')
+                # perform negative reinforcement
+                #self.reinforce(reinforcement = 'negative')
+                # update the success list
+                self.test_success.append(0)
+                #self.sent_len.append(stimuli_stream.length_current_sent(s2_index))
+            # Next beginning of sentence becomes
+            if self.border_type == 'next':
+                new_s1,s2_index = stimuli_stream.next_beginning_sent(s2_index)
+                new_s1 = SChunk(new_s1)
+            else:
+                self.border_before = stimuli_stream.border_before[s2_index]
+                new_s1,s2_index = s2, s2_index + 1
+
+            self.border_within = False
+              
+        else: # some type of chunking occurs
+            # Check if there was a border
+            if not self.border_within:
+                self.border_within = stimuli_stream.border_before[s2_index]
+            
+            # Perform chunking at correct level
+            new_s1 = s1.chunk_at_depth(s2,depth=s1.get_depth()+1-response) 
+            s2_index+=1      
+        return new_s1, s2_index
+    
     
     def respond(self,stimuli_stream,s1,s2_index):
         # get the s2 stimuli and make it a chunk
@@ -252,9 +335,9 @@ class Learner():
                 #print('Good Unit')
                 # perform positive reinforcement
                 # Store sentence (not cognitively plausible but used for grammar extraction)
-                if self.n_reinf > 60000:
-                    self.sentences.add(str(s1))
-                    self.update_sent_dict(s1)
+                #if self.n_reinf > 60000:
+                #    self.sentences.add(str(s1))
+                #    self.update_sent_dict(s1)
                 # Perform reinforcement
                 self.reinforce(reinforcement = 'positive')                    
                 # update the success list

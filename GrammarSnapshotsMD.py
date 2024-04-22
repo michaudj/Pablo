@@ -152,6 +152,7 @@ cfgNVNMD = ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP
 
 
 n_trials = 50010
+n_test = 100
 
 #############################################################
 #
@@ -162,7 +163,7 @@ print('Creating the stimuli stream')
 
 # Create stimuli stream
 stimuli_stream = Raw_input(10*n_trials,cfgNVNMD)
-
+test_stimuli_stream = Raw_input(2*n_test,cfgNVNMD)
 #############################################################
 #
 #   Learning snapshots
@@ -175,7 +176,7 @@ snaptid = [500,1000,1500,3000,6000,25000,50000]
 
 print('RW Q-learning, continuous')
 learner = RWLearner(n_trials = n_trials, border = 'cont')
-learner.learn_with_snapshot(stimuli_stream, 'RWQLearnerC_MD.xlsx', snaptid, 10)
+learner.learn_with_snapshot(stimuli_stream,test_stimuli_stream, n_test, 'RWQLearnerC_MD.xlsx', snaptid, 10)
 
 
 end_time = datetime.now()

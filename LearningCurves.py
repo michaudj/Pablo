@@ -60,6 +60,7 @@ def get_averaged_final_index(learners):
 def plot_learning_curve(learnersC,learnersN,RWlearnersC,RWlearnersN):
     # Process the result   
     colors = ['b','g','m','c']
+    markers = ['+','x','.','o']
     ll = [learnersC,learnersN,RWlearnersC,RWlearnersN]
     lab = ['Q-learner, cont','Q-learner, next','RW Q-learner, cont', 'RW Q-learner, next']
     for i in range(4):
@@ -77,7 +78,7 @@ def plot_learning_curve(learnersC,learnersN,RWlearnersC,RWlearnersN):
         plt.plot(x_data,logistic(x_data,*popt),'k:', label='_nolegend_')
         #plt.axvline(x = 2*popt[-1],color = 'k')
         # Plot the results
-        plt.scatter(trial_vec,success,s = 2,c=colors[i],label = lab[i])
+        plt.scatter(trial_vec,success,s = 2,marker=markers[i],c=colors[i],label = lab[i])
         plt.xlabel('Number of trials')
         plt.ylabel('Fraction of correct responses')
     #plt.colorbar()

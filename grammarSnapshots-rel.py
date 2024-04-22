@@ -154,6 +154,7 @@ cfgYPredMD = ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rules
 
 
 n_trials = 80002
+n_sent = 200
 
 #############################################################
 #
@@ -164,7 +165,7 @@ print('Creating the stimuli stream')
 
 # Create stimuli stream
 stimuli_stream = Raw_input(10*n_trials,cfgYPredMD)
-
+test_stimuli_stream = Raw_input(2*n_sent,cfgYPredMD)
 #############################################################
 #
 #   Learning snapshots
@@ -177,7 +178,7 @@ snaptid =[400,500,600,700,800,1000,2000,3000,5000,6000,9000,15000,30000,50000]
 
 print('RW Q-learning, continuous')
 learner = RWLearner(n_trials = n_trials, border = 'cont')
-learner.learn_with_snapshot(stimuli_stream, 'RWQLearnerC_rel.xlsx', snaptid, 2)
+learner.learn_with_snapshot(stimuli_stream,test_stimuli_stream,n_sent, 'RWQLearnerC_rel.xlsx', snaptid, 2)
 write_sent_dict_to_file(learner)
 
 end_time = datetime.now()
