@@ -84,6 +84,48 @@ class Type:
     def __eq__(self, other):
         return self is other
     
+    def split_gpt(self, pu=0.5, preferred_prim='New', bad_s1=None, bad_s2=None):
+        """Splits the Type into two subtypes based on a probability.
+    
+        Args:
+            pu (float): Probability to split by 'u' vs 'o'.
+            preferred_prim (Type or str): Primitive type to use, or 'New'.
+            bad_s1 (list of Type): Types not allowed on left split.
+            bad_s2 (list of Type): Types not allowed on right split.
+
+        Returns:
+            list of Type: Two resulting Types after split.
+        """
+        def get_new_primitive(bad_list):
+            index = 0
+            while Type(str(index)) in bad_list:
+                index += 1
+            return Type(str(index))
+
+        # Determine which side to prioritize
+        use_u_split = random() < pu
+
+        # Handle preferred primitive
+        if isinstance(preferred_prim, Type) and preferred_prim.is_primitive():
+            prim_type = preferred_prim
+        else:
+            prim_type = None  # will generate new if needed
+
+        # Adjust primitive choice if it's invalid
+        if use_u_split:
+            if prim_type and bad_s1 and prim_type in bad_s1:
+                prim_type = None
+            if prim_type is None:
+                prim_type = get_new_primitive(bad_s1 if bad_s1 else [])
+            return [prim_type, Type(prim_type.formula + "u" + self.formula)]
+        else:
+            if prim_type and bad_s2 and prim_type in bad_s2:
+                prim_type = None
+            if prim_type is None:
+                prim_type = get_new_primitive(bad_s2 if bad_s2 else [])
+            return [Type(self.formula + "o" + prim_type.formula), prim_type]
+
+    
     def split(self,pu=0.5,prim='New',bad_s1=None,bad_s2=None): # should return two types that combine into the initial type
         print(bad_s1)
         if prim == None:
@@ -331,6 +373,15 @@ class TChunk():
         st = str(self.structure)
         match = re.search("]*$",st)
         return len(match.group(0))
+    
+    def get_depth_gpt(self):
+        structure = self.structure
+        depth = 0
+        while isinstance(structure, list) and len(structure) == 2:
+            structure = structure[1]  # Always move to the right
+            depth += 1
+        return depth
+
     
     def remove_structure(self):
         if type(self.structure) is Type:
