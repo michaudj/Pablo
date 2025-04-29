@@ -142,6 +142,10 @@ class RawInputLazy:
                 return (self.stimuli[i], i + 1)
         return None
     
+    def read_stimulus(self,index):
+        self.fill_until(index)
+        return self.stimuli[index]
+    
     def length_current_sent(self, index: int) -> int:
         self.fill_until(index)
         start = index

@@ -20,33 +20,23 @@ sys.setrecursionlimit(1500)
 
 
 
-def modify_element_at_depth(nested_list, depth, new_value):
-    for i in range(depth-1):
-        nested_list = nested_list[-1]
-    nested_list[-1] = [nested_list[-1],new_value]
-    
-def change_element_at_depth(nested_list, depth, new_value):
-    for i in range(depth-1):
-        nested_list = nested_list[-1]
-    nested_list[-1] = new_value
 
     
-def flatten(lst):
-    flat_list = []
-    for item in lst:
-        if isinstance(item, list):
-            flat_list.extend(flatten(item))
-        else:
-            flat_list.append(item)
-    return flat_list
+# def change_element_at_depth(nested_list, depth, new_value):
+#     for i in range(depth-1):
+#         nested_list = nested_list[-1]
+#     nested_list[-1] = new_value
 
-def add_weights(b_values1,b_values2):
-    a = b_values1[:]
-    b = b_values2[:]
-    l = sorted((a, b), key=len)
-    c = l[1].copy()
-    c[:len(l[0])] += l[0]
-    return c
+    
+
+
+# def add_weights(b_values1,b_values2):
+#     a = b_values1[:]
+#     b = b_values2[:]
+#     l = sorted((a, b), key=len)
+#     c = l[1].copy()
+#     c[:len(l[0])] += l[0]
+#     return c
 
 
 
@@ -96,12 +86,18 @@ class SChunk():
         return right_subchunks
     
     def chunk_at_depth(self, other, depth=0):
+        def _modify_element_at_depth(nested_list, depth, new_value):
+            for i in range(depth-1):
+                nested_list = nested_list[-1]
+            nested_list[-1] = [nested_list[-1],new_value]
+            return None
+        
         nested_list = deepcopy(self.structure)
         if depth == 0:
             struct = [nested_list,other.structure]
             return SChunk(struct)
         else:
-            modify_element_at_depth(nested_list, depth, other.structure)
+            _modify_element_at_depth(nested_list, depth, other.structure)
             return SChunk(nested_list)
     
     def get_depth(self):
@@ -110,10 +106,19 @@ class SChunk():
         return len(match.group(0))
     
     def remove_structure(self):
+        def _flatten(lst):
+            flat_list = []
+            for item in lst:
+                if isinstance(item, list):
+                    flat_list.extend(_flatten(item))
+                else:
+                    flat_list.append(item)
+            return flat_list
+        
         if type(self.structure) is not list:
             return [self.structure]
         else:
-            return flatten(self.structure)
+            return _flatten(self.structure)
         
 
 ####################################################
