@@ -4,7 +4,8 @@ Created on Thu Dec 19 09:49:31 2019
 
 @author: jermi792
 """
-
+from dataclasses import dataclass, field
+from typing import Iterator, List, Tuple
 import random
 random.seed()
 
@@ -59,47 +60,107 @@ class ProbabilisticGrammar:
 
 
 
-class Raw_input():
+@dataclass
+class RawInput:
+    n_sentences: int 
+    grammar: 'ProbabilisticGrammar' 
     
+    stimuli: List[str] = field(init=False, default_factory=list)
+    border_before: List[bool] = field(init=False, default_factory=list)
+    sentences: List[List[str]] = field(init=False, default_factory=list)
     
-    def __init__(self, n_sentence,cfg):
-        #self.number_nouns =
-        self.stimuli = []
-        self.border_before = []
-        for i in range(n_sentence):
-            sentence = cfg.generate_sentence('S')#self.generate_sentence(cfg,symbol)
-            self.stimuli += sentence
-            border_before = [False for i in range(len(sentence))]
-            border_before[0] = True
-            self.border_before += border_before
+    def __post_init__(self):
+        self.sentences = [self.grammar.generate_sentence('S') for _ in range(self.n_sentences)]
+        for sentence in self.sentences:
+            self.stimuli.extend(sentence)
+            self.border_before.extend([True] + [False] * (len(sentence) - 1))
     
-    
-    # def generate_sentence(self,cfg, symbol):
-    #     if symbol in cfg['terminals']:
-    #         return [symbol]
-    #     expansion = flatten(random.choices(cfg['production_rules'][symbol],cfg['weights'][symbol]))
-    #     return flatten([self.generate_sentence(cfg, s) for s in expansion])
-    
-    def next_beginning_sent(self,index):
+    def next_beginning_sent(self, index: int) -> Tuple[str, int] | None:
         for i in range(index, len(self.border_before)):
-            if self.border_before[i] == True:
-                return (self.stimuli[i],i+1)
+            if self.border_before[i]:
+                return (self.stimuli[i], i + 1)
         return None
     
-    def length_current_sent(self,index):
-        count_before = 0
-        for i in range(index, -1, -1):
-            if self.border_before[i] == False:
-                count_before += 1
-            else:
-                break
-        count_after = 0
+    def length_current_sent(self, index: int) -> int:
+        start = index
+        while start > 0 and not self.border_before[start]:
+            start -= 1 
+        end = index + 1
+        while end < len(self.border_before) and not self.border_before[end]:
+            end +=1 
+            
+        return end - start
+    
+    @property 
+    def number_of_sentences(self) -> int:
+        return len(self.sentences)
+    
+    @property 
+    def number_of_words(self) -> int:
+        return len(self.stimuli)
+    
+    def __repr__(self) -> str:
+        return f"<RawInput with {self.number_of_sentences} sentences and {self.number_of_words} words>"
+    
+    
+@dataclass
+class RawInputLazy:
+    n_sentences: int 
+    grammar: 'ProbabilisticGrammar' 
+    
+    stimuli: List[str] = field(init=False, default_factory=list)
+    border_before: List[bool] = field(init=False, default_factory=list)
+    #sentences: List[List[str]] = field(init=False, default_factory=list)
+    
+    def __post_init__(self):
+        pass
+        # self.sentences = [self.grammar.generate_sentence('S') for _ in range(self.n_sentences)]
+        # for sentence in self.sentences:
+        #     self.stimuli.extend(sentence)
+        #     self.border_before.extend([True] + [False] * (len(sentence) - 1))
+        
+    def sentence_generator(self) -> Iterator[List[str]]:
+        """Yields one generated sentence at a time."""
+        for _ in range(self.n_sentences):
+            yield self.grammar.generate_sentence('S')
+            
+    def fill_until(self, target_index: int):
+        """Generate sentenes until stimuli is long enough to reach target_index."""
+        gen = self.sentence_generator()
+        try:
+            while len(self.stimuli) <= target_index:
+                sentence = next(gen)
+                self.stimuli.extend(sentence)
+                self.border_before.extend([True] + [False] * (len(sentence) - 1))
+        except StopIteration:
+            pass
+    
+    def next_beginning_sent(self, index: int) -> Tuple[str, int] | None:
+        self.fill_until(index)
         for i in range(index, len(self.border_before)):
-            if self.border_before[i] == False:
-                count_after += 1
-            else:
-                break
-        return count_before+ count_after
+            if self.border_before[i]:
+                return (self.stimuli[i], i + 1)
+        return None
+    
+    def length_current_sent(self, index: int) -> int:
+        self.fill_until(index)
+        start = index
+        while start > 0 and not self.border_before[start]:
+            start -= 1 
+        end = index + 1
+        while end < len(self.border_before) and not self.border_before[end]:
+            end +=1 
+            
+        return end - start
+    
+    @property 
+    def number_of_words(self) -> int:
+        return len(self.stimuli)
+    
+    def __repr__(self) -> str:
+        return f"<RawInputLazy with {self.number_of_words} words>"   
+
+
 
                                 
 # definition of the grammar
