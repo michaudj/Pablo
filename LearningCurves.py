@@ -7,7 +7,7 @@ Created on Thu Feb  2 11:00:55 2023
 
 
 from MyLearners import Learner,RWLearner
-from Raw_input import Raw_input, ProbabilisticGrammar
+from RawInput import Raw_input, ProbabilisticGrammar
 import numpy as np
 import matplotlib.pyplot as plt
 import concurrent.futures as cf
