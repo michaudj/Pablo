@@ -5,7 +5,7 @@ Created on Thu Dec 19 09:49:31 2019
 @author: jermi792
 """
 from dataclasses import dataclass, field
-from typing import Iterator, List, Tuple
+from typing import Iterator, List, Tuple, Union
 import random
 random.seed()
 
@@ -75,7 +75,7 @@ class RawInput:
             self.stimuli.extend(sentence)
             self.border_before.extend([True] + [False] * (len(sentence) - 1))
     
-    def next_beginning_sent(self, index: int) -> Tuple[str, int] | None:
+    def next_beginning_sent(self, index: int) -> Union[Tuple[str, int], None]:
         for i in range(index, len(self.border_before)):
             if self.border_before[i]:
                 return (self.stimuli[i], i + 1)
@@ -90,6 +90,9 @@ class RawInput:
             end +=1 
             
         return end - start
+    
+    def read_stimuli(self, index: int) -> str:
+        return self.stimuli[index]
     
     @property 
     def number_of_sentences(self) -> int:
@@ -124,18 +127,44 @@ class RawInputLazy:
         for _ in range(self.n_sentences):
             yield self.grammar.generate_sentence('S')
             
+    def read_stimuli(self, index: int) -> str:
+        self.fill_until(index)
+        return self.stimuli[index]
+            
+    # def fill_until(self, target_index: int):
+    #     """Generate sentenes until stimuli is long enough to reach target_index."""
+    #     gen = self.sentence_generator()
+    #     try:
+    #         while len(self.stimuli) <= target_index:
+    #             sentence = next(gen)
+    #             self.stimuli.extend(sentence)
+    #             self.border_before.extend([True] + [False] * (len(sentence) - 1))
+    #     except StopIteration:
+    #         pass
+
     def fill_until(self, target_index: int):
-        """Generate sentenes until stimuli is long enough to reach target_index."""
+        """Generate sentences until stimuli has at least one sentence *after* target_index."""
         gen = self.sentence_generator()
         try:
+            # Ensure target_index is within range
             while len(self.stimuli) <= target_index:
                 sentence = next(gen)
                 self.stimuli.extend(sentence)
                 self.border_before.extend([True] + [False] * (len(sentence) - 1))
+            
+            # Now ensure there's at least one sentence *after* target_index
+            # by checking for a `True` in border_before after target_index
+            has_next_sentence = any(self.border_before[i] for i in range(target_index + 1, len(self.border_before)))
+            while not has_next_sentence:
+                sentence = next(gen)
+                self.stimuli.extend(sentence)
+                self.border_before.extend([True] + [False] * (len(sentence) - 1))
+                has_next_sentence = any(self.border_before[i] for i in range(target_index + 1, len(self.border_before)))
+    
         except StopIteration:
             pass
     
-    def next_beginning_sent(self, index: int) -> Tuple[str, int] | None:
+    def next_beginning_sent(self, index: int) -> Union[Tuple[str, int], None]:
         self.fill_until(index)
         for i in range(index, len(self.border_before)):
             if self.border_before[i]:

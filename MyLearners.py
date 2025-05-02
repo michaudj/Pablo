@@ -204,7 +204,7 @@ class Learner():
 
     def learn(self,stimuli_stream):
         # initialize stimuli
-        s1 = SChunk(stimuli_stream.stimuli[0])
+        s1 = SChunk(stimuli_stream.read_stimuli(0))
         s2_index = 1
         #for t in range(self.n_trials):
         while self.n_reinf <= self.n_trials:
@@ -223,13 +223,16 @@ class Learner():
         print(len(self.sentences))
         
     def extract_test_sentences(self):
-        df = pd.DataFrame(self.sentences, columns = ['parsed sentences'])
+        length = []
+        for s in self.sentences:
+            length.append(len(s.remove_structure()))
+        df = pd.DataFrame(zip(self.sentences,length), columns = ['parsed sentences','length'])
         return df
             
 
     def learn_with_snapshot(self,stimuli_stream,test_stimuli_stream,n_sent,filename,snap_times,threshold):
         # initialize stimuli
-        s1 = SChunk(stimuli_stream.stimuli[0])
+        s1 = SChunk(stimuli_stream.read_stimuli(0))
         s2_index = 1
         #for t in range(self.n_trials):
         done_snap = []
@@ -248,13 +251,15 @@ class Learner():
                     print('End test')
                     df = self.extract_grammatical_information(threshold)
                     df.to_excel(f,sheet_name=str(self.n_reinf))
+                    df = self.extract_grammatical_information2()
+                    df.to_excel(f,sheet_name=str(self.n_reinf)+'full')
                     df = self.extract_grammatical_information_tilde()
                     df.to_excel(f,sheet_name=str(self.n_reinf)+'tilde')
     
     def respond_without_learning(self,stimuli_stream,s1,s2_index):
         # get the s2 stimuli and make it a chunk
         try:
-            s2 = SChunk(stimuli_stream.stimuli[s2_index])
+            s2 = SChunk(stimuli_stream.read_stimuli(s2_index))
         except IndexError:
             sys.exit("Index doesn't exist. End of input reached before learning is finished.")
             
@@ -312,7 +317,7 @@ class Learner():
     def respond(self,stimuli_stream,s1,s2_index):
         # get the s2 stimuli and make it a chunk
         try:
-            s2 = SChunk(stimuli_stream.stimuli[s2_index])
+            s2 = SChunk(stimuli_stream.read_stimuli(s2_index))
         except IndexError:
             sys.exit("Index doesn't exist. End of input reached before learning is finished.")
             
@@ -452,9 +457,25 @@ class Learner():
     def extract_grammatical_information(self,threshold):
         grammar = list()
         for key,value in self.behaviour_repertoire.items():
-            if max(value)>threshold:
-                grammar.append((key[0],key[1],list(value).index(max(value)),max(value)))
-        df = pd.DataFrame(grammar, columns = ['s1','s2','Index','Value'])
+            z = self.Q_tilde(self.couple_str_to_couple[key])
+            weights = np.exp(Learner.beta * z)
+            weights /= np.sum(weights)
+            length = len(self.couple_str_to_couple[key][0].remove_structure())
+            if max(value)>threshold and length < 4:
+                grammar.append((key[0],key[1],length,list(value).index(max(value)),max(value),list(z).index(max(z)),max(z),max(weights)))
+        df = pd.DataFrame(grammar, columns = ['s1','s2','Length s1','Index','Q Value','Index','Q bar Value','Proba'])
+        return df
+    
+    def extract_grammatical_information2(self):
+        grammar = list()
+        for key,value in self.behaviour_repertoire.items():
+            z = self.Q_tilde(self.couple_str_to_couple[key])
+            weights = np.exp(Learner.beta * z)
+            weights /= np.sum(weights)
+            length = len(self.couple_str_to_couple[key][0].remove_structure())
+            if length < 4:
+                grammar.append((key[0],key[1],length,list(value).index(max(value)),max(value),list(z).index(max(z)),max(z),max(weights)))
+        df = pd.DataFrame(grammar, columns = ['s1','s2','Length s1','Index','Q Value','Index','Q bar Value','Proba'])
         return df
     
     def extract_grammatical_information_tilde(self):
@@ -463,9 +484,11 @@ class Learner():
             z = self.Q_tilde(self.couple_str_to_couple[key])
             weights = np.exp(Learner.beta * z)
             weights /= np.sum(weights)
+            length = len(self.couple_str_to_couple[key][0].remove_structure())
             #grammar.append((key[0],key[1],list(weights).index(max(weights)),max(weights),list(value).index(max(value)),max(value)))
-            grammar.append((key[0],key[1],value,weights))
-        df = pd.DataFrame(grammar, columns = ['s1','s2','Q','proba'])
+            if length < 4:
+                grammar.append((key[0],key[1],length,value,z,weights))
+        df = pd.DataFrame(grammar, columns = ['s1','s2','length s1','Q','Q tilde','proba'])
         return df
 
 

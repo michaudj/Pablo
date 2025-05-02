@@ -7,7 +7,7 @@ Created on Thu Feb  2 11:00:55 2023
 
 
 from MyLearners import Learner,RWLearner
-from RawInput import RawInput, ProbabilisticGrammar
+from RawInput import RawInputLazy, ProbabilisticGrammar
 import numpy as np
 import matplotlib.pyplot as plt
 import concurrent.futures as cf
@@ -304,7 +304,7 @@ n_trials = 2000
 print('Creating the stimuli stream')
 
 # Create stimuli stream
-stimuli_stream = Raw_input(3*n_trials,cfgNVN)
+stimuli_stream = RawInputLazy(3*n_trials,cfgNVN)
 
 print('Initializing learners')
 
