@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 import concurrent.futures as cf
 from datetime import datetime
 #import pandas as pd
-start_time = datetime.now()
+
 import scipy
 
 plt.rcParams.update({
@@ -329,7 +329,7 @@ RWlearnersN = [RWLearner(n_trials = n_trials, border = 'next') for i in range(n_
 #
 #############################################################    
 print('Running the simulation in parallel')
-
+start_time = datetime.now()
 print('Q-learning with continuous border')
 # # Run the simulation in parallel
 with cf.ThreadPoolExecutor() as executor:
@@ -370,7 +370,8 @@ with cf.ThreadPoolExecutor() as executor:
     # Iterate over the results as they become available
     for future in cf.as_completed(results):
         result = future.result()
-    
+
+end_time = datetime.now()
 #############################################################
 #
 #       Postprocessing
@@ -386,6 +387,6 @@ print(get_averaged_final_index(RWlearnersC))
 print(get_averaged_final_index(RWlearnersN))
 
 
-end_time = datetime.now()
+
 print('Duration: {}'.format(end_time - start_time))
 

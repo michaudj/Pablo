@@ -7,6 +7,10 @@ Created on Thu May  1 22:24:02 2025
 
 from RawInput import RawInput, RawInputLazy, ProbabilisticGrammar
 from Learner import LearnerConfig, Learner
+from Population import Population, Population2
+import matplotlib.pyplot as plt
+
+from datetime import datetime
 
 def flatten(lst):
     flat_list = []
@@ -17,90 +21,178 @@ def flatten(lst):
             flat_list.append(item)
     return flat_list
 
-print('Defining the grammar')
-
-# definition of the grammar
-# Vocabulary
-number_of_verbs = 5
-number_of_nouns = 5
-number_of_adj = 0
-number_of_relpron = 2
-number_of_det = 0
-
-verbs = ['v' + str(i) for i in range(1, number_of_verbs+1)]
-nouns = ['n' + str(i) for i in range(1, number_of_nouns+1)]
-adjs = ['a' + str(i) for i in range(1, number_of_adj+1)]
-relpron = ['r' + str(i) for i in range(1, number_of_relpron+1)]
-det = ['d' + str(i) for i in range(1, number_of_det+1)]
-
-terminals2 = flatten([verbs,nouns,adjs,relpron,det])
-non_terminals2 = ['S', 'N','NP','VP','V','RelCl']
-
-###############################################################
-#
-#       NVN language
-#
-###############################################################
-
-# Grammatical rules
-production_rulesNVN = {
-    'S': [['N', 'VP','N']],
-    'VP': [['V']],
-    'N': [['n' + str(i)] for i in range(1, number_of_nouns+1)],
-    'V': [['v' + str(i)] for i in range(1, number_of_verbs+1)]
-}
-
-weightsNVN = {
-    'S': [1],
-    'VP': [1],
-    'N': [1/number_of_nouns for i in range(1, number_of_nouns+1)],
-    'V': [1/number_of_verbs for i in range(1, number_of_verbs+1)]    
+def create_stimuli():
+    number_of_verbs = 5
+    number_of_nouns = 5
+    number_of_adj = 0
+    number_of_relpron = 2
+    number_of_det = 0
+    
+    verbs = ['v' + str(i) for i in range(1, number_of_verbs+1)]
+    nouns = ['n' + str(i) for i in range(1, number_of_nouns+1)]
+    adjs = ['a' + str(i) for i in range(1, number_of_adj+1)]
+    relpron = ['r' + str(i) for i in range(1, number_of_relpron+1)]
+    det = ['d' + str(i) for i in range(1, number_of_det+1)]
+    
+    terminals2 = flatten([verbs,nouns,adjs,relpron,det])
+    non_terminals2 = ['S', 'N','NP','VP','V','RelCl']
+    
+    ###############################################################
+    #
+    #       NVN language
+    #
+    ###############################################################
+    
+    # Grammatical rules
+    production_rulesNVN = {
+        'S': [['N', 'VP','N']],
+        'VP': [['V']],
+        'N': [['n' + str(i)] for i in range(1, number_of_nouns+1)],
+        'V': [['v' + str(i)] for i in range(1, number_of_verbs+1)]
     }
+    
+    weightsNVN = {
+        'S': [1],
+        'VP': [1],
+        'N': [1/number_of_nouns for i in range(1, number_of_nouns+1)],
+        'V': [1/number_of_verbs for i in range(1, number_of_verbs+1)]    
+        }
+    
+    cfgNVN = ProbabilisticGrammar(terminals2, non_terminals2, production_rulesNVN,weightsNVN)
+    return RawInputLazy(n_sentences=2000, grammar=cfgNVN)
 
-cfgNVN = ProbabilisticGrammar(terminals2, non_terminals2, production_rulesNVN,weightsNVN)
-# Context free grammar
+if __name__ == '__main__':
 
-stimuli_stream = RawInputLazy(n_sentences=2000, grammar=cfgNVN)
-
-# Configure and initialize learner
-config = LearnerConfig(n_trials=1000,
-                       border = 'cont',
-                       initial_value_chunking=-1.,
-                       initial_value_border=1.,
-                       alpha= 0.1,
-                       beta= 1.9,
-                       positive_reinforcement = 25,
-                       negative_reinforcement = -10,
-                       RW=False)
-learner = Learner(config)
-
-# Run learning
-learner.learn(stimuli_stream)
-
-def moving_average(data, window_size):
-    if len(data) < window_size:
-        return []
-    return [sum(data[i:i+window_size]) / window_size for i in range(len(data) - window_size + 1)]
-
-
-import matplotlib.pyplot as plt
-
-# Assume learner.history.success is your list of 0s and 1s
-successes = learner.history.success
-window_size = 15
-ma = moving_average(successes, window_size)
-
-plt.figure(figsize=(10, 5))
-plt.plot(ma, label=f'{window_size}-trial Moving Average')
-plt.xlabel('Trial')
-plt.ylabel('Success Rate')
-plt.title('Learning Curve')
-plt.grid(True)
-plt.legend()
-plt.show()
-
-
-# Print results
-#print(f"Learner completed after index: {learner.final_index}")
-#print(f"Success history: {learner.history.success}")
-#print(f"Sentence lengths: {learner.history.sent_len}")
+    print('Defining the grammar')
+    
+    # definition of the grammar
+    # Vocabulary
+    number_of_verbs = 5
+    number_of_nouns = 5
+    number_of_adj = 0
+    number_of_relpron = 2
+    number_of_det = 0
+    
+    verbs = ['v' + str(i) for i in range(1, number_of_verbs+1)]
+    nouns = ['n' + str(i) for i in range(1, number_of_nouns+1)]
+    adjs = ['a' + str(i) for i in range(1, number_of_adj+1)]
+    relpron = ['r' + str(i) for i in range(1, number_of_relpron+1)]
+    det = ['d' + str(i) for i in range(1, number_of_det+1)]
+    
+    terminals2 = flatten([verbs,nouns,adjs,relpron,det])
+    non_terminals2 = ['S', 'N','NP','VP','V','RelCl']
+    
+    ###############################################################
+    #
+    #       NVN language
+    #
+    ###############################################################
+    
+    # Grammatical rules
+    production_rulesNVN = {
+        'S': [['N', 'VP','N']],
+        'VP': [['V']],
+        'N': [['n' + str(i)] for i in range(1, number_of_nouns+1)],
+        'V': [['v' + str(i)] for i in range(1, number_of_verbs+1)]
+    }
+    
+    weightsNVN = {
+        'S': [1],
+        'VP': [1],
+        'N': [1/number_of_nouns for i in range(1, number_of_nouns+1)],
+        'V': [1/number_of_verbs for i in range(1, number_of_verbs+1)]    
+        }
+    
+    cfgNVN = ProbabilisticGrammar(terminals2, non_terminals2, production_rulesNVN,weightsNVN)
+    # Context free grammar
+    
+    print('Creating the stimuli stream')
+    stimuli_stream = RawInputLazy(n_sentences=2000, grammar=cfgNVN)
+    
+    print('Learner initialization')
+    # Configure and initialize learner
+    configRWN = LearnerConfig(n_trials=1000,
+                           border = 'next',
+                           initial_value_chunking=-1.,
+                           initial_value_border=1.,
+                           alpha= 0.1,
+                           beta= 1.9,
+                           positive_reinforcement = 25,
+                           negative_reinforcement = -10,
+                           RW=True)
+    
+    configRWC = LearnerConfig(n_trials=1000,
+                           border = 'cont',
+                           initial_value_chunking=-1.,
+                           initial_value_border=1.,
+                           alpha= 0.1,
+                           beta= 1.9,
+                           positive_reinforcement = 25,
+                           negative_reinforcement = -10,
+                           RW=True)
+    
+    configN = LearnerConfig(n_trials=1000,
+                           border = 'next',
+                           initial_value_chunking=-1.,
+                           initial_value_border=1.,
+                           alpha= 0.1,
+                           beta= 1.9,
+                           positive_reinforcement = 25,
+                           negative_reinforcement = -10,
+                           RW=False)
+    
+    configC = LearnerConfig(n_trials=1000,
+                           border = 'cont',
+                           initial_value_chunking=-1.,
+                           initial_value_border=1.,
+                           alpha= 0.1,
+                           beta= 1.9,
+                           positive_reinforcement = 25,
+                           negative_reinforcement = -10,
+                           RW=False)
+    
+    
+    
+    # Initialize a learner
+    learner = Learner(configN)
+    
+    print('Learning...')
+    # Run learning
+    learner.learn(stimuli_stream)
+    
+    print('Postprocessing')
+    # Plot learning performance (moving average of successes)
+    learner.history.plot_moving_average(15)
+    
+    print('Testing on population')
+    labels = ['Cont','Next','RWCont','RWNext']
+    config = [configC,configN,configRWC,configRWN]
+    # Shared input
+    start = datetime.now()
+    #pop = Population(n_learners=100, config=config, grammar=cfgNVN, stimuli_stream=stimuli_stream)
+    
+    curves = []
+    # Or: per-learner input
+    #factory = lambda: RawInputLazy(n_sentences=2000, grammar=cfgNVN)
+    
+    
+    
+    for conf in config:
+        pop = Population2(n_learners=100, config=conf, stimuli_factory=create_stimuli)
+        
+        pop.train_all(use_multiprocessing=False)
+        curves.append(pop.plot_average_learning_curve(window=10,show=False))
+         
+    end  = datetime.now()
+    
+    for curve, label in zip(curves,labels):
+        plt.plot(curve, label = label)
+    
+    plt.title("Learning Curves Comparison")
+    plt.xlabel("Trial")
+    plt.ylabel("Moving Average Success")
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+    
+    print('Duration: {}'.format(end - start))

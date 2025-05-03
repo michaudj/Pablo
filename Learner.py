@@ -11,6 +11,8 @@ import random
 from dataclasses import dataclass, field
 from typing import List
 
+import matplotlib.pyplot as plt
+
 
 from SChunk import SChunk, ChunkPair
 
@@ -60,6 +62,31 @@ class LearningHistory:
     def record(self, success_value: int, length: int):
         self.success.append(success_value)
         self.sent_len.append(length)
+        
+
+
+    def plot_moving_average(self, window_size=10, show=True, save_path=None):
+        if len(self.success) < window_size:
+            print(f"Not enough data to compute moving average (need at least {window_size}).")
+            return
+
+        ma = [sum(self.success[i:i+window_size]) / window_size 
+              for i in range(len(self.success) - window_size + 1)]
+
+        plt.figure(figsize=(10, 5))
+        plt.plot(ma, label=f'{window_size}-trial moving avg')
+        plt.xlabel('Trial')
+        plt.ylabel('Success rate')
+        plt.title('Learning Progress')
+        plt.grid(True)
+        plt.legend()
+
+        if save_path:
+            plt.savefig(save_path)
+        if show:
+            plt.show()
+        plt.close()
+
 
 
             
