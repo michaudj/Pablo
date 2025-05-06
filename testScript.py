@@ -12,6 +12,8 @@ import matplotlib.pyplot as plt
 
 from datetime import datetime
 
+
+
 def flatten(lst):
     flat_list = []
     for item in lst:
@@ -192,9 +194,9 @@ if __name__ == '__main__':
     
     
     for conf in config:
-        pop = Population2(n_learners=100, config=conf, stimuli_factory=create_stimuli)
+        pop = Population2(n_learners=10, config=conf, stimuli_factory=create_stimuli)
         
-        pop.train_all(use_multiprocessing=False)
+        pop.train_all(use_multiprocessing=True)
         curves.append(pop.plot_average_learning_curve(window=10,show=False))
          
     end  = datetime.now()

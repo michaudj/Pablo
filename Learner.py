@@ -59,8 +59,6 @@ class LongTermMemory():
         if chunk not in self.chunk_values:
             self.chunk_values[chunk] = 0.0
             
-
-
 @dataclass
 class LearningHistory:
     success: List[int] = field(default_factory=list)
@@ -93,9 +91,6 @@ class LearningHistory:
         if show:
             plt.show()
         plt.close()
-
-
-
             
 class WorkingMemory():
     
@@ -117,12 +112,12 @@ class WorkingMemory():
         if is_border and not self.border_within and self.border_before:
             # Good unit
             if reinforcement:
-                self.reinforcer.reinforce(self.events,reinforcement = 'positive')  
+                self.reinforcer.reinforce2(self.events,self.pos)  
             self.learner.history.record(1,sent_length)
         else:
             # Bad unit
             if reinforcement:
-                self.reinforcer.reinforce(self.events,reinforcement = 'negative') 
+                self.reinforcer.reinforce2(self.events,self.negini) 
             self.learner.history.record(0,sent_length)
             
         new_s1, s2_index = self.get_new_s1(stimuli_stream, s2_index, s2)
@@ -179,6 +174,7 @@ class WorkingMemory():
         
     
     def respond_with_chaining(self,stimuli_stream,s1,s2_index,reinforcement = True):
+        # Positive and negative propagation to chunks
         # get the s2 stimuli and make it a chunk
         try:
             s2 = SChunk(stimuli_stream.read_stimuli(s2_index))
@@ -218,6 +214,8 @@ class WorkingMemory():
         return new_s1, s2_index
     
     def respond_with_chaining2(self,stimuli_stream,s1,s2_index,reinforcement = True):
+        # Only positive propagation to chunks
+        
         # get the s2 stimuli and make it a chunk
         try:
             s2 = SChunk(stimuli_stream.read_stimuli(s2_index))
