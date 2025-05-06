@@ -111,45 +111,59 @@ if __name__ == '__main__':
     
     print('Learner initialization')
     # Configure and initialize learner
-    configRWN = LearnerConfig(n_trials=1000,
-                           border = 'next',
-                           initial_value_chunking=-1.,
-                           initial_value_border=1.,
-                           alpha= 0.1,
-                           beta= 1.9,
-                           positive_reinforcement = 25,
-                           negative_reinforcement = -10,
-                           RW=True)
-    
-    configRWC = LearnerConfig(n_trials=1000,
+    n_trial = 1000
+    alpha = 0.1
+    alpha_v = 1
+    beta = 1.9
+    chaining = True
+    RW = True
+    configRWN = LearnerConfig(n_trials=n_trial,
                            border = 'cont',
                            initial_value_chunking=-1.,
                            initial_value_border=1.,
-                           alpha= 0.1,
-                           beta= 1.9,
+                           alpha= alpha,
+                           alpha_v=alpha_v,
+                           beta= beta,
                            positive_reinforcement = 25,
                            negative_reinforcement = -10,
-                           RW=True)
+                           RW=RW,
+                           chaining = chaining)
     
-    configN = LearnerConfig(n_trials=1000,
-                           border = 'next',
-                           initial_value_chunking=-1.,
-                           initial_value_border=1.,
-                           alpha= 0.1,
-                           beta= 1.9,
-                           positive_reinforcement = 25,
-                           negative_reinforcement = -10,
-                           RW=False)
-    
-    configC = LearnerConfig(n_trials=1000,
+    configRWC = LearnerConfig(n_trials=n_trial,
                            border = 'cont',
                            initial_value_chunking=-1.,
                            initial_value_border=1.,
-                           alpha= 0.1,
-                           beta= 1.9,
+                           alpha= alpha,
+                           alpha_v=alpha_v,
+                           beta= beta,
                            positive_reinforcement = 25,
                            negative_reinforcement = -10,
-                           RW=False)
+                           RW=RW,
+                           chaining = False)
+    
+    configN = LearnerConfig(n_trials=n_trial,
+                           border = 'next',
+                           initial_value_chunking=-1.,
+                           initial_value_border=1.,
+                           alpha= alpha,
+                           alpha_v=alpha_v,
+                           beta= beta,
+                           positive_reinforcement = 25,
+                           negative_reinforcement = -10,
+                           RW=RW,
+                           chaining = chaining)
+    
+    configC = LearnerConfig(n_trials=n_trial,
+                           border = 'next',
+                           initial_value_chunking=-1.,
+                           initial_value_border=1.,
+                           alpha= alpha,
+                           alpha_v=alpha_v,
+                           beta= beta,
+                           positive_reinforcement = 25,
+                           negative_reinforcement = -10,
+                           RW=RW,
+                           chaining = False)
     
     
     
@@ -165,7 +179,7 @@ if __name__ == '__main__':
     learner.history.plot_moving_average(15)
     
     print('Testing on population')
-    labels = ['Cont','Next','RWCont','RWNext']
+    labels = ['Next','NextChaining','Cont','ContChaining']
     config = [configC,configN,configRWC,configRWN]
     # Shared input
     start = datetime.now()

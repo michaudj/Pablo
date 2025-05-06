@@ -27,10 +27,12 @@ class LearnerConfig:
     initial_value_chunking: float = -1.
     initial_value_border: float = 1.
     alpha: float = 0.2
+    alpha_v: float = 0.3
     beta: float = 1.
     positive_reinforcement: float = 5.
     negative_reinforcement: float = -10.
     RW: bool = False
+    chaining: bool = False
     # parameter for choosing type of learner (RW or not.)
 
 class LongTermMemory():
@@ -39,6 +41,7 @@ class LongTermMemory():
         self.initial_value_chunking = config.initial_value_chunking
         self.initial_value_border = config.initial_value_border
         self.behaviour_repertoire = {} # dictionary of where the keys are couples of chunks and the value a list of behavioural values
+        self.chunk_values = {}
 
     
     def add(self,couple):
@@ -51,6 +54,10 @@ class LongTermMemory():
         subcouples = couple.get_sub_couples()
         for c in subcouples:
             self.add(c)
+            
+    def update_chunk(self,chunk):
+        if chunk not in self.chunk_values:
+            self.chunk_values[chunk] = 0.0
             
 
 
@@ -100,6 +107,8 @@ class WorkingMemory():
         self.border_within = False
         self.border_type = config.border
         self.beta = config.beta
+        self.pos = config.positive_reinforcement
+        self.neg = config.negative_reinforcement
         
     def place_border_and_reinforce(self,stimuli_stream,s2,s2_index, reinforcement = True):
         self.learner.n_reinf += 1
@@ -116,14 +125,7 @@ class WorkingMemory():
                 self.reinforcer.reinforce(self.events,reinforcement = 'negative') 
             self.learner.history.record(0,sent_length)
             
-        if self.border_type == 'next':
-            new_s1,s2_index = stimuli_stream.next_beginning_sent(s2_index)
-            new_s1 = SChunk(new_s1)
-        else:
-            self.border_before = stimuli_stream.border_before[s2_index]
-            new_s1,s2_index = s2, s2_index + 1
-
-        self.border_within = False
+        new_s1, s2_index = self.get_new_s1(stimuli_stream, s2_index, s2)
         
         self.events = []
         
@@ -160,6 +162,108 @@ class WorkingMemory():
             new_s1, s2_index = self.chunk(pair, response, stimuli_stream,s2_index)     
         return new_s1, s2_index
     
+    def is_border_correct(self,stimuli_stream,s2_index):
+        is_border = stimuli_stream.border_before[s2_index]
+        return is_border and not self.border_within and self.border_before
+    
+    def get_new_s1(self,stimuli_stream,s2_index,s2):
+        if self.border_type == 'next':
+            new_s1,s2_index = stimuli_stream.next_beginning_sent(s2_index)
+            new_s1 = SChunk(new_s1)
+        else:
+            self.border_before = stimuli_stream.border_before[s2_index]
+            new_s1,s2_index = s2, s2_index + 1
+
+        self.border_within = False
+        return new_s1, s2_index
+        
+    
+    def respond_with_chaining(self,stimuli_stream,s1,s2_index,reinforcement = True):
+        # get the s2 stimuli and make it a chunk
+        try:
+            s2 = SChunk(stimuli_stream.read_stimuli(s2_index))
+        except IndexError:
+            sys.exit("Index doesn't exist. End of input reached before learning is finished.")
+        
+        pair = ChunkPair((s1,s2))
+        self.learner.ltm.update_repertoire(pair)
+
+        response = self.choose_behaviour(pair)
+
+        event = [(pair,response)]
+         
+        if response == 0: # boundary placement
+            self.learner.n_reinf += 1
+            sent_length = stimuli_stream.length_current_sent(s2_index - 1)
+            if self.is_border_correct(stimuli_stream,s2_index):
+                reward = self.pos
+                self.learner.history.record(1,sent_length)
+            else:
+                reward = self.neg
+                self.learner.history.record(0,sent_length)
+            
+            new_s1, s2_index = self.get_new_s1(stimuli_stream,s2_index, s2)
+               
+        else: # some type of chunking occurs
+            # Check if there was a border
+            new_s1, s2_index = self.chunk(pair, response, stimuli_stream,s2_index) 
+            self.learner.ltm.update_chunk(new_s1)
+            reward = self.learner.ltm.chunk_values[new_s1]
+            
+        # Reinforce the event and the value of s1.
+        if reinforcement:
+            self.reinforcer.reinforce2(event,reward)
+            self.reinforcer.reinforce_value(pair.s1,reward)
+            
+        return new_s1, s2_index
+    
+    def respond_with_chaining2(self,stimuli_stream,s1,s2_index,reinforcement = True):
+        # get the s2 stimuli and make it a chunk
+        try:
+            s2 = SChunk(stimuli_stream.read_stimuli(s2_index))
+        except IndexError:
+            sys.exit("Index doesn't exist. End of input reached before learning is finished.")
+        
+        pair = ChunkPair((s1,s2))
+        self.learner.ltm.update_repertoire(pair)
+
+        response = self.choose_behaviour(pair)
+
+        event = [(pair,response)]
+         
+        if response == 0: # boundary placement
+            self.learner.n_reinf += 1
+            sent_length = stimuli_stream.length_current_sent(s2_index - 1)
+            if self.is_border_correct(stimuli_stream,s2_index):
+                reward = self.pos
+                self.learner.history.record(1,sent_length)
+                if reinforcement:
+                    self.reinforcer.reinforce2(event,reward)
+                    self.reinforcer.reinforce_value(pair.s1,reward)
+            else:
+                reward = self.neg
+                self.learner.history.record(0,sent_length)
+                if reinforcement:
+                    self.reinforcer.reinforce2(event,reward)
+                    #self.reinforcer.reinforce_value(pair.s1,reward)
+            
+            new_s1, s2_index = self.get_new_s1(stimuli_stream,s2_index, s2)
+               
+        else: # some type of chunking occurs
+            # Check if there was a border
+            new_s1, s2_index = self.chunk(pair, response, stimuli_stream,s2_index) 
+            self.learner.ltm.update_chunk(new_s1)
+            reward = self.learner.ltm.chunk_values[new_s1]
+            if reinforcement:
+                self.reinforcer.reinforce2(event,reward)
+                self.reinforcer.reinforce_value(pair.s1,reward)
+            
+        # # Reinforce the event and the value of s1.
+        # if reinforcement:
+        #     self.reinforcer.reinforce2(event,reward)
+        #     self.reinforcer.reinforce_value(pair.s1,reward)
+            
+        return new_s1, s2_index
     
     def choose_behaviour(self,couple):
         b_range = len(self.learner.ltm.behaviour_repertoire[couple])
@@ -187,6 +291,7 @@ class Reinforcer():
     
     def __init__(self,learner,config: LearnerConfig):
         self.alpha = config.alpha
+        self.alpha_v = config.alpha_v
         self.positive_reinforcement = config.positive_reinforcement
         self.negative_reinforcement = config.negative_reinforcement
         self.learner = learner
@@ -235,7 +340,25 @@ class Reinforcer():
     
                 for p,rr in subevents:
                     self.learner.ltm.behaviour_repertoire[p][rr] += self.alpha * (u - self.learner.ltm.behaviour_repertoire[p][rr])
+                    
+    def reinforce2(self,events, reward):
+        u = reward
 
+        for couple,r in events:
+            if self.RW:
+                subevents, Q = self.get_sub_eventsRW((couple,r))
+                
+                for p,rr in subevents:
+                    self.learner.ltm.behaviour_repertoire[p][rr]+= self.alpha * (u - Q)
+            else:
+                subevents=self.get_sub_events((couple,r))
+    
+                for p,rr in subevents:
+                    self.learner.ltm.behaviour_repertoire[p][rr] += self.alpha * (u - self.learner.ltm.behaviour_repertoire[p][rr])
+
+    def reinforce_value(self,chunk,reward):
+        self.learner.ltm.update_chunk(chunk)
+        self.learner.ltm.chunk_values[chunk] += self.alpha_v * (reward - self.learner.ltm.chunk_values[chunk])
 
 
 class Learner():
@@ -248,6 +371,7 @@ class Learner():
         self.ltm = LongTermMemory(config)
         self.wm = WorkingMemory(self,config) # alpha, 
         self.history = LearningHistory()
+        self.chaining = config.chaining
         
         
         # self.border_type = border # or 'default'
@@ -268,7 +392,10 @@ class Learner():
         s2_index = 1
         #for t in range(self.n_trials):
         while self.n_reinf <= self.n_trials:
-            s1, s2_index = self.wm.respond(stimuli_stream, s1, s2_index)
+            if not self.chaining:
+                s1, s2_index = self.wm.respond(stimuli_stream, s1, s2_index)
+            else:
+                s1, s2_index = self.wm.respond_with_chaining2(stimuli_stream, s1, s2_index)
 
         self.final_index = s2_index
         
