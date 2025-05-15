@@ -10,8 +10,14 @@ import numpy as np
 import random
 from dataclasses import dataclass, field
 from typing import List
+import pandas as pd
+
+from openpyxl import load_workbook
+from openpyxl.styles import Font
+from openpyxl.styles import PatternFill
 
 import matplotlib.pyplot as plt
+
 
 
 from SChunk import SChunk, ChunkPair
@@ -59,6 +65,78 @@ class LongTermMemory():
         if chunk not in self.chunk_values:
             self.chunk_values[chunk] = 0.0
             
+
+
+
+    def write_behaviour_repertoire_to_xlsx(self, filename="structured_output.xlsx"):
+        # Extract key attributes and values
+        rows = []
+        for key, values in self.behaviour_repertoire.items():
+            for i, value in enumerate(values):
+                rows.append({
+                    's1': repr(key.s1),
+                    's2': repr(key.s2),
+                    'length': len(key.s1),
+                    'index': i,
+                    'value': value
+                })
+    
+        # Create DataFrame
+        df = pd.DataFrame(rows)
+    
+        # Pivot to wide format
+        df_pivoted = df.pivot_table(
+            index=['length', 's1', 's2'],
+            columns='index',
+            values='value',
+            aggfunc='first'
+        ).reset_index()
+    
+        # Sort by length, s1, s2
+        df_pivoted = df_pivoted.sort_values(by=['length', 's1', 's2'])
+    
+        # Write to Excel
+        df_pivoted.to_excel(filename, index=False)
+    
+        # Post-process Excel file with openpyxl
+        wb = load_workbook(filename)
+        ws = wb.active
+    
+        # Bold headers
+        for cell in ws[1]:
+            cell.font = Font(bold=True)
+    
+        # Freeze top row
+        ws.freeze_panes = 'A2'
+        
+    
+        # Define fill color for max value
+        highlight_fill = PatternFill(start_color="FFD700", end_color="FFD700", fill_type="solid")  # Gold
+        
+        # Find the first data row (assumed row 2)
+        first_data_row = 2
+        last_row = ws.max_row
+        first_data_col = 4  # Adjust if your "value" columns start later
+        last_col = ws.max_column
+        
+        # Iterate through rows and highlight the max value
+        for row in ws.iter_rows(min_row=first_data_row, max_row=last_row,
+                                min_col=first_data_col, max_col=last_col):
+            # Extract values and find max
+            values = [cell.value for cell in row if isinstance(cell.value, (int, float))]
+            if not values:
+                continue
+            max_val = max(values)
+        
+            # Highlight all cells with the max value
+            for cell in row:
+                if cell.value == max_val:
+                    cell.fill = highlight_fill
+
+    
+        wb.save(filename)
+
+            
 @dataclass
 class LearningHistory:
     success: List[int] = field(default_factory=list)
@@ -91,6 +169,48 @@ class LearningHistory:
         if show:
             plt.show()
         plt.close()
+        
+
+    
+    def plot_moving_average_by_length_timed(self, window_size=10, show=True, save_path=None, lengths=None):
+        data = pd.DataFrame({
+            'success': self.success,
+            'length': self.sent_len
+        })
+    
+        if lengths is None:
+            lengths = sorted(data['length'].unique())
+    
+        plt.figure(figsize=(10, 5))
+        learning_curves = {}
+    
+        for length in lengths:
+            # Create a time-aligned series: NaN for trials not matching the length
+            mask = data['length'] == length
+            successes = data['success'].where(mask)
+    
+            # Compute moving average ignoring NaNs
+            ma = successes.rolling(window=window_size, min_periods=1).mean()
+    
+            plt.plot(ma, label=f'len={length}')
+            
+            # Store the aligned success list (not the moving avg) for averaging across learners
+            learning_curves[length] = list(successes)
+    
+        plt.xlabel('Trial (global time)')
+        plt.ylabel('Success rate')
+        plt.title(f'Learning Progress by Sentence Length (Aligned in Time, window={window_size})')
+        plt.grid(True)
+        plt.legend()
+    
+        if save_path:
+            plt.savefig(save_path)
+        if show:
+            plt.show()
+        plt.close()
+        
+        return learning_curves
+
             
 class WorkingMemory():
     
@@ -117,7 +237,7 @@ class WorkingMemory():
         else:
             # Bad unit
             if reinforcement:
-                self.reinforcer.reinforce2(self.events,self.negini) 
+                self.reinforcer.reinforce2(self.events,self.neg) 
             self.learner.history.record(0,sent_length)
             
         new_s1, s2_index = self.get_new_s1(stimuli_stream, s2_index, s2)
@@ -396,5 +516,6 @@ class Learner():
                 s1, s2_index = self.wm.respond_with_chaining2(stimuli_stream, s1, s2_index)
 
         self.final_index = s2_index
+        
         
         

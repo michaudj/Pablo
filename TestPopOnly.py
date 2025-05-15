@@ -14,7 +14,7 @@ Created on Thu May  1 22:24:02 2025
 
 #from RawInput import RawInput, RawInputLazy, ProbabilisticGrammar
 from Learner import LearnerConfig
-from Population import Population2
+from Population import Population
 from grammars import create_stimuliNVN, create_stimuliRCP,create_stimuliMD
 import matplotlib.pyplot as plt
 
@@ -67,9 +67,9 @@ if __name__ == '__main__':
     
     for conf,label in zip(config,labels):
         print('Running '+label)
-        pop = Population2(n_learners=1000, config=conf, stimuli_factory=create_stimuliMD)
+        pop = Population(n_learners=10, config=conf, stimuli_factory=create_stimuliMD)
         
-        pop.train_all(use_multiprocessing=True)
+        pop.train_all(use_multiprocessing=False)
         curves.append(pop.plot_average_learning_curve(window=10,show=False))
          
     end  = datetime.now()

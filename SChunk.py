@@ -83,7 +83,7 @@ class SChunk:
         return str(structure)  # for non-list elements, return as string
 
     def __repr__(self) -> str:
-        return f"SChunk({self.structure})"
+        return f"{self.structure}"
 
     def __hash__(self):
         return hash(self._normalized)  # hash based on normalized structure
@@ -175,7 +175,10 @@ class SChunk:
 
     def __len__(self) -> int:
         """Returns the number of leaf elements in the structure."""
-        return len(self.flatten_structure())
+        if isinstance(self.structure, list):
+            return len(self.flatten_structure())
+        else:
+            return 1
 
     @staticmethod
     def _modify_element_at_depth(nested_list: List[Any], depth: int, new_value: Any):
@@ -230,6 +233,7 @@ if testing:
     
     
     a = SChunk("A")
+    print(len(a))
     b = SChunk("B")
     ab = SChunk([a.structure, b.structure])
     abc = ab.chunk_at_depth(b, depth=1)

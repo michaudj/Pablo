@@ -8,7 +8,7 @@ Created on Tue May  6 11:46:29 2025
 
 #from RawInput import RawInput, RawInputLazy, ProbabilisticGrammar
 from Learner import LearnerConfig
-from Population import Population2
+from Population import Population
 from grammars import create_stimuliNVN, create_stimuliRCP,create_stimuli_rel
 import matplotlib.pyplot as plt
 
@@ -61,7 +61,7 @@ if __name__ == '__main__':
     
     for conf,label in zip(config,labels):
         print('Running '+label)
-        pop = Population2(n_learners=10, config=conf, stimuli_factory=create_stimuli_rel)
+        pop = Population(n_learners=10, config=conf, stimuli_factory=create_stimuli_rel)
         
         pop.train_all(use_multiprocessing=True)
         curves.append(pop.plot_average_learning_curve(window=10,show=False))

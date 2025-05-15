@@ -7,7 +7,7 @@ Created on Thu May  1 22:24:02 2025
 
 from RawInput import RawInput, RawInputLazy, ProbabilisticGrammar
 from Learner import LearnerConfig, Learner
-from Population import Population, Population2
+from Population import Population
 import matplotlib.pyplot as plt
 
 from datetime import datetime
@@ -194,9 +194,9 @@ if __name__ == '__main__':
     
     
     for conf in config:
-        pop = Population2(n_learners=10, config=conf, stimuli_factory=create_stimuli)
+        pop = Population(n_learners=10, config=conf, stimuli_factory=create_stimuli)
         
-        pop.train_all(use_multiprocessing=True)
+        pop.train_all(use_multiprocessing=False)
         curves.append(pop.plot_average_learning_curve(window=10,show=False))
          
     end  = datetime.now()
@@ -212,3 +212,5 @@ if __name__ == '__main__':
     plt.show()
     
     print('Duration: {}'.format(end - start))
+    
+    
