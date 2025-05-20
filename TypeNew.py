@@ -13,8 +13,6 @@ Created on Wed Jan  4 20:22:29 2023
 """
 
 import re
-#import json
-#from json import JSONEncoder
 import copy
 from itertools import accumulate
 from random import random
@@ -73,7 +71,7 @@ class Type:
         return tt
         
     def __hash__(self):
-        return hash(frozenset(self.formula))
+        return hash((self.formula))
         
     # define the string representation of the instance
     def __repr__(self):
@@ -84,14 +82,14 @@ class Type:
     def __eq__(self, other):
         return self is other
     
-    def split_gpt(self, pu=0.5, preferred_prim='New', bad_s1=None, bad_s2=None):
+    def split_gpt(self, pu=0.5, prim='New', bad_s1=None, bad_s2=None):
         """Splits the Type into two subtypes based on a probability.
     
         Args:
             pu (float): Probability to split by 'u' vs 'o'.
             preferred_prim (Type or str): Primitive type to use, or 'New'.
-            bad_s1 (list of Type): Types not allowed on left split.
-            bad_s2 (list of Type): Types not allowed on right split.
+            bad_s1 (dict of Type): Types not allowed on left split.
+            bad_s2 (dict of Type): Types not allowed on right split.
 
         Returns:
             list of Type: Two resulting Types after split.
@@ -106,8 +104,8 @@ class Type:
         use_u_split = random() < pu
 
         # Handle preferred primitive
-        if isinstance(preferred_prim, Type) and preferred_prim.is_primitive():
-            prim_type = preferred_prim
+        if isinstance(prim, Type) and prim.is_primitive():
+            prim_type = prim
         else:
             prim_type = None  # will generate new if needed
 
@@ -542,6 +540,7 @@ t2 = Type("1u0o2")
 t5 = Type("dd")
 t4 = Type("4u2o3")
 ttt = Type('')
+
 print(t1.is_primitive())
 print(t2.is_primitive())
 print(t3.is_primitive())
@@ -553,9 +552,9 @@ print(ttt.is_empty())
 print('???????????????????????????????')
 
 tt = Type("0")
-types = tt.split(pu=0.5)
+types = tt.split_gpt(pu=0.5)
 print(types)
-ttypes= types[0].split(pu=0.5,prim='New') + types[1].split(pu=0.5)
+ttypes= types[0].split_gpt(pu=0.5,prim='New') + types[1].split_gpt(pu=0.5)
 print(ttypes)
 tctypes = []
 for ttt in ttypes:
@@ -614,7 +613,7 @@ types = tt.split(pu=0.5)
 print(types)
 bad_s1 = {Type('0'):-1,Type('1'):-2}
 bad_s2 = {Type('0'):-1,Type('1'):-2,Type('2'):-2}
-ttypes= types[0].split(pu=0.5,prim='New',bad_s1=bad_s1,bad_s2=bad_s2) + types[1].split(pu=0.5)
+ttypes= types[0].split_gpt(pu=0.5,prim='New',bad_s1=bad_s1,bad_s2=bad_s2) + types[1].split_gpt(pu=0.5)
 print(ttypes)
 tctypes = []
 for ttt in ttypes:
