@@ -73,7 +73,7 @@ class Type:
         return tt
         
     def __hash__(self):
-        return hash(frozenset(self.formula))
+        return hash((self.formula))
         
     # define the string representation of the instance
     def __repr__(self):
