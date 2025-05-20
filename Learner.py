@@ -11,6 +11,7 @@ import random
 from dataclasses import dataclass, field
 from typing import List
 import pandas as pd
+from TypeNew import Type, TChunk
 
 from openpyxl import load_workbook
 from openpyxl.styles import Font
@@ -39,6 +40,8 @@ class LearnerConfig:
     negative_reinforcement: float = -10.
     RW: bool = False
     chaining: bool = False
+    bad_type_threshold: float = -1
+    good_type_threshold: float = 0.1
     # parameter for choosing type of learner (RW or not.)
 
 class LongTermMemory():
@@ -46,8 +49,11 @@ class LongTermMemory():
     def __init__(self,config):
         self.initial_value_chunking = config.initial_value_chunking
         self.initial_value_border = config.initial_value_border
-        self.behaviour_repertoire = {} # dictionary of where the keys are couples of chunks and the value a list of behavioural values
-        self.chunk_values = {}
+        self.behaviour_repertoire = dict() # dictionary of where the keys are couples of chunks and the value a list of behavioural values
+        self.chunk_values = dict()
+        
+        self.chunk_type_associations = dict()
+        self.typatory = dict()
 
     
     def add(self,couple):
@@ -64,6 +70,16 @@ class LongTermMemory():
     def update_chunk(self,chunk):
         if chunk not in self.chunk_values:
             self.chunk_values[chunk] = 0.0
+            
+    def update_typatory(self,ttype):
+        if ttype not in self.typatory:
+            self.typatory[ttype] = 0.0
+            
+    def update_chunk_type_associations(self,chunk,ttype):
+        if chunk not in self.chunk_type_associations:
+            self.chunk_type_associations[chunk] = dict()
+        if ttype not in self.chunk_type_associations[chunk]:
+            self.chunk_type_associations[chunk][ttype] = 0.0
             
 
 
@@ -217,43 +233,17 @@ class WorkingMemory():
     def __init__(self,learner,config: LearnerConfig):
         self.learner = learner
         self.reinforcer = Reinforcer(learner,config)
+        self.type_assigner = TypeAssigner(learner,config)
         self.events = []
+        self.typing_events = []
+        self.ts1_list = Type.EMPTY
+        self.typing_used = False
         self.border_before = True
         self.border_within = False
         self.border_type = config.border
         self.beta = config.beta
         self.pos = config.positive_reinforcement
         self.neg = config.negative_reinforcement
-        
-    def place_border_and_reinforce(self,stimuli_stream,s2,s2_index, reinforcement = True):
-        self.learner.n_reinf += 1
-        sent_length = stimuli_stream.length_current_sent(s2_index - 1)
-        is_border = stimuli_stream.border_before[s2_index]
-        if is_border and not self.border_within and self.border_before:
-            # Good unit
-            if reinforcement:
-                self.reinforcer.reinforce2(self.events,self.pos)  
-            self.learner.history.record(1,sent_length)
-        else:
-            # Bad unit
-            if reinforcement:
-                self.reinforcer.reinforce2(self.events,self.neg) 
-            self.learner.history.record(0,sent_length)
-            
-        new_s1, s2_index = self.get_new_s1(stimuli_stream, s2_index, s2)
-        
-        self.events = []
-        
-        return new_s1, s2_index
-
-    def chunk(self,pair,response,stimuli_stream,s2_index):
-        if not self.border_within:
-            self.border_within = stimuli_stream.border_before[s2_index]
-         
-        # Perform chunking at correct level
-        new_s1 = pair.s1.chunk_at_depth(pair.s2,depth=pair.s1.depth+1-response) 
-        s2_index+=1 
-        return new_s1, s2_index
     
     def respond(self,stimuli_stream,s1,s2_index,reinforcement = True):
         # get the s2 stimuli and make it a chunk
@@ -263,23 +253,101 @@ class WorkingMemory():
             sys.exit("Index doesn't exist. End of input reached before learning is finished.")
         
         pair = ChunkPair((s1,s2))
+        # Assign types
+        # Update memory
         self.learner.ltm.update_repertoire(pair)
 
         response = self.choose_behaviour(pair)
 
         self.events.append((pair,response))
-         
+        
         if response == 0: # boundary placement
-            new_s1, s2_index = self.place_border_and_reinforce(stimuli_stream, s2, s2_index, reinforcement=reinforcement)
+            self.learner.n_reinf += 1
+            sent_length = stimuli_stream.length_current_sent(s2_index - 1)
+            if self.is_border_correct(stimuli_stream,s2_index):
+                reward = self.pos
+                self.learner.history.record(1,sent_length)
+                if reinforcement:
+                    self.reinforcer.reinforce2(self.events,reward)
+                    #self.reinforcer.reinforce_value_hierarchical(pair.s1,reward)
+            else:
+                reward = self.neg
+                self.learner.history.record(0,sent_length)
+                if reinforcement:
+                    self.reinforcer.reinforce2(self.events,reward)
+                    #self.reinforcer.reinforce_value(pair.s1,reward)
+            
+            new_s1, s2_index = self.get_new_s1(stimuli_stream,s2_index, s2)
+            
+            self.events = []
                
         else: # some type of chunking occurs
-            # Check if there was a border
-            new_s1, s2_index = self.chunk(pair, response, stimuli_stream,s2_index)     
+            new_s1, s2_index = self.chunk(pair, response, stimuli_stream,s2_index) 
+  
+        return new_s1, s2_index
+    
+    def respond_with_type(self,stimuli_stream,s1,s2_index,reinforcement = True):
+        # get the s2 stimuli and make it a chunk
+        try:
+            s2 = SChunk(stimuli_stream.read_stimuli(s2_index))
+        except IndexError:
+            sys.exit("Index doesn't exist. End of input reached before learning is finished.")
+        
+        pair = ChunkPair((s1,s2))
+        (self.ts1, ts2) = self.type_assigner.assign_type(pair,self.ts1) # self.ts1 is a TChunk, while ts2 is a Type object 
+        # Assign types
+        # Update memory
+        self.learner.ltm.update_repertoire(pair)
+
+        response = self.choose_behaviour_with_types(pair, (self.ts1,ts2)) # Set also whether self.typing_used is True or False
+
+        self.events.append((pair,response))
+        
+        
+        if response == 0: # boundary placement
+            self.learner.n_reinf += 1
+            sent_length = stimuli_stream.length_current_sent(s2_index - 1)
+            
+            if self.is_border_correct(stimuli_stream,s2_index):
+                reward = self.pos
+                self.learner.history.record(1,sent_length)
+                # if not self.typing_used:
+                #   self.type_assigner.type_sentence(pair.s1)
+                #   self.typing_events = self.extract_typing_events()
+                if reinforcement:
+                    self.reinforcer.reinforce2(self.events,reward)
+                    self.reinforcer.reinforce_types(self.typing_events,reward)
+            else:
+                reward = self.neg
+                self.learner.history.record(0,sent_length)
+                if reinforcement:
+                    self.reinforcer.reinforce2(self.events,reward)
+                    #if self.typing_used:
+                    #   self.typing_events = self.extract_typing_events()
+                    #   self.reinforcer.reinforce_types(self.typing_events,reward)
+            
+            new_s1, s2_index = self.get_new_s1(stimuli_stream,s2_index, s2)
+            
+            self.events = []
+            self.typing_events = []
+               
+        else: # some type of chunking occurs
+            new_s1, s2_index = self.chunk(pair, response, stimuli_stream,s2_index) 
+  
         return new_s1, s2_index
     
     def is_border_correct(self,stimuli_stream,s2_index):
         is_border = stimuli_stream.border_before[s2_index]
         return is_border and not self.border_within and self.border_before
+    
+    def chunk(self,pair,response,stimuli_stream,s2_index):
+        if not self.border_within:
+            self.border_within = stimuli_stream.border_before[s2_index]
+         
+        # Perform chunking at correct level
+        new_s1 = pair.s1.chunk_at_depth(pair.s2,depth=pair.s1.depth+1-response) 
+        s2_index+=1 
+        return new_s1, s2_index
     
     def get_new_s1(self,stimuli_stream,s2_index,s2):
         if self.border_type == 'next':
@@ -292,6 +360,9 @@ class WorkingMemory():
         self.border_within = False
         return new_s1, s2_index
         
+    def extract_typing_events(self):
+        # Use the structure of self.ts1 to extract the typing events
+        pass
     
     def respond_with_chaining(self,stimuli_stream,s1,s2_index,reinforcement = True):
         # Positive and negative propagation to chunks
@@ -376,11 +447,6 @@ class WorkingMemory():
                 self.reinforcer.reinforce2(event,reward)
                 self.reinforcer.reinforce_value_hierarchical(pair.s1,reward)
             
-        # # Reinforce the event and the value of s1.
-        # if reinforcement:
-        #     self.reinforcer.reinforce2(event,reward)
-        #     self.reinforcer.reinforce_value(pair.s1,reward)
-            
         return new_s1, s2_index
     
     def choose_behaviour(self,couple):
@@ -404,6 +470,9 @@ class WorkingMemory():
         # Take the average
         z /= norm_vec
         return z 
+
+    def choose_behaviour_with_types(self, pair, types_pair):
+        pass
             
 class Reinforcer():
     
@@ -490,6 +559,43 @@ class Reinforcer():
         for c in chunks_list:
             self.learner.ltm.update_chunk(c)
             self.learner.ltm.chunk_values[c] += self.alpha_v * (reward - self.learner.ltm.chunk_values[c])
+
+class TypeAssigner():
+    
+    def __init__(self, learner, config: LearnerConfig):
+        self.learner = learner
+        self.bad_type_threshold = config.bad_type_threshold
+        self.good_type_threshold = config.good_type_threshold
+        pass
+    
+    def assign_type(self, pair: ChunkPair):
+        # Do type assignment taking into account the values associated to chunk and types
+        # update longterm memory
+        return (Type.EMPTY, Type.EMPTY)
+    
+    def type_sentence(self, s1: SChunk):
+        pass
+    
+    def extract_bad_types(self, chunk: SChunk):
+        def filter_dict_below_threshold(data,threshold):
+            result = {k: v for k, v in data.items() if v < threshold}
+            return result if result else None
+        
+        if chunk in self.learner.ltm.chunk_type_associations:
+            return filter_dict_below_threshold(self.learner.ltm.chunk_type_associations[chunk],self.bad_type_threshold)
+        else:
+            return None
+        
+    def extract_good_types(self, chunk: SChunk):
+        def filter_dict_above_threshold(data,threshold):
+            result = {k: v for k, v in data.items() if v > threshold}
+            return result if result else None
+        
+        if chunk in self.learner.ltm.chunk_type_associations:
+            return filter_dict_above_threshold(self.learner.ltm.chunk_type_associations[chunk],self.good_type_threshold)
+        else:
+            return None
+
 
 
 
