@@ -59,8 +59,8 @@ limit_value_for_bad_type=-0.5 #very imortant parameter that governs diversity. i
 negative_reinforcement = -2
 positive_reinforcement = 3
 #mechanism variant
-subchunk_learner = 1                                                           #subchunk learner considers all chunking possilbilities. else: superchunk or border are the only possible behaviours
-type_learner = 0                                                               #ATTENTION: subchunk learner and type learner are not compatible! at least 1 of them has to be 0. See point 10 in coices above.
+subchunk_learner = 0                                                           #subchunk learner considers all chunking possilbilities. else: superchunk or border are the only possible behaviours
+type_learner = 1                                                           #ATTENTION: subchunk learner and type learner are not compatible! at least 1 of them has to be 0. See point 10 in coices above.
 #SIMULATION
 n_trials = 4000
 sentences = n_trials*2
