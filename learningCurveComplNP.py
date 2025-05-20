@@ -19,10 +19,10 @@ if __name__ == '__main__':
     
     print('Learner initialization')
     # Configure and initialize learner
-    n_trial =10000
+    n_trial =300000
     alpha = 0.1
     alpha_v = 1.
-    beta = 1.
+    beta = 1.5
     chaining = True
     RW = True
     configChaining = LearnerConfig(n_trials=n_trial,
@@ -52,8 +52,8 @@ if __name__ == '__main__':
 
     
     print('Testing on population')
-    labels = ['Chaining','NoChaining']
-    config = [configChaining,configNoChaining]
+    labels = ['NoChaining']
+    config = [configNoChaining]
     # Shared input
     start = datetime.now()
     curves = []
@@ -63,8 +63,9 @@ if __name__ == '__main__':
         print('Running '+label)
         pop = Population(n_learners=10, config=conf, stimuli_factory=create_stimuli_ComplNP)
         
-        pop.train_all(use_multiprocessing=False)
-        curves.append(pop.plot_average_learning_curve(window=10,show=False))
+        pop.train_all(use_multiprocessing=True)
+        pop.plot_average_learning_by_length(window_size=200)
+        curves.append(pop.plot_average_learning_curve(window=100,show=False))
          
     end  = datetime.now()
     

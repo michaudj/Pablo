@@ -175,16 +175,19 @@ class Population:
     def _train_learner(index, config, stimuli_factory):
         learner = Learner(config=config)
         learner.learn(stimuli_factory())
-        return learner.history.success
+        return learner.history
 
     def train_all(self, use_multiprocessing: bool = False):
         if use_multiprocessing and not self.shared_input:
             with Pool(processes=min(cpu_count(), self.n_learners)) as pool:
                 train_fn = functools.partial(self._train_learner, config=self.config, stimuli_factory=self.stimuli_factory)
                 results = pool.map(train_fn, range(self.n_learners))
+            
 
-            for learner, success in zip(self.learners, results):
-                learner.history.success = success
+            for learner, history in zip(self.learners, results):
+                learner.history = history
+                #learner.ltm.behaviour_repertoire = behaviour_repertoire
+
         else:
             for learner in self.learners:
                 stimuli = self.stimuli_stream if self.shared_input else self.stimuli_factory()

@@ -357,7 +357,7 @@ class WorkingMemory():
                 self.learner.history.record(1,sent_length)
                 if reinforcement:
                     self.reinforcer.reinforce2(event,reward)
-                    self.reinforcer.reinforce_value(pair.s1,reward)
+                    self.reinforcer.reinforce_value_hierarchical(pair.s1,reward)
             else:
                 reward = self.neg
                 self.learner.history.record(0,sent_length)
@@ -374,7 +374,7 @@ class WorkingMemory():
             reward = self.learner.ltm.chunk_values[new_s1]
             if reinforcement:
                 self.reinforcer.reinforce2(event,reward)
-                self.reinforcer.reinforce_value(pair.s1,reward)
+                self.reinforcer.reinforce_value_hierarchical(pair.s1,reward)
             
         # # Reinforce the event and the value of s1.
         # if reinforcement:
@@ -477,6 +477,20 @@ class Reinforcer():
     def reinforce_value(self,chunk,reward):
         self.learner.ltm.update_chunk(chunk)
         self.learner.ltm.chunk_values[chunk] += self.alpha_v * (reward - self.learner.ltm.chunk_values[chunk])
+        
+    def reinforce_value_hierarchical(self,chunk,reward):
+        chunks_list = [chunk]
+        try:
+            subchunks = chunk.get_right_subchunks2(0)
+            for s in subchunks:
+                chunks_list.append(s)
+        except ValueError:
+            pass 
+        
+        for c in chunks_list:
+            self.learner.ltm.update_chunk(c)
+            self.learner.ltm.chunk_values[c] += self.alpha_v * (reward - self.learner.ltm.chunk_values[c])
+
 
 
 class Learner():

@@ -232,7 +232,7 @@ def create_stimuli_rel(n_sentences=10_000_000):
 
 def create_stimuli_ComplNP(n_sentences=10_000_000):
     number_of_verbs = 1
-    number_of_nouns = 1
+    number_of_nouns = 5
     number_of_adj = 1
     number_of_relpron = 1
     number_of_det = 1
