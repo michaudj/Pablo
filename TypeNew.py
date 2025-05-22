@@ -419,182 +419,184 @@ class TChunk():
 #           Tests
 #
 ###############################################################################
-     
-a = Type(r"aufubocodd")
-print(a)
-print(a.formula)
-print(re.findall(r"o"+a.right_type()+"$",a.formula))
-print(re.findall(r"^"+a.left_type()+"u",a.formula))
-#print(a.right_compatible_chunks2())
-#print(a.left_compatible_chunks2())
+tests = False
 
-b = Type(r"aufubocodd")
-print(b.left_type())
-print(b.right_type())
-print(b.get_primitives())
-
-
-print('-------------------------------')
-d = Type(r"ddoe")
-e = Type(r"dd")
-f = Type(r"a")
-g = Type(r"auf")
-h = Type(r"buauf")
-#print(f.right_compatible_chunks2())
-#print(f.left_compatible_chunks2())
-print(f.right_compatible_chunks())
-print(f.left_compatible_chunks())
-print(b.is_primitive())
-print(d.is_primitive())
-print(e.is_primitive())
-print(f.is_primitive())
-print(h.is_primitive())
-print(h.is_compatible(g))
-print('Compatibility check for ghost types')
-
-print(str(a)+'+'+str(d)+'='+str(a+d))
-print(str(a)+'+'+str(e)+'='+str(a+e))
-print(str(f)+'+'+str(a)+'='+str(f+a))
-#print(str(g)+'+'+str(a)+'='+str(g+a))
-#print(str(h)+'+'+str(a)+'='+str(h+a))
-
-
-
-
+if tests:    
+    a = Type(r"aufubocodd")
+    print(a)
+    print(a.formula)
+    print(re.findall(r"o"+a.right_type()+"$",a.formula))
+    print(re.findall(r"^"+a.left_type()+"u",a.formula))
+    #print(a.right_compatible_chunks2())
+    #print(a.left_compatible_chunks2())
     
-def reduce_types(types):
-    # make a copy of the list of types
-    remaining_types = types[:]
+    b = Type(r"aufubocodd")
+    print(b.left_type())
+    print(b.right_type())
+    print(b.get_primitives())
     
-    # keep trying to reduce the list of types until it contains only one type
-    while len(remaining_types) > 1:
-        #print(remaining_types)
-        # set the reduced flag to False
-        reduced = False
+    
+    print('-------------------------------')
+    d = Type(r"ddoe")
+    e = Type(r"dd")
+    f = Type(r"a")
+    g = Type(r"auf")
+    h = Type(r"buauf")
+    #print(f.right_compatible_chunks2())
+    #print(f.left_compatible_chunks2())
+    print(f.right_compatible_chunks())
+    print(f.left_compatible_chunks())
+    print(b.is_primitive())
+    print(d.is_primitive())
+    print(e.is_primitive())
+    print(f.is_primitive())
+    print(h.is_primitive())
+    print(h.is_compatible(g))
+    print('Compatibility check for ghost types')
+    
+    print(str(a)+'+'+str(d)+'='+str(a+d))
+    print(str(a)+'+'+str(e)+'='+str(a+e))
+    print(str(f)+'+'+str(a)+'='+str(f+a))
+    #print(str(g)+'+'+str(a)+'='+str(g+a))
+    #print(str(h)+'+'+str(a)+'='+str(h+a))
+    
+    
+    
+    
         
-        # iterate over the remaining types
-        for i, type1 in enumerate(remaining_types[:-1]):
-            type2 = remaining_types[i+1]
-            # if the two types are compatible, reduce them and update the reduced flag
-            if type1.is_compatible(type2):
-                #print('add')
-                #print(type1)
-                #print(type2)
-                #print('result')
-                #print(type1+type2)
-                remaining_types[i] = type1 + type2
-                del remaining_types[i+1]
-                reduced = True
-                break
+    def reduce_types(types):
+        # make a copy of the list of types
+        remaining_types = types[:]
         
-        # if the list of types was not reduced, raise a TypeError
-        if not reduced:
-            return remaining_types
+        # keep trying to reduce the list of types until it contains only one type
+        while len(remaining_types) > 1:
+            #print(remaining_types)
+            # set the reduced flag to False
+            reduced = False
+            
+            # iterate over the remaining types
+            for i, type1 in enumerate(remaining_types[:-1]):
+                type2 = remaining_types[i+1]
+                # if the two types are compatible, reduce them and update the reduced flag
+                if type1.is_compatible(type2):
+                    #print('add')
+                    #print(type1)
+                    #print(type2)
+                    #print('result')
+                    #print(type1+type2)
+                    remaining_types[i] = type1 + type2
+                    del remaining_types[i+1]
+                    reduced = True
+                    break
+            
+            # if the list of types was not reduced, raise a TypeError
+            if not reduced:
+                return remaining_types
+        
+        # return the remaining type
+        return remaining_types
     
-    # return the remaining type
-    return remaining_types
-
-t1 = Type("1o3")
-t3 = Type("3")
-t2 = Type("1u0o2")
-t5 = Type("dd")
-t4 = Type("4u2o3")
-ttt = Type('')
-print(t1.is_primitive())
-print(t2.is_primitive())
-print(t3.is_primitive())
-print(t4.is_primitive())
-print(t5.is_primitive())
-print(ttt.is_primitive())
-print(ttt.is_empty())
-
-print('???????????????????????????????')
-
-tt = Type("0")
-types = tt.split(pu=0.5)
-print(types)
-ttypes= types[0].split(pu=0.5,prim='New') + types[1].split(pu=0.5)
-print(ttypes)
-tctypes = []
-for ttt in ttypes:
-    tctypes.append(TChunk(ttt))
+    t1 = Type("1o3")
+    t3 = Type("3")
+    t2 = Type("1u0o2")
+    t5 = Type("dd")
+    t4 = Type("4u2o3")
+    ttt = Type('')
+    print(t1.is_primitive())
+    print(t2.is_primitive())
+    print(t3.is_primitive())
+    print(t4.is_primitive())
+    print(t5.is_primitive())
+    print(ttt.is_primitive())
+    print(ttt.is_empty())
     
-tttc =tctypes[0].chunk_at_depth(tctypes[1])
-tttc2 = tctypes[2].chunk_at_depth(tctypes[3])
-tchunk = tttc.chunk_at_depth(tttc2)
-print(tchunk)
-reduce_types(ttypes)
-print('Reduced?')
-print(Type.reduce(ttypes))
-print(Type.is_sentence(ttypes))
-#print(types[0].split())
-#print(types[1].split())
-
-#result = reduce_types([t1,t3, t2,t5, t4,t3])
-#print(result)  # prints "a\\b\\c\\d"
-
-tc =TChunk(b)
-print(tc)
-tcc = TChunk(t5)
-print(tcc)
-new_tc =TChunk([tc.structure,tcc.structure])
-print(new_tc)
-if new_tc.is_consistent():
-    print(new_tc.reduce())
-else:
-    print('incompatible types')
-#print(new_tc.is_consistent())
-print('---------------------')
-
-print(tchunk)
-print('right types')
-print(tchunk)
-print(tchunk.right_types())
-print('Test remove structure')
-print(tchunk.remove_structure())
-print(tchunk.get_right_subchunks(tchunk.depth))
-#print(reduce_types(tchunk.remove_structure()))
-list_of_reduced_types = reduce_types(tchunk.remove_structure())
-for chunk in tchunk.get_right_subchunks(tchunk.depth):
-    if type(chunk.structure) is not Type:
-        #print(chunk.structure[0]+chunk.structure[1])
-        list_of_reduced_types.append(chunk.structure[0]+chunk.structure[1])
+    print('???????????????????????????????')
+    
+    tt = Type("0")
+    types = tt.split(pu=0.5)
+    print(types)
+    ttypes= types[0].split(pu=0.5,prim='New') + types[1].split(pu=0.5)
+    print(ttypes)
+    tctypes = []
+    for ttt in ttypes:
+        tctypes.append(TChunk(ttt))
+        
+    tttc =tctypes[0].chunk_at_depth(tctypes[1])
+    tttc2 = tctypes[2].chunk_at_depth(tctypes[3])
+    tchunk = tttc.chunk_at_depth(tttc2)
+    print(tchunk)
+    reduce_types(ttypes)
+    print('Reduced?')
+    print(Type.reduce(ttypes))
+    print(Type.is_sentence(ttypes))
+    #print(types[0].split())
+    #print(types[1].split())
+    
+    #result = reduce_types([t1,t3, t2,t5, t4,t3])
+    #print(result)  # prints "a\\b\\c\\d"
+    
+    tc =TChunk(b)
+    print(tc)
+    tcc = TChunk(t5)
+    print(tcc)
+    new_tc =TChunk([tc.structure,tcc.structure])
+    print(new_tc)
+    if new_tc.is_consistent():
+        print(new_tc.reduce())
     else:
-        list_of_reduced_types.append(chunk.structure)
-        #print(chunk.structure)
-list_of_reduced_types.reverse()
-print(list_of_reduced_types)
-
-
-print('===================================')
-tt = Type("0")
-types = tt.split(pu=0.5)
-print(types)
-bad_s1 = {Type('0'):-1,Type('1'):-2}
-bad_s2 = {Type('0'):-1,Type('1'):-2,Type('2'):-2}
-ttypes= types[0].split(pu=0.5,prim='New',bad_s1=bad_s1,bad_s2=bad_s2) + types[1].split(pu=0.5)
-print(ttypes)
-tctypes = []
-for ttt in ttypes:
-    tctypes.append(TChunk(ttt))
+        print('incompatible types')
+    #print(new_tc.is_consistent())
+    print('---------------------')
     
-tttc =tctypes[0].chunk_at_depth(tctypes[1])
-tttc2 = tctypes[2].chunk_at_depth(tctypes[3])
-tchunk = tttc.chunk_at_depth(tttc2)
-print(ttypes)
-reduce_types(ttypes)
-print('Reduced?')
-print(Type.reduce(ttypes))
-print(Type.is_sentence(ttypes))
-
-print('===================================')
-print(tchunk)
-print(tchunk.get_right_subchunks(tchunk.depth))
-#print(tchunk.is_consistent())
-#print(tchunk)
-#print(tchunk.reduce())
-#print(tchunk)
-print('right types version 1')
-print(tchunk.right_types())
-
-#TChunk(2)
+    print(tchunk)
+    print('right types')
+    print(tchunk)
+    print(tchunk.right_types())
+    print('Test remove structure')
+    print(tchunk.remove_structure())
+    print(tchunk.get_right_subchunks(tchunk.depth))
+    #print(reduce_types(tchunk.remove_structure()))
+    list_of_reduced_types = reduce_types(tchunk.remove_structure())
+    for chunk in tchunk.get_right_subchunks(tchunk.depth):
+        if type(chunk.structure) is not Type:
+            #print(chunk.structure[0]+chunk.structure[1])
+            list_of_reduced_types.append(chunk.structure[0]+chunk.structure[1])
+        else:
+            list_of_reduced_types.append(chunk.structure)
+            #print(chunk.structure)
+    list_of_reduced_types.reverse()
+    print(list_of_reduced_types)
+    
+    
+    print('===================================')
+    tt = Type("0")
+    types = tt.split(pu=0.5)
+    print(types)
+    bad_s1 = {Type('0'):-1,Type('1'):-2}
+    bad_s2 = {Type('0'):-1,Type('1'):-2,Type('2'):-2}
+    ttypes= types[0].split(pu=0.5,prim='New',bad_s1=bad_s1,bad_s2=bad_s2) + types[1].split(pu=0.5)
+    print(ttypes)
+    tctypes = []
+    for ttt in ttypes:
+        tctypes.append(TChunk(ttt))
+        
+    tttc =tctypes[0].chunk_at_depth(tctypes[1])
+    tttc2 = tctypes[2].chunk_at_depth(tctypes[3])
+    tchunk = tttc.chunk_at_depth(tttc2)
+    print(ttypes)
+    reduce_types(ttypes)
+    print('Reduced?')
+    print(Type.reduce(ttypes))
+    print(Type.is_sentence(ttypes))
+    
+    print('===================================')
+    print(tchunk)
+    print(tchunk.get_right_subchunks(tchunk.depth))
+    #print(tchunk.is_consistent())
+    #print(tchunk)
+    #print(tchunk.reduce())
+    #print(tchunk)
+    print('right types version 1')
+    print(tchunk.right_types())
+    
+    #TChunk(2)

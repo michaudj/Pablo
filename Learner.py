@@ -13,11 +13,16 @@ from typing import List
 import pandas as pd
 from TypeNew import Type, TChunk
 
+import math
+
+
 from openpyxl import load_workbook
 from openpyxl.styles import Font
 from openpyxl.styles import PatternFill
 
 import matplotlib.pyplot as plt
+
+from typing import Tuple, Dict, Any, Optional
 
 
 
@@ -25,6 +30,57 @@ from SChunk import SChunk, ChunkPair
 
 import sys
 sys.setrecursionlimit(1500)
+
+
+
+def softmax(weights: Dict, tau: float = 1.0) -> Dict:
+    """Compute softmax distribution with temperature tau."""
+    if not weights:
+        return {}
+    keys, values = zip(*weights.items())
+    scaled = [v / tau for v in values]
+    max_scaled = max(scaled)  # for numerical stability
+    exp_values = [math.exp(s - max_scaled) for s in scaled]
+    total = sum(exp_values)
+    probs = [e / total for e in exp_values]
+    return dict(zip(keys, probs))
+
+def merged_softmax_choice(
+    left: Dict, right: Dict, tau: float = 1.0
+) -> Tuple[str, Optional[object]]:
+    """
+    Returns (side, selected_key) where side ∈ {'left', 'right'}.
+    Handles empty dicts gracefully.
+    """
+    if not left and not right:
+        return random.choice([('left', None), ('right', None)])
+
+    if not left:
+        chosen = softmax_choice(right, tau)
+        return 'right', chosen
+    if not right:
+        chosen = softmax_choice(left, tau)
+        return 'left', chosen
+
+    # Both non-empty: proceed with merged softmax
+    left_soft = softmax(left, tau)
+    right_soft = softmax(right, tau)
+
+    merged_keys = list(left_soft.keys()) + list(right_soft.keys())
+    merged_probs = list(left_soft.values()) + list(right_soft.values())
+
+    chosen_key = random.choices(merged_keys, weights=merged_probs, k=1)[0]
+    if chosen_key in left_soft:
+        return 'left', chosen_key
+    else:
+        return 'right', chosen_key
+
+def softmax_choice(weights: Dict, tau: float = 1.0):
+    """Sample a key from a softmax distribution of weights."""
+    probs = softmax(weights, tau)
+    keys, values = zip(*probs.items())
+    return random.choices(keys, weights=values, k=1)[0]
+
 
 
 @dataclass
@@ -42,6 +98,7 @@ class LearnerConfig:
     chaining: bool = False
     bad_type_threshold: float = -1
     good_type_threshold: float = 0.1
+    tau: float = 2.0 # softmax parameter of TypeAssigner
     # parameter for choosing type of learner (RW or not.)
 
 class LongTermMemory():
@@ -235,7 +292,7 @@ class WorkingMemory():
         self.reinforcer = Reinforcer(learner,config)
         self.type_assigner = TypeAssigner(learner,config)
         self.events = []
-        self.typing_events = []
+        self.typing_events = dict()
         self.ts1_list = Type.EMPTY
         self.typing_used = False
         self.border_before = True
@@ -298,8 +355,10 @@ class WorkingMemory():
         # Assign types
         # Update memory
         self.learner.ltm.update_repertoire(pair)
+        
+        response = self.choose_behaviour(pair)
 
-        response = self.choose_behaviour_with_types(pair, (self.ts1,ts2)) # Set also whether self.typing_used is True or False
+        #response = self.choose_behaviour_with_types(pair, (self.ts1,ts2)) # Set also whether self.typing_used is True or False
 
         self.events.append((pair,response))
         
@@ -311,9 +370,8 @@ class WorkingMemory():
             if self.is_border_correct(stimuli_stream,s2_index):
                 reward = self.pos
                 self.learner.history.record(1,sent_length)
-                # if not self.typing_used:
-                #   self.type_assigner.type_sentence(pair.s1)
-                #   self.typing_events = self.extract_typing_events()
+                if not self.typing_used:
+                   self.type_assigner.type_sentence(pair.s1)
                 if reinforcement:
                     self.reinforcer.reinforce2(self.events,reward)
                     self.reinforcer.reinforce_types(self.typing_events,reward)
@@ -559,6 +617,11 @@ class Reinforcer():
         for c in chunks_list:
             self.learner.ltm.update_chunk(c)
             self.learner.ltm.chunk_values[c] += self.alpha_v * (reward - self.learner.ltm.chunk_values[c])
+            
+    def reinforce_types(self,typing_events,reward):
+        for chunk,typ in typing_events.items():
+            self.learner.ltm.update_chunk_type_associations(chunk,typ)
+            self.learner.ltm.chunk_type_associations[chunk][typ] += self.alpha * (reward - self.learner.ltm.chunk_type_associations[chunk][typ])
 
 class TypeAssigner():
     
@@ -566,6 +629,7 @@ class TypeAssigner():
         self.learner = learner
         self.bad_type_threshold = config.bad_type_threshold
         self.good_type_threshold = config.good_type_threshold
+        self.tau = config.tau
         pass
     
     def assign_type(self, pair: ChunkPair):
@@ -573,28 +637,99 @@ class TypeAssigner():
         # update longterm memory
         return (Type.EMPTY, Type.EMPTY)
     
+    def choose_types(self, typ, s1, s2):
+        def _compatible_pair(typ, left_candidates, right_candidates):
+            # Tries to find a compatible pair
+            chosen_pair = None
+            for lt in left_candidates:
+                for rt in right_candidates:
+                    try:
+                        if lt + rt == typ:
+                            chosen_pair = (lt, rt)
+                            break
+                    except TypeError:
+                        continue
+                if chosen_pair:
+                    break
+            return chosen_pair
+        
+        def _dominant_type(typ, left_candidates, right_candidates,s1,s2):
+            side, chosen = merged_softmax_choice(left_candidates, right_candidates, tau=self.tau)
+
+            if chosen is None:
+                # Fall back to a default random split
+                left_type, right_type =typ.split(pu=0.5, 
+                                                       prim='New',
+                                                       bad_s1= self.extract_bad_types(s1),
+                                                       bad_s2=self.extract_bad_types(s2))
+                return (left_type, right_type)
+            elif side == 'left':
+                left_type, right_type = typ.split(pu=1.0, prim=chosen,bad_s2 = self.extract_bad_types(s2))
+                return (left_type, right_type)
+            else:
+                left_type, right_type = typ.split(pu=0.0, prim=chosen,bad_s1 = self.extract_bad_types(s1))
+                return (left_type, right_type)
+
+        
+        left_candidates = self.extract_good_types(s1)
+        right_candidates = self.extract_good_types(s2)
+        
+        chosen_pair = _compatible_pair(typ,left_candidates,right_candidates)
+        
+            
+        if not chosen_pair: # No compatible pairs have been found
+                # Choose randomly a right of a left type that is good and construct the corresponding type on the other side
+            chosen_pair = _dominant_type(typ,left_candidates,right_candidates,s1,s2)
+            
+        return chosen_pair
+    
+    def propagate_types(self,
+                        chunk: SChunk,
+                        current_type: Type) -> None:
+        
+        self.learner.wm.typing_events[chunk] = current_type
+    
+        if not isinstance(chunk.structure, list):
+            return  # Base case: it's a leaf
+        
+        # Propagate to children
+        left_chunk = chunk.get_left()
+        right_chunk = chunk.get_right()
+        
+        
+        left_type, right_type = self.choose_types(current_type,left_chunk,right_chunk)
+        
+        self.propagate_types(left_chunk, left_type)
+        self.propagate_types(right_chunk, right_type)
+
+    
     def type_sentence(self, s1: SChunk):
-        pass
+        typ = Type.SENTENCE # start with the sentence type
+        # Get good and bad types for the components of s1 if its structure is complex
+        self.learner.wm.typing_events = {}
+        self.propagate_types(s1,typ)
+        
+
     
     def extract_bad_types(self, chunk: SChunk):
         def filter_dict_below_threshold(data,threshold):
             result = {k: v for k, v in data.items() if v < threshold}
-            return result if result else None
+            return result if result else {}
         
         if chunk in self.learner.ltm.chunk_type_associations:
             return filter_dict_below_threshold(self.learner.ltm.chunk_type_associations[chunk],self.bad_type_threshold)
         else:
-            return None
+            return {}
         
     def extract_good_types(self, chunk: SChunk):
         def filter_dict_above_threshold(data,threshold):
             result = {k: v for k, v in data.items() if v > threshold}
-            return result if result else None
+            return result if result else {}
         
         if chunk in self.learner.ltm.chunk_type_associations:
             return filter_dict_above_threshold(self.learner.ltm.chunk_type_associations[chunk],self.good_type_threshold)
         else:
-            return None
+            return {}
 
 
 
