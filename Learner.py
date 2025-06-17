@@ -11,7 +11,7 @@ import random
 from dataclasses import dataclass, field
 from typing import List
 import pandas as pd
-from TypeNew import Type, TChunk
+from TypeNew import Type, TChunk, VChunk
 
 import math
 
@@ -96,9 +96,10 @@ class LearnerConfig:
     negative_reinforcement: float = -10.
     RW: bool = False
     chaining: bool = False
-    bad_type_threshold: float = -1
-    good_type_threshold: float = 0.1
+    bad_type_threshold: float = -3
+    good_type_threshold: float = 2.
     tau: float = 2.0 # softmax parameter of TypeAssigner
+    type_on: bool = False
     # parameter for choosing type of learner (RW or not.)
 
 class LongTermMemory():
@@ -137,6 +138,28 @@ class LongTermMemory():
             self.chunk_type_associations[chunk] = dict()
         if ttype not in self.chunk_type_associations[chunk]:
             self.chunk_type_associations[chunk][ttype] = 0.0
+            
+    def decay_chunk_type_values(self):
+        multiplier = 0.999
+        for c in self.chunk_type_associations:
+            for t in self.chunk_type_associations[c]:
+                self.chunk_type_associations[c][t] *= multiplier
+                
+                
+    def clean_chunk_type_associations(self):
+        elements_to_clean = []
+        for c in self.chunk_type_associations:
+            for t in self.chunk_type_associations[c]:
+                if np.abs(self.chunk_type_associations[c][t]) < 0.5:
+                    elements_to_clean.append((c,t))
+                    
+        for (c,t) in elements_to_clean:
+            self.chunk_type_associations[c].pop(t)
+        
+    def display_typings_of_elements(self):
+        for c,d in self.chunk_type_associations.items():
+            if len(c) ==1:
+                print(f'The type of {c} are {d}')
             
 
 
@@ -233,6 +256,7 @@ class LearningHistory:
         plt.plot(ma, label=f'{window_size}-trial moving avg')
         plt.xlabel('Trial')
         plt.ylabel('Success rate')
+        plt.ylim((0,1))
         plt.title('Learning Progress')
         plt.grid(True)
         plt.legend()
@@ -242,6 +266,7 @@ class LearningHistory:
         if show:
             plt.show()
         plt.close()
+        return ma
         
 
     
@@ -293,7 +318,8 @@ class WorkingMemory():
         self.type_assigner = TypeAssigner(learner,config)
         self.events = []
         self.typing_events = dict()
-        self.ts1_list = Type.EMPTY
+        self.ts1 = TChunk(Type.EMPTY)
+        self.ts2 = TChunk(Type.EMPTY)
         self.typing_used = False
         self.border_before = True
         self.border_within = False
@@ -301,6 +327,12 @@ class WorkingMemory():
         self.beta = config.beta
         self.pos = config.positive_reinforcement
         self.neg = config.negative_reinforcement
+    
+    def get_responses(self):
+        responses = []
+        for e in self.events:
+            responses.append(e[1])
+        return responses
     
     def respond(self,stimuli_stream,s1,s2_index,reinforcement = True):
         # get the s2 stimuli and make it a chunk
@@ -310,13 +342,14 @@ class WorkingMemory():
             sys.exit("Index doesn't exist. End of input reached before learning is finished.")
         
         pair = ChunkPair((s1,s2))
-        # Assign types
+
         # Update memory
         self.learner.ltm.update_repertoire(pair)
 
         response = self.choose_behaviour(pair)
 
         self.events.append((pair,response))
+        print(self.get_responses())
         
         if response == 0: # boundary placement
             self.learner.n_reinf += 1
@@ -351,47 +384,77 @@ class WorkingMemory():
             sys.exit("Index doesn't exist. End of input reached before learning is finished.")
         
         pair = ChunkPair((s1,s2))
-        (self.ts1, ts2) = self.type_assigner.assign_type(pair,self.ts1) # self.ts1 is a TChunk, while ts2 is a Type object 
-        # Assign types
-        # Update memory
         self.learner.ltm.update_repertoire(pair)
         
-        response = self.choose_behaviour(pair)
+        self.type_assigner.assign_type(pair) # self.ts1 is a TChunk, while ts2 is a TChunk 
 
-        #response = self.choose_behaviour_with_types(pair, (self.ts1,ts2)) # Set also whether self.typing_used is True or False
+        
+        # Check if the structure of ts1 and ts2 are useful as a support for decisions
+        # If so, use them in the decision making process
+        # Otherwise, fallback on the decision making process without types
+        if not self.ts1.is_consistent():  
+            self.typing_used = False
+            response = self.choose_behaviour(pair)
+        else: 
+            self.typing_used = True
+            # I need to fix the following function! Needs to gather support for decisions...
+            response = self.choose_behaviour_with_types(pair) # Set also whether self.typing_used is True or False
 
         self.events.append((pair,response))
+        print(self.get_responses())
+        
+        if False:
+            print(self.ts1)
+            print(self.ts1.is_consistent())
+            print(self.ts2)
+            if response == 0:
+                print('border')
+            else:
+                print('chunk')
+        
+        
         
         
         if response == 0: # boundary placement
             self.learner.n_reinf += 1
+            self.learner.ltm.decay_chunk_type_values()
+            if self.learner.n_reinf % 100 == 0:
+                self.learner.ltm.clean_chunk_type_associations()
             sent_length = stimuli_stream.length_current_sent(s2_index - 1)
             
             if self.is_border_correct(stimuli_stream,s2_index):
                 reward = self.pos
                 self.learner.history.record(1,sent_length)
-                if not self.typing_used:
-                   self.type_assigner.type_sentence(pair.s1)
                 if reinforcement:
                     self.reinforcer.reinforce2(self.events,reward)
-                    self.reinforcer.reinforce_types(self.typing_events,reward)
+                    if not self.typing_used:
+                       self.type_assigner.type_sentence(pair.s1)
+                       self.reinforcer.reinforce_types(self.typing_events,reward)
+                    elif self.ts1.reduce() != Type.SENTENCE:
+                        self.typing_events = self.extract_typing_events(s1,self.ts1)
+                        self.reinforcer.reinforce_types(self.typing_events,self.neg)
+                    else:
+                        self.typing_events = self.extract_typing_events(s1,self.ts1)
+                        self.reinforcer.reinforce_types(self.typing_events,reward)
             else:
                 reward = self.neg
                 self.learner.history.record(0,sent_length)
                 if reinforcement:
                     self.reinforcer.reinforce2(self.events,reward)
-                    #if self.typing_used:
-                    #   self.typing_events = self.extract_typing_events()
-                    #   self.reinforcer.reinforce_types(self.typing_events,reward)
+                    if self.typing_used and self.ts1.reduce() == Type.SENTENCE:
+                       self.typing_events = self.extract_typing_events(s1,self.ts1)
+                       self.reinforcer.reinforce_types(self.typing_events,reward)
             
             new_s1, s2_index = self.get_new_s1(stimuli_stream,s2_index, s2)
             
             self.events = []
-            self.typing_events = []
+            self.typing_events = {}
+            self.typing_used = False
                
         else: # some type of chunking occurs
             new_s1, s2_index = self.chunk(pair, response, stimuli_stream,s2_index) 
-  
+            
+        
         return new_s1, s2_index
     
     def is_border_correct(self,stimuli_stream,s2_index):
@@ -403,7 +466,8 @@ class WorkingMemory():
             self.border_within = stimuli_stream.border_before[s2_index]
          
         # Perform chunking at correct level
-        new_s1 = pair.s1.chunk_at_depth(pair.s2,depth=pair.s1.depth+1-response) 
+        new_s1 = pair.s1.chunk_at_depth(pair.s2,depth=pair.s1.depth+1-response)
+        self.ts1 = self.ts1.chunk_at_depth(self.ts2,depth=pair.s1.depth+1-response)
         s2_index+=1 
         return new_s1, s2_index
     
@@ -411,16 +475,44 @@ class WorkingMemory():
         if self.border_type == 'next':
             new_s1,s2_index = stimuli_stream.next_beginning_sent(s2_index)
             new_s1 = SChunk(new_s1)
+            self.ts1 = TChunk(Type.EMPTY)
+            self.ts2 = TChunk(Type.EMPTY)
         else:
             self.border_before = stimuli_stream.border_before[s2_index]
             new_s1,s2_index = s2, s2_index + 1
+            self.ts1 = self.ts2
+            self.ts2 = TChunk(Type.EMPTY)
 
         self.border_within = False
         return new_s1, s2_index
         
-    def extract_typing_events(self):
+    def extract_typing_events(self,s1,ts1,mapping=None):
+        if mapping is None:
+            mapping = {}
+            
+        schunk = s1
+        tchunk = ts1
+    
+        # Base case: if it's a leaf node (not a list), just map it
+        if not isinstance(schunk.structure, list):
+            mapping[schunk] = tchunk.structure
+            return mapping
+    
+        # Map the current (composite) chunk
+        mapping[schunk] = tchunk.reduce()
+    
+        # Recurse on left and right subchunks
+        s_left = schunk.get_left()
+        s_right = schunk.get_right()
+        t_left = tchunk.get_left()
+        t_right = tchunk.get_right()
+    
+        self.extract_typing_events(s_left, t_left, mapping)
+        self.extract_typing_events(s_right, t_right, mapping)
+    
+        return mapping
         # Use the structure of self.ts1 to extract the typing events
-        pass
+        
     
     def respond_with_chaining(self,stimuli_stream,s1,s2_index,reinforcement = True):
         # Positive and negative propagation to chunks
@@ -515,6 +607,43 @@ class WorkingMemory():
         response = random.choices(options,weights/np.sum(weights))
         return response[0]  
     
+    def get_z_values_type(self,couple):
+        list_right_types = self.ts1.right_types()
+        t2= self.ts2.structure 
+        
+        list_types = self.ts1.remove_structure2()
+        list_chunk = couple.s1.flatten_structure()
+        list_values = []
+        for c,t in zip(list_chunk,list_types):
+            self.learner.ltm.update_chunk_type_associations(SChunk(c), t)
+            list_values.append(self.learner.ltm.chunk_type_associations[SChunk(c)][t])
+
+        responses = self.get_responses()
+            
+        value_chunk = VChunk.from_list_and_responses(list_values, responses)
+        right_values = value_chunk.right_values()
+        #print('-----------')
+        #print(right_values)
+        # Here, I need to get the elements of s1 and s2
+        # Construct the VChunk associated, using the chunk_type_associations dictionary
+        # Check whether the action is supported and if so, use the correct value to update z
+        
+        z = np.zeros(len(list_right_types)+1)
+        #print(len(z))
+        
+        reduced_type = list_right_types[-1]
+        if reduced_type == Type.SENTENCE and not reduced_type.is_compatible(t2):
+            # print('Support for border, s1 well-typed')
+            z[0] = right_values[-1]
+        
+        for i in range(len(list_right_types)):
+            t1 = list_right_types[i]
+            if t1.is_compatible(t2):
+                pass
+                # print('Support for chunking')
+                z[i+1]=right_values[i]
+        return z
+
 
     def Q_tilde(self,couple,b_range):
         z = deepcopy(self.learner.ltm.behaviour_repertoire[couple])
@@ -529,8 +658,17 @@ class WorkingMemory():
         z /= norm_vec
         return z 
 
-    def choose_behaviour_with_types(self, pair, types_pair):
-        pass
+    def choose_behaviour_with_types(self, couple):
+        
+        b_range = len(self.learner.ltm.behaviour_repertoire[couple])
+        z = self.Q_tilde(couple,b_range)
+        z_type = self.get_z_values_type(couple)
+        # combine z and z_type with some rules
+        z = (z + z_type)/2
+        weights = np.exp(self.beta * z)
+        options = [i for i in range(b_range)]
+        response = random.choices(options,weights/np.sum(weights))
+        return response[0]
             
 class Reinforcer():
     
@@ -634,9 +772,161 @@ class TypeAssigner():
     
     def assign_type(self, pair: ChunkPair):
         # Do type assignment taking into account the values associated to chunk and types
-        # update longterm memory
-        return (Type.EMPTY, Type.EMPTY)
-    
+        left_candidates = self.extract_good_starting_types(pair.s1)
+        right_candidates = self.extract_good_types(pair.s2)
+        
+        
+        if self.learner.wm.ts1.has_empty_elements():
+            if isinstance(self.learner.wm.ts1.structure,list):
+                #print('bad TCHUNK... Assign ts2 to its best candidate (in case it is used as the beginning of the next sentence)')
+                if right_candidates:
+                    choice = softmax_choice(right_candidates,tau = self.tau)
+                    self.learner.wm.ts2 = TChunk(choice)
+            else:
+                #print('Here I should try to assign t1 and t2 jointly')
+                if right_candidates:
+                    # Here I need to check for consistency
+                    choice = softmax_choice(right_candidates,tau = self.tau)
+                    self.learner.wm.ts2 = TChunk(choice)
+                if left_candidates:
+                    # Here I need to check for consistency
+                    choice = softmax_choice(left_candidates,tau = self.tau)
+                    self.learner.wm.ts1 = TChunk(choice)
+
+        else:
+            #print('s1 typed')
+            if right_candidates:
+                # Here I need to check for consistency
+                choice = softmax_choice(right_candidates,tau = self.tau)
+                self.learner.wm.ts2 = TChunk(choice)
+            if not isinstance(self.learner.wm.ts1.structure,list):
+                if not self.learner.wm.ts1.structure.is_start():
+                    # Here I need to check for consistency
+                    if left_candidates:
+                        choice = softmax_choice(left_candidates,tau = self.tau)
+                        self.learner.wm.ts1 = TChunk(choice)
+                        
+        # This part should try to find a valid starting type
+        if not isinstance(self.learner.wm.ts1.structure, list):
+            if not self.learner.wm.ts1.structure.is_start():
+                if left_candidates:
+                    choice = softmax_choice(left_candidates,tau = self.tau)
+                    self.learner.wm.ts1 = TChunk(choice)
+                else:
+                    self.learner.wm.ts1 = TChunk(Type.EMPTY)
+        
+        self.fill_empty_types(pair)
+        
+        self.correct_typings(pair)
+        
+        # Check if s1 is typed (no EMPTY types in ts1)
+        # if it is
+        # - get candidates type for s2 and bad types for s2
+        # - Try to find a ts2 compatible with ts1
+        # - if found assign it to ts2
+        # - if not found, check if ts1 is expecting something after
+        # - if so fulfill expectation if proposed type is not bad
+        # - otherwise type ts2 as empty (failure to type)
+        # if s1 is not typed:
+            # collect candidates types for both s1 and s2.
+            # Try to find find compatible types and assign the corresponding types to ts1 and ts2
+            # Special cases, only s1 has good types or only s2 have good types. 
+            # In that case, chose randomly a type for s1 or s2, if it expects something in the other position, fullfil expectation otherwise failure to type
+        #self.learner.wm.ts2 = TChunk(Type.EMPTY)
+
+    def correct_typings(self, pair: ChunkPair):
+        if not self.learner.wm.ts1.has_empty_elements() and not self.learner.wm.ts2.has_empty_elements():
+            if not isinstance(self.learner.wm.ts1.structure,list) and not isinstance(self.learner.wm.ts2.structure, list):
+                # print('Both non complex')
+                t1 = self.learner.wm.ts1.structure
+                t2 = self.learner.wm.ts2.structure
+                if t1.is_expecting_after() and not t2.is_expecting_before():
+                    # print('t1 expectations')
+                    # Check compatibility and correct if needed
+                    # print(f't1 {t1} is expecting after {Type(t1.right_type())} and t2 is {t2}')
+                    t1_r = Type(t1.right_type())
+                    if t1_r == t2:
+                        pass
+                        # print('Good match')
+                    else:
+                        # print('Bad match')
+                        # Check if expectation is a bad match for t2
+                        bad_t2 = self.extract_bad_types(pair.s2)
+                        good_t2 = self.extract_good_types(pair.s2)
+                        if t1_r in bad_t2: # or t1_r has not been used for that element
+                            # print('Should retype expectation')
+                            new_t1 = t1 + t1_r
+                            [new_t1,t2] = new_t1.split(pu=0,prim=t2)
+                            self.learner.wm.ts1 = TChunk(new_t1)
+                            self.learner.wm.ts2 = TChunk(t2)
+                        else:
+                            self.learner.wm.ts2 = TChunk(t1_r)
+                        # retype here
+                elif not t1.is_expecting_after() and t2.is_expecting_before():
+                    # print('t2 expectations')
+                    # print(f't2 {t2} is expecting before {Type(t2.left_type())} and t1 is {t1}')
+                    # Check compatibility and correct if needed
+                    t2_l = Type(t2.left_type())
+                    if t2_l == t1:
+                        pass
+                        #print('Good match')
+                    else:
+                        # print('Bad match')
+                        # Check if expectation is a bad type for t1
+                        bad_t1 = self.extract_bad_types(pair.s1)
+                        good_t1 = self.extract_good_types(pair.s1)
+                        if t2_l in bad_t1:
+                            # print('Should retype expectation')
+                            new_t2 = t2_l+t2
+                            [t1,new_t2] = new_t2.split(pu=1,prim=t1)
+                            self.learner.wm.ts2 = TChunk(new_t2)
+                            self.learner.wm.ts1 = TChunk(t1)
+                        else:
+                            self.learner.wm.ts1 = TChunk(t2_l)
+                            # print(t1)
+                            # print(new_t2)
+                            # add t2 to is left type and split it using t1
+                        # retype here
+                    pass
+                elif t2.is_expecting_before() and t1.is_expecting_after():
+                    # Incompatible types! Try to find a compatible pairing
+                    print(f'Incompatible typing at step {self.learner.n_reinf}')
+                    # retype here
+                
+            elif self.learner.wm.ts1.is_consistent():
+                #print(self.learner.wm.get_responses())
+                # print('ts1 complex')
+                reduced_type = self.learner.wm.ts1.reduce()
+                t2 = self.learner.wm.ts2.structure
+                if reduced_type.is_expecting_after() and not t2.is_expecting_before():
+                    rt_r = Type(reduced_type.right_type())
+                    bad_t2 = self.extract_bad_types(pair.s2)
+                    good_t2 = self.extract_good_types(pair.s2)
+                    if rt_r in bad_t2: # or t1_r has not been used for that element
+                        # print('Should retype expectation')
+                        
+                        # print(f'ts1 is {self.learner.wm.ts1} and ts2 is {self.learner.wm.ts2}')
+                        if t2.is_primitive():# and len(pair.s1) <=2:
+                            # print(f't2 {t2} is a primitive type')
+                            
+                            self.learner.wm.ts1 = self.learner.wm.ts1.retype_expectation(t2,self.learner.wm.get_responses())
+                            # print(f'ts1 consistent after changing expectation: {self.learner.wm.ts1.is_consistent()}')
+
+                        # print('retyping')
+                        # print(f'ts1 is {self.learner.wm.ts1} and ts2 is {self.learner.wm.ts2}')
+                        
+                        # new_t1 = t1 + t1_r
+                        # [new_t1,t2] = new_t1.split(pu=0,prim=t2)
+                        # self.learner.wm.ts1 = TChunk(new_t1)
+                        # self.learner.wm.ts2 = TChunk(t2)
+                    else:
+                        self.learner.wm.ts2 = TChunk(rt_r)
+                    #self.learner.wm.ts2 = TChunk(new_ts2)
+                # ts1 complex: check if it reduces to something that expect something after. If ts2 expects something before retype ts2
+                
+
+        
+
     def choose_types(self, typ, s1, s2):
         def _compatible_pair(typ, left_candidates, right_candidates):
             # Tries to find a compatible pair
@@ -709,7 +999,15 @@ class TypeAssigner():
         self.learner.wm.typing_events = {}
         self.propagate_types(s1,typ)
         
-
+    def is_new(self,typ:Type, chunk: SChunk):
+        if chunk in self.learner.ltm.chunk_type_associations:
+            if typ in self.learner.ltm.chunk_type_associations[chunk]:
+                return True
+            else:
+                return False
+        else:
+            return False
+        
     
     def extract_bad_types(self, chunk: SChunk):
         def filter_dict_below_threshold(data,threshold):
@@ -730,6 +1028,42 @@ class TypeAssigner():
             return filter_dict_above_threshold(self.learner.ltm.chunk_type_associations[chunk],self.good_type_threshold)
         else:
             return {}
+        
+    def extract_good_starting_types(self, chunk: SChunk):
+        def filter_dict_above_threshold(data,threshold):
+            result = {k: v for k, v in data.items() if v > threshold and k.is_start()}
+            return result if result else {}
+        
+        if chunk in self.learner.ltm.chunk_type_associations:
+            return filter_dict_above_threshold(self.learner.ltm.chunk_type_associations[chunk],self.good_type_threshold)
+        else:
+            return {}
+        
+    def fill_empty_types(self, pair):
+        if not isinstance(self.learner.wm.ts1.structure, list): # ts1 is not complex
+            if self.learner.wm.ts1.has_empty_elements() and not self.learner.wm.ts2.has_empty_elements() and self.learner.wm.ts2.structure.is_expecting_before():                
+                new_ts1 = Type(self.learner.wm.ts2.structure.left_type())
+                self.learner.wm.ts1 = TChunk(new_ts1)
+
+            elif not self.learner.wm.ts1.has_empty_elements() and self.learner.wm.ts1.structure.is_expecting_after() and self.learner.wm.ts2.has_empty_elements():
+                new_ts2 = Type(self.learner.wm.ts1.structure.right_type())
+                self.learner.wm.ts2 = TChunk(new_ts2)
+        elif self.learner.wm.ts1.is_consistent():
+            reduced_type = self.learner.wm.ts1.reduce()
+            if reduced_type.is_expecting_after() and self.learner.wm.ts2.has_empty_elements():
+                print('This case applies')
+                new_ts2 = Type(reduced_type.right_type())
+                self.learner.wm.ts2 = TChunk(new_ts2)
+            # Here I need to check whether the reduced ts1 is expecting something and at which level.
+            # Will be implemented later. I may use the full reduction as a first step.
+            pass
+
+        
+        # if ts1 not a list and empty and ts2 non empty and expecting before
+        # assign expectation to ts1
+        # elif ts1 is consistent and expecting after and ts2 empty
+        # assign expectation to ts2
+
 
 
 
@@ -745,6 +1079,7 @@ class Learner():
         self.wm = WorkingMemory(self,config) # alpha, 
         self.history = LearningHistory()
         self.chaining = config.chaining
+        self.type_on = config.type_on
         
         
         # self.border_type = border # or 'default'
@@ -766,7 +1101,10 @@ class Learner():
         #for t in range(self.n_trials):
         while self.n_reinf <= self.n_trials:
             if not self.chaining:
-                s1, s2_index = self.wm.respond(stimuli_stream, s1, s2_index)
+                if self.type_on:
+                    s1, s2_index = self.wm.respond_with_type(stimuli_stream, s1, s2_index)
+                else:
+                    s1, s2_index = self.wm.respond(stimuli_stream, s1, s2_index)
             else:
                 s1, s2_index = self.wm.respond_with_chaining2(stimuli_stream, s1, s2_index)
 

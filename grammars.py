@@ -18,9 +18,9 @@ def flatten(lst):
             flat_list.append(item)
     return flat_list
 
-def create_stimuliNVN(n_sentences = 2000):
-    number_of_verbs = 5
-    number_of_nouns = 5
+def create_stimuliNVN(n_sentences = 200000):
+    number_of_verbs = 20
+    number_of_nouns = 50
     number_of_adj = 0
     number_of_relpron = 2
     number_of_det = 0
@@ -47,6 +47,19 @@ def create_stimuliNVN(n_sentences = 2000):
         'VP': [1],
         'N': [1/number_of_nouns for i in range(1, number_of_nouns+1)],
         'V': [1/number_of_verbs for i in range(1, number_of_verbs+1)]    
+        }
+    
+    nweight = np.array([1/2**i for i in range(len(nouns))])
+    nweight /= np.sum(nweight)
+
+    vweight = np.array([1/2**i for i in range(len(verbs))])
+    vweight /= np.sum(vweight)
+
+    weightsNVNZipf = {
+        'S': [1 ],
+        'VP': [1],
+        'N': nweight,
+        'V': vweight   
         }
     
     cfgNVN = ProbabilisticGrammar(terminals2, non_terminals2, production_rulesNVN,weightsNVN)

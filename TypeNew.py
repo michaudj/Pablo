@@ -27,6 +27,11 @@ def modify_element_at_depth(nested_list, depth, new_value):
         nested_list = nested_list[-1]
     nested_list[-1] = [nested_list[-1],new_value]
     
+def change_element_at_depth(nested_list, depth, new_value):
+    for i in range(depth-1):
+        nested_list = nested_list[-1]
+    nested_list[-1] = [new_value]
+    
 def flatten(lst):
     flat_list = []
     for item in lst:
@@ -84,7 +89,7 @@ class Type:
     def __repr__(self):
         string = self.formula.replace('o','/')
         string = string.replace('u','\\')
-        return string    
+        return 'tc_'+string    
     
     def __eq__(self, other):
         return self is other
@@ -136,6 +141,21 @@ class Type:
 
     def get_primitives(self):
         return re.split(r"u|o",self.formula)
+    
+    def __len__(self):
+        return len(self.get_primitives())
+    
+    def is_expecting_before(self):
+        if self.left_compatible_chunks():
+            return True
+        else:
+            return False
+
+    def is_expecting_after(self):
+        if self.right_compatible_chunks():
+            return True
+        else:
+            return False
     
     
     def left_compatible_chunks(self):
@@ -266,24 +286,6 @@ Type.SENTENCE = Type('0')
 
 class TChunk():
     
-    cache = {}
-    
-        # override the __new__ method to check the cache for an existing instance
-    def __new__(cls, structure):
-        key = hash(frozenset(str(structure)))
-
-        # check if the key is in the cache
-        if key in cls.cache:
-            # if the key is in the cache, return the corresponding instance
-            return cls.cache[key]
-        else:
-            # if the key is not in the cache, create a new instance
-            instance = super().__new__(cls)
-            # store the new instance in the cache
-            cls.cache[key] = instance
-            # return the new instance
-            return instance
-    
     def __init__(self, structure):
         self.structure = structure
         #self.type_dic = {}
@@ -295,25 +297,37 @@ class TChunk():
     def __hash__(self):
         return hash(str(self.structure))
     
-    def get_s1(self):
+    def get_left(self):
         [s1,s2] = self.structure
         s1 = TChunk(s1)
         s2 = TChunk(s2)
         return s1
     
-    def get_s2(self):
+    def get_right(self):
         [s1,s2] = self.structure
         s1 = TChunk(s1)
         s2 = TChunk(s2)
         return s2
     
     def get_right_subchunks(self, depth):
-        right_subchunks = []
+        right_subchunks = [self]
         nested_list = self.structure[:]
         for d in range(depth):
             nested_list = nested_list[-1]
             right_subchunks.append(TChunk(nested_list))
         return right_subchunks
+    
+    @staticmethod
+    def from_list_and_responses(list_of_types, responses):
+        if len(list_of_types) != len(responses)+1:
+            print('mismatch of length')
+        else:
+            tc1 = TChunk(list_of_types[0])
+            for i in range(len(responses)):
+                tc2 = TChunk(list_of_types[i+1])
+                tc1 = tc1.chunk_at_depth(tc2,depth=tc1.depth+1-responses[i])
+             # Here I need to construct a TChunk based on the corresponding responses
+        return tc1
     
     def chunk_at_depth(self, other, depth=0):
         if type(self.structure)== Type:
@@ -327,18 +341,21 @@ class TChunk():
             modify_element_at_depth(nested_list, depth, other.structure)
             return TChunk(nested_list)
     
-    def get_depth(self):
+    def get_depth_old(self):
         st = str(self.structure)
         match = re.search("]*$",st)
         return len(match.group(0))
     
-    def get_depth_gpt(self):
+    def get_depth(self):
         structure = self.structure
         depth = 0
         while isinstance(structure, list) and len(structure) == 2:
             structure = structure[1]  # Always move to the right
             depth += 1
         return depth
+    
+
+
 
     
     def remove_structure(self):
@@ -346,6 +363,29 @@ class TChunk():
             return str(self.structure)
         else:
             return flatten(self.structure)
+        
+    def remove_structure2(self):
+        if type(self.structure) is Type:
+            return [self.structure]
+        else:
+            return flatten(self.structure)
+        
+
+    def is_consistent_gpt(self):
+        if isinstance(self.structure, Type):
+            return True
+    
+        left_chunk = TChunk(self.structure[0])
+        right_chunk = TChunk(self.structure[1])
+    
+        if not left_chunk.is_consistent_gpt() or not right_chunk.is_consistent_gpt():
+            return False
+    
+        left_type = left_chunk.reduce_gpt()
+        right_type = right_chunk.reduce_gpt()
+    
+        return left_type.is_compatible(right_type)
+
         
     def reduce(self):
         if type(self.structure) != list:
@@ -375,7 +415,9 @@ class TChunk():
                 self = TChunk([s1.structure,s2.structure])
 
                 return result
-                    
+     
+    def is_sentence(self):
+        return self.reduce() == Type.SENTENCE               
         
     def is_consistent(self):
         if type(self.structure) != list:
@@ -403,16 +445,228 @@ class TChunk():
                 else:
                     return False
     
+    def find_type_to_modify(self):
+        if self.is_consistent() and self.reduce().is_expecting_after():
+            expected_type = Type(self.reduce().right_type())
+            for i, t in enumerate(self.right_types()):
+                
+                if t.is_expecting_after() and Type(t.right_type())==expected_type:
+                    return i, self.remove_structure2()[-(i+1)]
+                
+    def modified_element(self,new_expectation):
+        if self.is_consistent() and self.reduce().is_expecting_after():
+            expected_type = Type(self.reduce().right_type())
+            right_types = self.right_types()
+            right_types.reverse()
+            #print(f'In modified element, right_types is {right_types}')
+            for i,t in enumerate(right_types):
+                if t.is_expecting_after() and Type(t.right_type()) == expected_type:
+                    new_type = t + expected_type
+                    [new_type,_] = new_type.split(pu=0, prim=new_expectation)
+                    right_types[i] = new_type
+            
+            #print(f'In modified element, modified right_types is {right_types}')
+            
+            # for i in range(len(right_types)-1):
+            #     if len(right_types[i+1])>len(right_types[i]):
+            #         [_,new_type]=right_types[i].split(pu=1,prim=right_types[i+1])
+            #     else:
+            #         [new_type,_]=right_types[i].split(pu=0,prim=right_types[i+1])
+            return new_type
+            
     
     def right_types(self):
         # Only works if TChunk is consistent!!!
-        list_of_reduced_types = [self.reduce()]
+        list_of_reduced_types = []
+        if not isinstance(self.structure, list):
+            return [self.structure]
         
         for chunk in self.get_right_subchunks(self.depth):
             list_of_reduced_types.append(chunk.reduce())
+        list_of_reduced_types.reverse()
         return list_of_reduced_types
+    
+    
+    
+    def has_empty_elements(self):
+        flat = self.remove_structure2()
+        if Type.EMPTY in flat:
+            return True
+        else:
+            return False
+        
+    def retype_expectation(self,typ,responses):
+        if self.is_consistent() and self.reduce().is_expecting_after():
+            list_of_types = self.remove_structure2()
+            #print(f'list of types: {list_of_types}')
+            chunktree = ChunkTree.from_tchunk(self)
+            #print(f'list of types after chunktree creation: {list_of_types}')
+            (index, old_type) = self.find_type_to_modify()
+            #print(f'the old type is {old_type}')
+            new_type = self.modified_element(typ)
+            #print(f'Should be replaced by {new_type}')
+            list_of_types[-(index+1)] = new_type
+            new_ts1 = TChunk.from_list_and_responses(list_of_types, responses)
+            #print(f'new list of types: {list_of_types}')
+            #new_ts1 = chunktree.apply_types(list_of_types) # The apply_types function only works for ts1 of length 2, more complex structure fail to construct a TChunk with the correct internal structure
+            return new_ts1
+        
+class VChunk():
+    
+    def __init__(self, structure: float):
+        self.structure = structure
+        #self.type_dic = {}
+        self.depth = self.get_depth()
+        
+    def __repr__(self):
+        return str(self.structure)
+    
+    def __hash__(self):
+        return hash(str(self.structure))
+    
+    def get_left(self):
+        [s1,s2] = self.structure
+        s1 = VChunk(s1)
+        s2 = VChunk(s2)
+        return s1
+    
+    def get_right(self):
+        [s1,s2] = self.structure
+        s1 = VChunk(s1)
+        s2 = VChunk(s2)
+        return s2
+    
+    @staticmethod
+    def from_list_and_responses(list_of_values, responses):
+        if len(list_of_values) != len(responses)+1:
+            print('mismatch of length')
+        else:
+            tc1 = VChunk(list_of_values[0])
+            for i in range(len(responses)):
+                tc2 = VChunk(list_of_values[i+1])
+                tc1 = tc1.chunk_at_depth(tc2,depth=tc1.depth+1-responses[i])
+             # Here I need to construct a TChunk based on the corresponding responses
+        return tc1
+    
+    def get_right_subchunks(self, depth):
+        right_subchunks = [self]
+        nested_list = self.structure[:]
+        for d in range(depth):
+            nested_list = nested_list[-1]
+            right_subchunks.append(VChunk(nested_list))
+        return right_subchunks
+    
+    def chunk_at_depth(self, other, depth=0):
+        if not isinstance(self.structure,list):
+            nested_list = self.structure
+        else:
+            nested_list = self.structure[:]
+        
+        if depth == 0:
+            return VChunk([nested_list,other.structure])
+        else:
+            modify_element_at_depth(nested_list, depth, other.structure)
+            return VChunk(nested_list)
+    
+    def get_depth_old(self):
+        st = str(self.structure)
+        match = re.search("]*$",st)
+        return len(match.group(0))
+    
+    def get_depth(self):
+        structure = self.structure
+        depth = 0
+        while isinstance(structure, list) and len(structure) == 2:
+            structure = structure[1]  # Always move to the right
+            depth += 1
+        return depth
+
+    
+    def remove_structure(self):
+        if type(self.structure) is Type:
+            return (self.structure)
+        else:
+            return flatten(self.structure)
+        
+    def remove_structure2(self):
+        if type(self.structure) is Type:
+            return [self.structure]
+        else:
+            return flatten(self.structure)
         
 
+
+        
+    def reduce(self):
+        if type(self.structure) != list:
+            return self.structure
+        else:
+            [s1,s2] = self.structure[:]
+            s1 = VChunk(s1)
+            s2 = VChunk(s2)
+            if type(s1.structure) == float and type(s2.structure)== float:
+                result = (s1.structure + s2.structure)/2
+                return result
+            elif type(s1.structure) != float and type(s2.structure)== float:
+                result = (s1.reduce() + s2.structure)/2
+                # Weird bug fixed by the following line: if more than one element reduce to 0, creates bug...
+                self = VChunk([s1.structure,s2.structure])
+                return result
+            elif type(s1.structure) == float and type(s2.structure)!= float:
+                result = (s1.structure + s2.reduce())/2
+                # Weird bug fixed by the following line: if more than one element reduce to 0, creates bug...
+                self = VChunk([s1.structure,s2.structure])
+                return result
+            else:
+                t1 = s1.reduce()
+                t2 = s2.reduce()
+                result = (t1 + t2)/2
+                # Weird bug fixed by the following line: if more than one element reduce to 0, creates bug...
+                self = VChunk([s1.structure,s2.structure])
+
+                return result
+     
+    
+    
+    def right_values(self):
+        # Only works if TChunk is consistent!!!
+        list_of_reduced_types = []
+        if not isinstance(self.structure, list):
+            list_of_reduced_types.append(self.structure)
+            return list_of_reduced_types
+        
+        for chunk in self.get_right_subchunks(self.depth):
+            list_of_reduced_types.append(chunk.reduce())
+        list_of_reduced_types.reverse()
+        return list_of_reduced_types
+    
+class ChunkTree:
+    def __init__(self, left, right):
+        self.left = left  # ChunkTree or placeholder
+        self.right = right
+
+    @staticmethod
+    def from_tchunk(tchunk):
+        if isinstance(tchunk.structure, Type):
+            return None  # Atomic
+        left, right = tchunk.structure
+        return ChunkTree(
+            ChunkTree.from_tchunk(TChunk(left)) or 0,  # placeholder for type
+            ChunkTree.from_tchunk(TChunk(right)) or 0
+        )
+
+    def apply_types(self, types):
+        if self.left == 0:
+            left_type = types.pop(0)
+        else:
+            left_type = self.left.apply_types(types)
+
+        if self.right == 0:
+            right_type = types.pop(0)
+        else:
+            right_type = self.right.apply_types(types)
+
+        return TChunk([left_type, right_type])
           
 ###############################################################################
 #
@@ -420,6 +674,10 @@ class TChunk():
 #
 ###############################################################################
 tests = False
+
+v1 = VChunk(2.)
+v2 = VChunk(3.)
+v3 = VChunk(0.2)
 
 if tests:    
     a = Type(r"aufubocodd")

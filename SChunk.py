@@ -170,7 +170,10 @@ class SChunk:
 
     def flatten_structure(self) -> List[Any]:
         """Flattens the structure recursively."""
-        return flatten(self.structure)
+        if isinstance(self.structure, list):
+            return flatten(self.structure)
+        else:
+            return [self.structure]
         
 
     def __len__(self) -> int:
