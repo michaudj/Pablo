@@ -349,7 +349,7 @@ class WorkingMemory():
         response = self.choose_behaviour(pair)
 
         self.events.append((pair,response))
-        print(self.get_responses())
+        # print(self.get_responses())
         
         if response == 0: # boundary placement
             self.learner.n_reinf += 1
@@ -401,7 +401,7 @@ class WorkingMemory():
             response = self.choose_behaviour_with_types(pair) # Set also whether self.typing_used is True or False
 
         self.events.append((pair,response))
-        print(self.get_responses())
+        #print(self.get_responses())
         
         if False:
             print(self.ts1)
