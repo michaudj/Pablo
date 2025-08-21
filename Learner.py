@@ -973,6 +973,44 @@ class TypeAssigner():
             
         return chosen_pair
     
+    def choose_types_greedy(self, typ, s1, s2):
+        left_candidates = self.extract_good_types(s1)
+        right_candidates = self.extract_good_types(s2)
+    
+        while left_candidates or right_candidates:
+            # pick dominant type probabilistically across both sides
+            side, dominant_type = merged_softmax_choice(left_candidates, right_candidates, tau=self.tau)
+    
+            if side == 'left':
+                compatible_candidates = {rt: w for rt, w in right_candidates.items() 
+                                 if dominant_type.is_compatible(rt)}
+            else:
+                compatible_candidates = {lt: w for lt, w in left_candidates.items() 
+                                 if dominant_type.is_compatible(lt)}
+
+        # if compatible ones exist, choose best with softmax
+        if compatible_candidates:
+            _, match_type = merged_softmax_choice(
+                compatible_candidates if side == 'left' else {},
+                compatible_candidates if side == 'right' else {},
+                tau=self.tau
+            )
+            if side == 'left':
+                return dominant_type, match_type
+            else:
+                return match_type, dominant_type
+    
+        # else: remove dominant_type and retry
+        if side == 'left':
+            left_candidates.pop(dominant_type, None)
+        else:
+            right_candidates.pop(dominant_type, None)
+    
+        # fallback: no compatible pair found
+        return self.choose_types(typ, s1, s2)
+    
+    
+    
     def propagate_types(self,
                         chunk: SChunk,
                         current_type: Type) -> None:
@@ -987,7 +1025,7 @@ class TypeAssigner():
         right_chunk = chunk.get_right()
         
         
-        left_type, right_type = self.choose_types(current_type,left_chunk,right_chunk)
+        left_type, right_type = self.choose_types_greedy(current_type,left_chunk,right_chunk) #choose_types or choose_types_greedy is for old or new way
         
         self.propagate_types(left_chunk, left_type)
         self.propagate_types(right_chunk, right_type)

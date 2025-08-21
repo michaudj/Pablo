@@ -67,7 +67,7 @@ def create_stimuliNVN(n_sentences = 200000):
 
 
 def create_stimuliRCP(n_sentences = 200000):
-    number_of_verbs = 5
+    number_of_verbs = 1
     number_of_nouns = 5
     number_of_adj = 0
     number_of_relpron = 2
@@ -122,14 +122,14 @@ def create_stimuliRCP(n_sentences = 200000):
     return RawInputLazy(n_sentences=n_sentences, grammar=cfgRCP)
 
 def create_stimuliMD(n_sentences=80000):
-    number_of_verbs = 1
-    number_of_nouns = 5
+    number_of_verbs = 10
+    number_of_nouns = 20
     number_of_adj = 1
     number_of_relpron = 1
     number_of_det = 1
     number_of_prep = 1
-    number_of_monotransitive_verbs = 1
-    number_of_ditransitive_verbs = 1
+    number_of_monotransitive_verbs = 20
+    number_of_ditransitive_verbs = 20
 
     #verbs = ['v' + str(i) for i in range(1, number_of_verbs+1)]
     nouns = ['n' + str(i) for i in range(1, number_of_nouns+1)]
