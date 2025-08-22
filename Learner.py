@@ -980,31 +980,24 @@ class TypeAssigner():
         while left_candidates or right_candidates:
             # pick dominant type probabilistically across both sides
             side, dominant_type = merged_softmax_choice(left_candidates, right_candidates, tau=self.tau)
-    
+            
             if side == 'left':
-                compatible_candidates = {rt: w for rt, w in right_candidates.items() 
+                right_matches = {rt: w for rt, w in right_candidates.items() 
                                  if dominant_type.is_compatible(rt)}
-            else:
-                compatible_candidates = {lt: w for lt, w in left_candidates.items() 
-                                 if dominant_type.is_compatible(lt)}
-
-        # if compatible ones exist, choose best with softmax
-        if compatible_candidates:
-            _, match_type = merged_softmax_choice(
-                compatible_candidates if side == 'left' else {},
-                compatible_candidates if side == 'right' else {},
-                tau=self.tau
-            )
-            if side == 'left':
-                return dominant_type, match_type
-            else:
-                return match_type, dominant_type
-    
-        # else: remove dominant_type and retry
-        if side == 'left':
-            left_candidates.pop(dominant_type, None)
-        else:
-            right_candidates.pop(dominant_type, None)
+                if right_matches:
+                    _, match_type = merged_softmax_choice({}, right_matches, tau=self.tau)
+                    return dominant_type, match_type
+                else:
+                    left_candidates.pop(dominant_type, None)
+            
+            else:  # side == 'right'
+                left_matches = {lt: w for lt, w in left_candidates.items() 
+                                if dominant_type.is_compatible(lt)}
+                if left_matches:
+                    _, match_type = merged_softmax_choice(left_matches, {}, tau=self.tau)
+                    return match_type, dominant_type
+                else:
+                    right_candidates.pop(dominant_type, None)
     
         # fallback: no compatible pair found
         return self.choose_types(typ, s1, s2)

@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 # Consider using the typatory to keep the number of types to a minimum.
 
 
-n_trial = 30000
+n_trial = 20000
 alpha = 0.1
 alpha_v = 1
 beta = 1.
@@ -33,7 +33,7 @@ config_t = LearnerConfig(n_trials=n_trial,
                        negative_reinforcement = -10,
                        RW=RW,
                        chaining = False,
-                       bad_type_threshold = -0.5,
+                       bad_type_threshold = -0.,
                        good_type_threshold = 0., 
                        tau = 0.1,
                        type_on = True)
@@ -49,7 +49,7 @@ config = LearnerConfig(n_trials=n_trial,
                        negative_reinforcement = -10,
                        RW=RW,
                        chaining = False,
-                       bad_type_threshold = -0.5,
+                       bad_type_threshold = -0.,
                        good_type_threshold = 0., 
                        tau = 0.1,
                        type_on = False)
