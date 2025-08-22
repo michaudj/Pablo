@@ -761,7 +761,7 @@ class Reinforcer():
             self.learner.ltm.update_chunk_type_associations(chunk,typ)
             self.learner.ltm.chunk_type_associations[chunk][typ] += self.alpha * (reward - self.learner.ltm.chunk_type_associations[chunk][typ])
 
-class TypeAssigner():
+class TypeAssigner(): #här ska jag vara för att fixa
     
     def __init__(self, learner, config: LearnerConfig):
         self.learner = learner
@@ -777,10 +777,10 @@ class TypeAssigner():
         
         
         if self.learner.wm.ts1.has_empty_elements():
-            if isinstance(self.learner.wm.ts1.structure,list):
+            if isinstance(self.learner.wm.ts1.structure,list): #if the structure of ts1 is a list, it is complex
                 #print('bad TCHUNK... Assign ts2 to its best candidate (in case it is used as the beginning of the next sentence)')
                 if right_candidates:
-                    choice = softmax_choice(right_candidates,tau = self.tau)
+                    choice = softmax_choice(right_candidates,tau = self.tau) #this is only for using in the next round
                     self.learner.wm.ts2 = TChunk(choice)
             else:
                 #print('Here I should try to assign t1 and t2 jointly')
@@ -1018,7 +1018,7 @@ class TypeAssigner():
         right_chunk = chunk.get_right()
         
         
-        left_type, right_type = self.choose_types_greedy(current_type,left_chunk,right_chunk) #choose_types or choose_types_greedy is for old or new way
+        left_type, right_type = self.choose_types(current_type,left_chunk,right_chunk) #choose_types or choose_types_greedy is for old or new way
         
         self.propagate_types(left_chunk, left_type)
         self.propagate_types(right_chunk, right_type)
