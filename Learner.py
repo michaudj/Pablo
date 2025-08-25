@@ -799,7 +799,17 @@ class TypeAssigner(): #här ska jag vara för att fixa
                 # Here I need to check for consistency
                 choice = softmax_choice(right_candidates,tau = self.tau)
                 self.learner.wm.ts2 = TChunk(choice)
-            if not isinstance(self.learner.wm.ts1.structure,list):
+            if isinstance(self.learner.wm.ts1.structure,list):
+                try:
+                    value_ts1 = vs1.reduce()
+                    if value_ts1 is not None and value_ts1 != Type.EMPTY:
+                        print("DEBUG: s1.reduce() =", value_ts1)
+                        raise SystemExit("Stopping after first reduced s1")
+                except Exception as e:
+                    print("DEBUG ERROR in s1.reduce():", e)
+                    raise SystemExit("Stopping due to error")
+
+            else:
                 if not self.learner.wm.ts1.structure.is_start():
                     # Here I need to check for consistency
                     if left_candidates:
@@ -927,7 +937,7 @@ class TypeAssigner(): #här ska jag vara för att fixa
 
         
 
-    def choose_types(self, typ, s1, s2):
+    def choose_types(self, typ, s1, s2):  #this is the split right
         def _compatible_pair(typ, left_candidates, right_candidates):
             # Tries to find a compatible pair
             chosen_pair = None
@@ -973,7 +983,7 @@ class TypeAssigner(): #här ska jag vara för att fixa
             
         return chosen_pair
     
-    def choose_types_greedy(self, typ, s1, s2):
+    def choose_types_greedy(self, typ, s1, s2): #this function is wrong
         left_candidates = self.extract_good_types(s1)
         right_candidates = self.extract_good_types(s2)
     
