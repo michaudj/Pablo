@@ -993,22 +993,37 @@ class TypeAssigner(): #här ska jag vara för att fixa
             
             if side == 'left':
                 right_matches = {rt: w for rt, w in right_candidates.items() 
+<<<<<<< Updated upstream
                                  if dominant_type.is_compatible(rt)}
+=======
+                         if dominant_type.is_compatible(rt)}
+>>>>>>> Stashed changes
                 if right_matches:
                     _, match_type = merged_softmax_choice({}, right_matches, tau=self.tau)
                     return dominant_type, match_type
                 else:
                     left_candidates.pop(dominant_type, None)
+<<<<<<< Updated upstream
             
             else:  # side == 'right'
                 left_matches = {lt: w for lt, w in left_candidates.items() 
                                 if dominant_type.is_compatible(lt)}
+=======
+    
+            else:  # side == 'right'
+                left_matches = {lt: w for lt, w in left_candidates.items() 
+                        if dominant_type.is_compatible(lt)}
+>>>>>>> Stashed changes
                 if left_matches:
                     _, match_type = merged_softmax_choice(left_matches, {}, tau=self.tau)
                     return match_type, dominant_type
                 else:
                     right_candidates.pop(dominant_type, None)
+<<<<<<< Updated upstream
     
+=======
+
+>>>>>>> Stashed changes
         # fallback: no compatible pair found
         return self.choose_types(typ, s1, s2)
     
