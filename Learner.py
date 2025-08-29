@@ -643,6 +643,19 @@ class WorkingMemory():
                 # print('Support for chunking')
                 z[i+1]=right_values[i]
         return z
+    
+    def get_value_chunk(self,couple):
+        list_types = self.ts1.remove_structure2()
+        list_chunk = couple.s1.flatten_structure()
+        list_values = []
+        for c,t in zip(list_chunk,list_types):
+            self.learner.ltm.update_chunk_type_associations(SChunk(c), t)
+            list_values.append(self.learner.ltm.chunk_type_associations[SChunk(c)][t])
+
+        responses = self.get_responses()
+            
+        value_chunk = VChunk.from_list_and_responses(list_values, responses)
+        return value_chunk
 
 
     def Q_tilde(self,couple,b_range):
@@ -795,6 +808,11 @@ class TypeAssigner(): #här ska jag vara för att fixa
 
         else:
             #print('s1 typed')
+            # if isinstance(self.learner.wm.ts1.structure,list):
+            vchunk_s1=self.learner.wm.get_value_chunk(pair)
+           
+            value_s1 = vchunk_s1.reduce()
+            
             if right_candidates:
                 # Here I need to check for consistency
                 choice = softmax_choice(right_candidates,tau = self.tau)
@@ -973,34 +991,34 @@ class TypeAssigner(): #här ska jag vara för att fixa
             
         return chosen_pair
     
-    def choose_types_greedy(self, typ, s1, s2):
-        left_candidates = self.extract_good_types(s1)
-        right_candidates = self.extract_good_types(s2)
+    # def choose_types_greedy(self, typ, s1, s2):
+    #     left_candidates = self.extract_good_types(s1)
+    #     right_candidates = self.extract_good_types(s2)
     
-        while left_candidates or right_candidates:
-            # pick dominant type probabilistically across both sides
-            side, dominant_type = merged_softmax_choice(left_candidates, right_candidates, tau=self.tau)
+    #     while left_candidates or right_candidates:
+    #         # pick dominant type probabilistically across both sides
+    #         side, dominant_type = merged_softmax_choice(left_candidates, right_candidates, tau=self.tau)
             
-            if side == 'left':
-                right_matches = {rt: w for rt, w in right_candidates.items() 
-                                 if dominant_type.is_compatible(rt)}
-                if right_matches:
-                    _, match_type = merged_softmax_choice({}, right_matches, tau=self.tau)
-                    return dominant_type, match_type
-                else:
-                    left_candidates.pop(dominant_type, None)
+    #         if side == 'left':
+    #             right_matches = {rt: w for rt, w in right_candidates.items() 
+    #                              if dominant_type.is_compatible(rt)}
+    #             if right_matches:
+    #                 _, match_type = merged_softmax_choice({}, right_matches, tau=self.tau)
+    #                 return dominant_type, match_type
+    #             else:
+    #                 left_candidates.pop(dominant_type, None)
             
-            else:  # side == 'right'
-                left_matches = {lt: w for lt, w in left_candidates.items() 
-                                if dominant_type.is_compatible(lt)}
-                if left_matches:
-                    _, match_type = merged_softmax_choice(left_matches, {}, tau=self.tau)
-                    return match_type, dominant_type
-                else:
-                    right_candidates.pop(dominant_type, None)
+    #         else:  # side == 'right'
+    #             left_matches = {lt: w for lt, w in left_candidates.items() 
+    #                             if dominant_type.is_compatible(lt)}
+    #             if left_matches:
+    #                 _, match_type = merged_softmax_choice(left_matches, {}, tau=self.tau)
+    #                 return match_type, dominant_type
+    #             else:
+    #                 right_candidates.pop(dominant_type, None)
     
-        # fallback: no compatible pair found
-        return self.choose_types(typ, s1, s2)
+    #     # fallback: no compatible pair found
+    #     return self.choose_types(typ, s1, s2)
     
     
     
