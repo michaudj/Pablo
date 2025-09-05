@@ -643,7 +643,7 @@ class WorkingMemory():
                 # print('Support for chunking')
                 z[i+1]=right_values[i]
         return z
-
+    
 
     def Q_tilde(self,couple,b_range):
         z = deepcopy(self.learner.ltm.behaviour_repertoire[couple])
@@ -777,10 +777,10 @@ class TypeAssigner(): #här ska jag vara för att fixa
         
         
         if self.learner.wm.ts1.has_empty_elements():
-            if isinstance(self.learner.wm.ts1.structure,list): #if the structure of ts1 is a list, it is complex
+            if isinstance(self.learner.wm.ts1.structure,list):
                 #print('bad TCHUNK... Assign ts2 to its best candidate (in case it is used as the beginning of the next sentence)')
                 if right_candidates:
-                    choice = softmax_choice(right_candidates,tau = self.tau) #this is only for using in the next round
+                    choice = softmax_choice(right_candidates,tau = self.tau)
                     self.learner.wm.ts2 = TChunk(choice)
             else:
                 #print('Here I should try to assign t1 and t2 jointly')
@@ -799,17 +799,7 @@ class TypeAssigner(): #här ska jag vara för att fixa
                 # Here I need to check for consistency
                 choice = softmax_choice(right_candidates,tau = self.tau)
                 self.learner.wm.ts2 = TChunk(choice)
-            if isinstance(self.learner.wm.ts1.structure,list):
-                try:
-                    value_ts1 = vs1.reduce()
-                    if value_ts1 is not None and value_ts1 != Type.EMPTY:
-                        print("DEBUG: s1.reduce() =", value_ts1)
-                        raise SystemExit("Stopping after first reduced s1")
-                except Exception as e:
-                    print("DEBUG ERROR in s1.reduce():", e)
-                    raise SystemExit("Stopping due to error")
-
-            else:
+            if not isinstance(self.learner.wm.ts1.structure,list):
                 if not self.learner.wm.ts1.structure.is_start():
                     # Here I need to check for consistency
                     if left_candidates:
@@ -845,22 +835,41 @@ class TypeAssigner(): #här ska jag vara för att fixa
         #self.learner.wm.ts2 = TChunk(Type.EMPTY)
 
     def correct_typings(self, pair: ChunkPair):
-        if not self.learner.wm.ts1.has_empty_elements() and not self.learner.wm.ts2.has_empty_elements():
-            if not isinstance(self.learner.wm.ts1.structure,list) and not isinstance(self.learner.wm.ts2.structure, list):
-                # print('Both non complex')
-                t1 = self.learner.wm.ts1.structure
-                t2 = self.learner.wm.ts2.structure
-                if t1.is_expecting_after() and not t2.is_expecting_before():
-                    # print('t1 expectations')
-                    # Check compatibility and correct if needed
-                    # print(f't1 {t1} is expecting after {Type(t1.right_type())} and t2 is {t2}')
-                    t1_r = Type(t1.right_type())
-                    if t1_r == t2:
-                        pass
-                        # print('Good match')
+        ts1 = self.learner.wm.ts1
+        ts2 = self.learner.wm.ts2
+        
+        if not ts1.has_empty_elements() and not ts2.has_empty_elements():
+            #if not isinstance(self.learner.wm.ts1.structure,list) and not isinstance(self.learner.wm.ts2.structure, list):
+                # print('Both non complex') (Anna: skipped this one, because we want to also modify typing of compound s1)
+            t1 = ts1.reduce() if isinstance(ts1.structure, list) else ts1.structure
+            t2 = ts2.structure
+            if t1.is_expecting_after() and not t2.is_expecting_before():
+                # print('t1 expectations')
+                # Check compatibility and correct if needed
+                # print(f't1 {t1} is expecting after {Type(t1.right_type())} and t2 is {t2}')
+                t1_r = Type(t1.right_type())
+                if t1_r == t2:
+                    pass
+                    # print('Good match')
+                else:
+                    # print('Bad match')
+                    # Check if expectation is a bad match for t2
+                    z_values = self.get_z_values_type(pair) #gets values for right chunks' types
+                    z_dict = {i: z for i, z in enumerate(z_values)}
+                    winner_index = softmax_choice(z_dict, tau=1.0) #lets right chunk types compete with softmax
+                    winner_value = z_values[winner_index]
+                    value_ts2 = self.learner.ltm.chunk_type_associations[SChunk(pair.s2)][ts2.structure]
+                    candidates = {'s1': winner_value,'s2': value_ts2}
+                    dominant_side = softmax_choice(candidates, tau=1.0) #decides if type of s1 or s1 sominates
+                    if dominant_side == 's2':
+                        # s2 is dominant -> modify ts1 expectation at winner level
+                        new_ts1 = self.modify_expectation_at_level(ts1, winner_index, t2, side="right")
+                        self.learner.wm.ts1 = TChunk(new_ts1)
+                        self.learner.wm.ts2 = TChunk(t2)
+                        
+                        
                     else:
-                        # print('Bad match')
-                        # Check if expectation is a bad match for t2
+                    
                         bad_t2 = self.extract_bad_types(pair.s2)
                         good_t2 = self.extract_good_types(pair.s2)
                         if t1_r in bad_t2: # or t1_r has not been used for that element
@@ -872,67 +881,86 @@ class TypeAssigner(): #här ska jag vara för att fixa
                         else:
                             self.learner.wm.ts2 = TChunk(t1_r)
                         # retype here
-                elif not t1.is_expecting_after() and t2.is_expecting_before():
-                    # print('t2 expectations')
-                    # print(f't2 {t2} is expecting before {Type(t2.left_type())} and t1 is {t1}')
-                    # Check compatibility and correct if needed
-                    t2_l = Type(t2.left_type())
-                    if t2_l == t1:
-                        pass
-                        #print('Good match')
-                    else:
-                        # print('Bad match')
-                        # Check if expectation is a bad type for t1
-                        bad_t1 = self.extract_bad_types(pair.s1)
-                        good_t1 = self.extract_good_types(pair.s1)
-                        if t2_l in bad_t1:
-                            # print('Should retype expectation')
-                            new_t2 = t2_l+t2
-                            [t1,new_t2] = new_t2.split(pu=1,prim=t1)
-                            self.learner.wm.ts2 = TChunk(new_t2)
-                            self.learner.wm.ts1 = TChunk(t1)
-                        else:
-                            self.learner.wm.ts1 = TChunk(t2_l)
-                            # print(t1)
-                            # print(new_t2)
-                            # add t2 to is left type and split it using t1
-                        # retype here
+            elif not t1.is_expecting_after() and t2.is_expecting_before():
+                # print('t2 expectations')
+                # print(f't2 {t2} is expecting before {Type(t2.left_type())} and t1 is {t1}')
+                # Check compatibility and correct if needed
+                t2_l = Type(t2.left_type())
+                if t2_l == t1:
                     pass
-                elif t2.is_expecting_before() and t1.is_expecting_after():
-                    # Incompatible types! Try to find a compatible pairing
-                    print(f'Incompatible typing at step {self.learner.n_reinf}')
-                    # retype here
+                    #print('Good match')
+                else:
+                    
+                    z_values = self.get_z_values_type(pair)
+                    top_value_ts1 = z_values[-1]  # top-level reduced type value
+        
+                    # Get value for ts2 type from LTM (assumes primitive type)
+                    value_ts2 = self.learner.ltm.get_value(ts2)  # implement/get from chunk_type_associations
+        
+                    # Softmax competition between top ts1 value and ts2 value
+                    dominant = softmax_choice({'s1': top_value_ts1, 's2': value_ts2}, tau=1.0)    
+                    
+                    if dominant == 's1':
+                        # s1 is dominant → ts2 adapts its expectation
+                        t2_l = Type(t2.left_type())
+                        new_t2 = t1 + t2        # assign t1 as the left type for ts2
+                        self.learner.wm.ts2 = TChunk(new_t2)
+                    elif dominant == 's2':
+                        # ts2 remains; ts1 can now be compound — do a split at top
+                        if isinstance(ts1.structure, list):
+                            # compound s1 → modify top-level and propagate split, no check for bad type
+                            ts1_new = self.split_top_level(ts1, t2)
+                            self.learner.wm.ts1 = ts1_new
+                        else:
+                            # Check if expectation is a bad type for t1
+                            bad_t1 = self.extract_bad_types(pair.s1)
+                            good_t1 = self.extract_good_types(pair.s1)
+                            if t2_l in bad_t1:
+                                # print('Should retype expectation')
+                                new_t2 = t2_l+t2
+                                [t1,new_t2] = new_t2.split(pu=1,prim=t1)
+                                self.learner.wm.ts2 = TChunk(new_t2)
+                                self.learner.wm.ts1 = TChunk(t1)
+                            else:
+                                self.learner.wm.ts1 = TChunk(t2_l)
+                                
+            elif t2.is_expecting_before() and t1.is_expecting_after():
+                # Incompatible types! Try to find a compatible pairing
+                print(f'Incompatible typing at step {self.learner.n_reinf}')
                 
-            elif self.learner.wm.ts1.is_consistent():
-                #print(self.learner.wm.get_responses())
-                # print('ts1 complex')
-                reduced_type = self.learner.wm.ts1.reduce()
-                t2 = self.learner.wm.ts2.structure
-                if reduced_type.is_expecting_after() and not t2.is_expecting_before():
-                    rt_r = Type(reduced_type.right_type())
-                    bad_t2 = self.extract_bad_types(pair.s2)
-                    good_t2 = self.extract_good_types(pair.s2)
-                    if rt_r in bad_t2: # or t1_r has not been used for that element
-                        # print('Should retype expectation')
+        return self.learner.wm.ts1, self.learner.wm.ts2    
+                # retype here
+                
+            # elif self.learner.wm.ts1.is_consistent(): # gammal kod
+            #     #print(self.learner.wm.get_responses())
+            #     # print('ts1 complex')
+            #     reduced_type = self.learner.wm.ts1.reduce()
+            #     t2 = self.learner.wm.ts2.structure
+            #     if reduced_type.is_expecting_after() and not t2.is_expecting_before():
+            #         rt_r = Type(reduced_type.right_type())
+            #         bad_t2 = self.extract_bad_types(pair.s2)
+            #         good_t2 = self.extract_good_types(pair.s2)
+            #         if rt_r in bad_t2: # or t1_r has not been used for that element
+            #             # print('Should retype expectation')
                         
-                        # print(f'ts1 is {self.learner.wm.ts1} and ts2 is {self.learner.wm.ts2}')
-                        if t2.is_primitive():# and len(pair.s1) <=2:
-                            # print(f't2 {t2} is a primitive type')
+            #             # print(f'ts1 is {self.learner.wm.ts1} and ts2 is {self.learner.wm.ts2}')
+            #             if t2.is_primitive():# and len(pair.s1) <=2:
+            #                 # print(f't2 {t2} is a primitive type')
                             
-                            self.learner.wm.ts1 = self.learner.wm.ts1.retype_expectation(t2,self.learner.wm.get_responses())
-                            # print(f'ts1 consistent after changing expectation: {self.learner.wm.ts1.is_consistent()}')
+            #                 self.learner.wm.ts1 = self.learner.wm.ts1.retype_expectation(t2,self.learner.wm.get_responses())
+            #                 # print(f'ts1 consistent after changing expectation: {self.learner.wm.ts1.is_consistent()}')
 
-                        # print('retyping')
-                        # print(f'ts1 is {self.learner.wm.ts1} and ts2 is {self.learner.wm.ts2}')
+            #             # print('retyping')
+            #             # print(f'ts1 is {self.learner.wm.ts1} and ts2 is {self.learner.wm.ts2}')
                         
-                        # new_t1 = t1 + t1_r
-                        # [new_t1,t2] = new_t1.split(pu=0,prim=t2)
-                        # self.learner.wm.ts1 = TChunk(new_t1)
-                        # self.learner.wm.ts2 = TChunk(t2)
-                    else:
-                        self.learner.wm.ts2 = TChunk(rt_r)
-                    #self.learner.wm.ts2 = TChunk(new_ts2)
-                # ts1 complex: check if it reduces to something that expect something after. If ts2 expects something before retype ts2
+            #             # new_t1 = t1 + t1_r
+            #             # [new_t1,t2] = new_t1.split(pu=0,prim=t2)
+            #             # self.learner.wm.ts1 = TChunk(new_t1)
+            #             # self.learner.wm.ts2 = TChunk(t2)
+            #         else:
+            #             self.learner.wm.ts2 = TChunk(rt_r)
+            #         #self.learner.wm.ts2 = TChunk(new_ts2)
+            #     # ts1 complex: check if it reduces to something that expect something after. If ts2 expects something before retype ts2
                 
 
         
@@ -983,50 +1011,40 @@ class TypeAssigner(): #här ska jag vara för att fixa
             
         return chosen_pair
     
-    def choose_types_greedy(self, typ, s1, s2): #this function is wrong
-        left_candidates = self.extract_good_types(s1)
-        right_candidates = self.extract_good_types(s2)
-    
-        while left_candidates or right_candidates:
-            # pick dominant type probabilistically across both sides
-            side, dominant_type = merged_softmax_choice(left_candidates, right_candidates, tau=self.tau)
-            
-            if side == 'left':
-                right_matches = {rt: w for rt, w in right_candidates.items() 
-<<<<<<< Updated upstream
-                                 if dominant_type.is_compatible(rt)}
-=======
-                         if dominant_type.is_compatible(rt)}
->>>>>>> Stashed changes
-                if right_matches:
-                    _, match_type = merged_softmax_choice({}, right_matches, tau=self.tau)
-                    return dominant_type, match_type
-                else:
-                    left_candidates.pop(dominant_type, None)
-<<<<<<< Updated upstream
-            
-            else:  # side == 'right'
-                left_matches = {lt: w for lt, w in left_candidates.items() 
-                                if dominant_type.is_compatible(lt)}
-=======
-    
-            else:  # side == 'right'
-                left_matches = {lt: w for lt, w in left_candidates.items() 
-                        if dominant_type.is_compatible(lt)}
->>>>>>> Stashed changes
-                if left_matches:
-                    _, match_type = merged_softmax_choice(left_matches, {}, tau=self.tau)
-                    return match_type, dominant_type
-                else:
-                    right_candidates.pop(dominant_type, None)
-<<<<<<< Updated upstream
-    
-=======
 
->>>>>>> Stashed changes
-        # fallback: no compatible pair found
-        return self.choose_types(typ, s1, s2)
+    def modify_expectation_at_level(ts, winner_index, new_type, side="right"):
+    # """
+    # Modify expectation at a given node inside ts (compound or simple).
+    # Ensures global consistency by re-splitting from the top.
     
+    # Args:
+    #     ts: TChunk (possibly compound)
+    #     winner_index: index in flattened structure of node to update
+    #     new_type: Type to assign as expectation
+    #     side: "right" (is_expecting_after) or "left" (is_expecting_before)
+    # """
+        flat_nodes = ts.flatten_structure()
+        target_node = flat_nodes[winner_index]
+    
+        if side == "right":
+            updated = target_node + new_type
+            [updated, _] = updated.split(pu=0, prim=new_type)
+    
+        elif side == "left":
+            updated = new_type + target_node
+            [_, updated] = updated.split(pu=1, prim=new_type)
+    
+        else:
+            raise ValueError("side must be 'right' or 'left'")
+    
+        # Replace modified node
+        flat_nodes[winner_index] = updated
+    
+        # Rebuild structure fully to ensure consistency
+        rebuilt = TChunk.from_flat_nodes(flat_nodes)
+        rebuilt = rebuilt.reduce()  # optional: re-reduce top level to enforce coherence
+    
+        return rebuilt
     
     
     def propagate_types(self,
