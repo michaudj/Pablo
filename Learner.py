@@ -837,24 +837,38 @@ class TypeAssigner(): #här ska jag vara för att fixa
     def correct_typings(self, pair: ChunkPair):
         ts1 = self.learner.wm.ts1
         ts2 = self.learner.wm.ts2
-        
+        print("START")
+        print("pair:", pair)
+        print("ts1:", ts1)
+        print("ts2:", ts2)
         if not ts1.has_empty_elements() and not ts2.has_empty_elements():
-            #if not isinstance(self.learner.wm.ts1.structure,list) and not isinstance(self.learner.wm.ts2.structure, list):
+            print("both sides fully typed")     
+            # reduce only if compound and consistent#if not isinstance(self.learner.wm.ts1.structure,list) and not isinstance(self.learner.wm.ts2.structure, list):
                 # print('Both non complex') (Anna: skipped this one, because we want to also modify typing of compound s1)
-            t1 = ts1.reduce() if isinstance(ts1.structure, list) else ts1.structure
+            if isinstance(ts1.structure, list):
+                if self.learner.wm.ts1.is_consistent():
+                    t1 = ts1.reduce()
+                    print("reduced t1", t1)
+                else: 
+                    print("ts1 is complex and does not reduce")
+                    return
+            else: 
+                t1 = ts1.structure
+                print("t1, ",ts1)
             t2 = ts2.structure
-            if t1.is_expecting_after() and not t2.is_expecting_before():
-                # print('t1 expectations')
+            print("t2", t2)
+            if t1.is_expecting_after() and not t1.is_expecting_before() and not t2.is_expecting_before():
+                print('t1 expectations')
                 # Check compatibility and correct if needed
                 # print(f't1 {t1} is expecting after {Type(t1.right_type())} and t2 is {t2}')
                 t1_r = Type(t1.right_type())
                 if t1_r == t2:
                     pass
-                    # print('Good match')
+                    print('Good match')
                 else:
-                    # print('Bad match')
+                    print('Bad match')
                     # Check if expectation is a bad match for t2
-                    z_values = self.get_z_values_type(pair) #gets values for right chunks' types
+                    z_values = self.learner.wm.get_z_values_type(pair) #gets values for right chunks' types
                     z_dict = {i: z for i, z in enumerate(z_values)}
                     winner_index = softmax_choice(z_dict, tau=1.0) #lets right chunk types compete with softmax
                     winner_value = z_values[winner_index]
@@ -882,20 +896,20 @@ class TypeAssigner(): #här ska jag vara för att fixa
                             self.learner.wm.ts2 = TChunk(t1_r)
                         # retype here
             elif not t1.is_expecting_after() and t2.is_expecting_before():
-                # print('t2 expectations')
+                print('t2 expectations')
                 # print(f't2 {t2} is expecting before {Type(t2.left_type())} and t1 is {t1}')
                 # Check compatibility and correct if needed
                 t2_l = Type(t2.left_type())
                 if t2_l == t1:
                     pass
-                    #print('Good match')
+                    print('Good match')
                 else:
-                    
-                    z_values = self.get_z_values_type(pair)
+                    print("bad match")
+                    z_values = self.learner.wm.get_z_values_type(pair)
                     top_value_ts1 = z_values[-1]  # top-level reduced type value
         
                     # Get value for ts2 type from LTM (assumes primitive type)
-                    value_ts2 = self.learner.ltm.get_value(ts2)  # implement/get from chunk_type_associations
+                    value_ts2 = self.learner.ltm.chunk_type_associations[SChunk(pair.s2)][ts2.structure]
         
                     # Softmax competition between top ts1 value and ts2 value
                     dominant = softmax_choice({'s1': top_value_ts1, 's2': value_ts2}, tau=1.0)    
