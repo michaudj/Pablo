@@ -1,0 +1,13738 @@
+Hej världen!
+Kraschat!
+Traceback (most recent call last):
+  File "C:\Users\anjo1309\Documents\GitHub\Pablo\Learner.py", line 66, in <module>
+    1/0
+ZeroDivisionError: division by zero
+[4;33mReloaded modules[24m: TypeNew, SChunk[0m
+[4;33mReloaded modules[24m: TypeNew, SChunk[0m
+START
+pair: (n20,mv18)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv18,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,mv12)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv12,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,mv19)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv19,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,dv15)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv15,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,mv1)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv1,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,dv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv20,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,dv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv4,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv4', 'n4'],n12)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n12,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,mv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv14,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,dv1)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv1,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,dv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv14,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,mv18)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv18,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,mv8)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv8,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,dv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv2,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,dv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv16,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,dv12)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv12,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,mv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv4,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,dv1)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv1,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n5', 'n9'],n3)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n3,dv11)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv11,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,mv3)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv3,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,dv10)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv10,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,mv15)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv15,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,dv12)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv12,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,mv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv20,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,dv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv5,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv5', 'n7'],n14)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n14,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,dv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n9', 'dv4'],n7)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n7,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,mv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n17', 'mv4'],n10)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n10,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,dv19)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv19,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,dv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv4,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,mv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv7,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv7', 'n6'],n15)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n15,mv3)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv3,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,mv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv5,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,dv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv20,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,dv12)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv12,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,dv9)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv9,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,mv9)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n8', 'mv9'],n1)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n1,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,mv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv7,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,dv9)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv9,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,dv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv7,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,mv8)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv8,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,mv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n18', 'mv2'],n9)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n9,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,dv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv7,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,dv1)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv1,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n20', 'n2'],mv16)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv16,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,dv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv5,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,dv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv6,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,dv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv2,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,mv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv20,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv20', 'n9'],n12)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n12,mv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv14,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,dv11)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv11,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,dv15)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv15,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv15', 'n9'],n1)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n1,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,mv9)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv9,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,dv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv20,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n4', 'n1'],n13)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (['n4', ['n1', 'n13']],dv18)
+ts1: [tc_, [tc_, tc_]]
+ts2: tc_
+START
+pair: (dv18,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,dv12)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv12,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n2', 'n1'],dv11)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv11,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,dv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv16,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,dv15)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv15,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,dv3)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv3,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,dv12)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv12,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,dv3)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv3,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n16', 'n6'],n3)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (['n16', ['n6', 'n3']],dv12)
+ts1: [tc_, [tc_, tc_]]
+ts2: tc_
+START
+pair: (dv12,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,dv9)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv9,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,mv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv7,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,mv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv2,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,dv9)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv9,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv9', 'n10'],n16)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n16,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,mv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv2,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,mv13)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n19', 'mv13'],n8)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n8,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,dv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv14,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n10', 'n2'],dv4)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv4,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n13', 'n4'],n11)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n11,mv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n11', 'mv7'],n9)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (['n11', ['mv7', 'n9']],n6)
+ts1: [tc_, [tc_, tc_]]
+ts2: tc_
+START
+pair: (n6,mv13)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv13,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,dv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv14,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,mv7)
+ts1: tc_
+ts2: tc_0/0
+START
+pair: (mv7,n10)
+ts1: tc_0/0
+ts2: tc_0
+both sides fully typed
+t1,  tc_0/0
+t2 tc_0
+t1 expectation
+Good match
+START
+pair: (['mv7', 'n10'],n8)
+ts1: [tc_0/0, tc_0]
+ts2: tc_0
+both sides fully typed
+reduced t1 tc_0
+t2 tc_0
+START
+pair: (n8,dv7)
+ts1: tc_0
+ts2: tc_
+START
+pair: (['n8', 'dv7'],n18)
+ts1: [tc_0, tc_]
+ts2: tc_
+START
+pair: (n18,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,dv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv4,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n8', 'n6'],n12)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n12,dv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv5,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv5', 'n4'],n17)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n17,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,mv8)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv8,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n11)
+ts1: tc_
+ts2: tc_0/0
+START
+pair: (n11,dv6)
+ts1: tc_0/0
+ts2: tc_0
+both sides fully typed
+t1,  tc_0/0
+t2 tc_0
+t1 expectation
+Good match
+START
+pair: (['n11', 'dv6'],n6)
+ts1: [tc_0/0, tc_0]
+ts2: tc_0
+both sides fully typed
+reduced t1 tc_0
+t2 tc_0
+START
+pair: (n6,n15)
+ts1: tc_0
+ts2: tc_
+START
+pair: (n15,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n15', 'n4'],dv8)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv8,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv8', 'n15'],n15)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n15,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,dv17)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv17,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv17', 'n4'],n11)
+ts1: [tc_, tc_]
+ts2: tc_0/0
+START
+pair: ([['dv17', 'n4'], 'n11'],n13)
+ts1: [[tc_, tc_], tc_0/0]
+ts2: tc_0/0
+START
+pair: (n13,mv12)
+ts1: tc_0/0
+ts2: tc_0
+both sides fully typed
+t1,  tc_0/0
+t2 tc_0
+t1 expectation
+Good match
+START
+pair: (mv12,n18)
+ts1: tc_0
+ts2: tc_
+START
+pair: (n18,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,mv1)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n15', 'mv1'],n4)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n4,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,dv17)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv17,n11)
+ts1: tc_
+ts2: tc_0/0
+START
+pair: (n11,n1)
+ts1: tc_0/0
+ts2: tc_0
+both sides fully typed
+t1,  tc_0/0
+t2 tc_0
+t1 expectation
+Good match
+START
+pair: (n1,n13)
+ts1: tc_0
+ts2: tc_
+START
+pair: (n13,dv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv5,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n2', 'n15'],mv20)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv20,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n2', 'n4'],mv11)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv11,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n11)
+ts1: tc_
+ts2: tc_0/0
+START
+pair: (n11,mv1)
+ts1: tc_0/0
+ts2: tc_0
+both sides fully typed
+t1,  tc_0/0
+t2 tc_0
+t1 expectation
+Good match
+START
+pair: (mv1,n6)
+ts1: tc_0
+ts2: tc_
+START
+pair: (n6,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,mv12)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv12,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,mv11)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv11,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n8', 'n4'],dv14)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv14,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,mv12)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv12,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,mv13)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv13,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv13', 'n15'],n20)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n20,dv11)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv11,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv11', 'n5'],n3)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n3,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,dv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv4,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv4', 'n8'],n8)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n8,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n8', 'n13'],dv5)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv5,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv5', 'n1'],n18)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n18,n9)
+ts1: tc_
+ts2: tc_0
+START
+pair: (n9,dv3)
+ts1: tc_0
+ts2: tc_
+START
+pair: (dv3,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n9)
+ts1: tc_
+ts2: tc_0
+START
+pair: (n9,n10)
+ts1: tc_0
+ts2: tc_
+START
+pair: (n10,mv19)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv19,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,dv12)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv12,n11)
+ts1: tc_
+ts2: tc_0/0
+START
+pair: (['dv12', 'n11'],n3)
+ts1: [tc_, tc_0/0]
+ts2: tc_0/0
+START
+pair: (n3,n15)
+ts1: tc_0/0
+ts2: tc_0
+both sides fully typed
+t1,  tc_0/0
+t2 tc_0
+t1 expectation
+Good match
+START
+pair: (n15,dv3)
+ts1: tc_0
+ts2: tc_
+START
+pair: (dv3,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv3', 'n9'],n2)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n2,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n2', 'n19'],mv8)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv8,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,mv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv5,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,mv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv2,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,mv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv16,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,mv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv14,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,mv17)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n9', 'mv17'],n15)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n15,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,dv19)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv19,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,dv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv20,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv20', 'n13'],n14)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n14,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,mv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv5,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n9', 'n10'],mv5)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv5,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,mv13)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv13,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n5', 'n20'],mv8)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv8,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n13', 'n20'],mv10)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv10,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv10', 'n14'],n14)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n14,dv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv20,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,mv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv5,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,dv8)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv8,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,dv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv6,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n2', 'n4'],mv2)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv2,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv2', 'n9'],n18)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n18,dv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv4,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv4', 'n7'],n16)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n16,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,mv8)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv8,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,dv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv20,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,dv9)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv9,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,mv7)
+ts1: tc_
+ts2: tc_0/0
+START
+pair: (['n4', 'mv7'],n16)
+ts1: [tc_, tc_0/0]
+ts2: tc_0/0
+START
+pair: (n16,n12)
+ts1: tc_0/0
+ts2: tc_0
+both sides fully typed
+t1,  tc_0/0
+t2 tc_0
+t1 expectation
+Good match
+START
+pair: (n12,dv10)
+ts1: tc_0
+ts2: tc_
+START
+pair: (dv10,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,dv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n5', 'dv16'],n20)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n20,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n2', 'n9'],dv6)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv6,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n15', 'n13'],mv3)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv3,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n10', 'n1'],mv2)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv2,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv2', 'n12'],n14)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n14,mv13)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv13,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,dv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv6,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n9', 'n10'],n17)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n17,mv11)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv11,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,mv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv14,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv14', 'n13'],n14)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n14,mv13)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv13,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,mv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv6,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n10', 'n7'],mv13)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv13,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv13', 'n8'],n16)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n16,dv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv2,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv2', 'n10'],n12)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n12,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,dv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv2,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,dv17)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv17,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n8', 'n19'],mv11)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv11,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,dv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv14,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,dv12)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n1', 'dv12'],n10)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n10,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,dv19)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv19,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,dv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv6,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv6', 'n18'],n20)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n20,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,dv19)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv19,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,dv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv4,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,dv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv16,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,mv19)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n7', 'mv19'],n8)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n8,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,mv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv4,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv4', 'n20'],n5)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n5,mv17)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv17,n11)
+ts1: tc_
+ts2: tc_0/0
+START
+pair: (n11,n18)
+ts1: tc_0/0
+ts2: tc_0
+both sides fully typed
+t1,  tc_0/0
+t2 tc_0
+t1 expectation
+Good match
+START
+pair: (n18,dv11)
+ts1: tc_0
+ts2: tc_
+START
+pair: (dv11,n11)
+ts1: tc_
+ts2: tc_0/0
+START
+pair: (n11,n10)
+ts1: tc_0/0
+ts2: tc_0
+both sides fully typed
+t1,  tc_0/0
+t2 tc_0
+t1 expectation
+Good match
+START
+pair: (n10,n16)
+ts1: tc_0
+ts2: tc_
+START
+pair: (['n10', 'n16'],mv18)
+ts1: [tc_0, tc_]
+ts2: tc_
+START
+pair: (mv18,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,dv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv5,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n1', 'n18'],n12)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n12,dv12)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv12,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n12', 'n17'],n17)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n17,dv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n17', 'dv4'],n4)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n4,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,mv12)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n6', 'mv12'],n8)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n8,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,mv17)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv17,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,dv9)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv9,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,mv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv20,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,mv13)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv13,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n16', 'n5'],dv7)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv7,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv7', 'n7'],n17)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n17,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,dv3)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv3,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,mv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv16,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,dv19)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv19,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,dv1)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv1,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,mv19)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n17', 'mv19'],n13)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n13,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n13', 'n2'],mv8)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv8,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,dv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv4,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,mv3)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv3,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv3', 'n4'],n11)
+ts1: [tc_, tc_]
+ts2: tc_0/0
+START
+pair: (n11,mv2)
+ts1: tc_0/0
+ts2: tc_0
+both sides fully typed
+t1,  tc_0/0
+t2 tc_0
+t1 expectation
+Good match
+START
+pair: (mv2,n8)
+ts1: tc_0
+ts2: tc_
+START
+pair: (n8,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,mv3)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv3,n11)
+ts1: tc_
+ts2: tc_0/0
+START
+pair: (n11,n4)
+ts1: tc_0/0
+ts2: tc_0
+both sides fully typed
+t1,  tc_0/0
+t2 tc_0
+t1 expectation
+Good match
+START
+pair: (n4,mv10)
+ts1: tc_0
+ts2: tc_
+START
+pair: (mv10,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,mv1)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv1,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,mv12)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv12,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n16', 'n4'],mv18)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv18,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,mv19)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv19,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,mv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv20,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,dv15)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv15,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,dv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n10', 'dv14'],n1)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n1,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n13', 'n14'],mv15)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv15,n11)
+ts1: tc_
+ts2: tc_0/0
+START
+pair: (['mv15', 'n11'],n14)
+ts1: [tc_, tc_0/0]
+ts2: tc_0/0
+START
+pair: (n14,mv12)
+ts1: tc_0/0
+ts2: tc_0
+both sides fully typed
+t1,  tc_0/0
+t2 tc_0
+t1 expectation
+Good match
+START
+pair: (['n14', 'mv12'],n18)
+ts1: [tc_0/0, tc_0]
+ts2: tc_0
+both sides fully typed
+reduced t1 tc_0
+t2 tc_0
+START
+pair: (n18,n4)
+ts1: tc_0
+ts2: tc_
+START
+pair: (n4,mv8)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv8,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,dv13)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv13,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,dv11)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n6', 'dv11'],n14)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n14,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,dv17)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv17,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,dv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n6', 'dv20'],n19)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n19,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n15', 'n20'],mv10)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv10,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,mv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n15', 'mv16'],n16)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n16,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,dv19)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv19,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,dv12)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv12,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv12', 'n18'],n2)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n2,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,dv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv16,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,dv17)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv17,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,dv12)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n1', 'dv12'],n19)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n19,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n19', 'n17'],n4)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (['n19', ['n17', 'n4']],dv3)
+ts1: [tc_, [tc_, tc_]]
+ts2: tc_
+START
+pair: (dv3,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n13', 'n7'],mv19)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv19,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n5', 'n12'],mv2)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv2,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,mv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv20,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,mv17)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv17,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,dv17)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n14', 'dv17'],n10)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n10,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n4', 'n12'],dv11)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv11,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n8', 'n10'],dv5)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv5,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n9', 'n12'],n20)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n20,dv15)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv15,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n10', 'n17'],n12)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n12,dv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv14,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n15', 'n19'],n5)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n5,mv12)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv12,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,dv8)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv8,n11)
+ts1: tc_
+ts2: tc_0/0
+START
+pair: (n11,n15)
+ts1: tc_0/0
+ts2: tc_0
+both sides fully typed
+t1,  tc_0/0
+t2 tc_0
+t1 expectation
+Good match
+START
+pair: (n15,n3)
+ts1: tc_0
+ts2: tc_
+START
+pair: (['n15', 'n3'],mv1)
+ts1: [tc_0, tc_]
+ts2: tc_
+START
+pair: (mv1,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n11)
+ts1: tc_
+ts2: tc_0/0
+START
+pair: (n11,dv10)
+ts1: tc_0/0
+ts2: tc_0
+both sides fully typed
+t1,  tc_0/0
+t2 tc_0
+t1 expectation
+Good match
+START
+pair: (dv10,n4)
+ts1: tc_0
+ts2: tc_
+START
+pair: (['dv10', 'n4'],n3)
+ts1: [tc_0, tc_]
+ts2: tc_
+START
+pair: (n3,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,dv17)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv17,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv17', 'n13'],n1)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n1,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,dv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv4,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,mv3)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv3,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n10', 'n14'],mv6)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv6,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,mv10)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv10,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,mv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv6,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,mv1)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv1,n11)
+ts1: tc_
+ts2: tc_0/0
+START
+pair: (n11,n8)
+ts1: tc_0/0
+ts2: tc_0
+both sides fully typed
+t1,  tc_0/0
+t2 tc_0
+t1 expectation
+Good match
+START
+pair: (n8,mv19)
+ts1: tc_0
+ts2: tc_
+START
+pair: (mv19,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n4', 'n12'],dv3)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv3,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,dv3)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv3,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n3', 'n10'],mv1)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv1,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n18', 'n12'],dv16)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv16,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n8', 'n12'],n20)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n20,dv15)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv15,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,dv3)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv3,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n3', 'n17'],dv5)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv5,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,dv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv20,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv20', 'n15'],n11)
+ts1: [tc_, tc_]
+ts2: tc_0/0
+START
+pair: (n11,n7)
+ts1: tc_0/0
+ts2: tc_0
+both sides fully typed
+t1,  tc_0/0
+t2 tc_0
+t1 expectation
+Good match
+START
+pair: (['n11', 'n7'],mv12)
+ts1: [tc_0/0, tc_0]
+ts2: tc_0
+both sides fully typed
+reduced t1 tc_0
+t2 tc_0
+START
+pair: (mv12,n5)
+ts1: tc_0
+ts2: tc_
+START
+pair: (n5,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,dv11)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv11,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,dv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv2,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n19', 'n13'],n17)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n17,mv3)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv3,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,dv11)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv11,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,mv15)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv15,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,dv8)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n7', 'dv8'],n19)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n19,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n1', 'n18'],mv13)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv13,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,dv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv5,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,mv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv14,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n15', 'n20'],mv17)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv17,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv17', 'n3'],n19)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n19,dv17)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv17,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,mv12)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv12,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv12', 'n3'],n7)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n7,dv12)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n7', 'dv12'],n19)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n19,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n19', 'n9'],n1)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n1,dv10)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv10,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n20', 'n1'],mv9)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv9,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,dv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv7,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,mv9)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv9,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,dv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv4,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,mv10)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv10,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,mv17)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv17,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n8', 'n2'],dv16)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv16,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv16', 'n20'],n14)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n14,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,dv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv6,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,dv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv6,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,dv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv5,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,mv7)
+ts1: tc_
+ts2: tc_0/0
+START
+pair: (mv7,n15)
+ts1: tc_0/0
+ts2: tc_0
+both sides fully typed
+t1,  tc_0/0
+t2 tc_0
+t1 expectation
+Good match
+START
+pair: (n15,n3)
+ts1: tc_0
+ts2: tc_
+START
+pair: (n3,dv18)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv18,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n17', 'n14'],n1)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n1,dv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv5,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv5', 'n18'],n10)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n10,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n10', 'n4'],dv17)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv17,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n6', 'n12'],n2)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n2,dv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv6,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n17', 'n12'],mv2)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv2,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv2', 'n8'],n5)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n5,dv18)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv18,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,dv18)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv18,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,dv17)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n11', 'dv17'],n6)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n6,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,mv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv6,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n17', 'n13'],mv14)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv14,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,dv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv4,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv4', 'n17'],n1)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n1,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,dv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv2,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,mv9)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n12', 'mv9'],n9)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n9,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,mv18)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv18,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv18', 'n20'],n14)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (['mv18', ['n20', 'n14']],dv14)
+ts1: [tc_, [tc_, tc_]]
+ts2: tc_
+START
+pair: (dv14,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,dv1)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv1,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n12', 'n12'],dv14)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv14,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,mv7)
+ts1: tc_
+ts2: tc_0/0
+START
+pair: (mv7,n10)
+ts1: tc_0/0
+ts2: tc_0
+both sides fully typed
+t1,  tc_0/0
+t2 tc_0
+t1 expectation
+Good match
+START
+pair: (n10,n17)
+ts1: tc_0
+ts2: tc_
+START
+pair: (n17,mv3)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n17', 'mv3'],n7)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n7,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,mv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv2,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,dv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv20,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n3', 'n19'],n5)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n5,dv10)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv10,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n17', 'n6'],n17)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n17,dv3)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv3,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,dv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv20,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n2', 'n12'],n15)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n15,dv8)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv8,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv8', 'n20'],n9)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (['dv8', ['n20', 'n9']],n16)
+ts1: [tc_, [tc_, tc_]]
+ts2: tc_
+START
+pair: (n16,dv18)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv18,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,dv10)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv10,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n9', 'n17'],n9)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n9,mv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv6,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,dv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv7,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,mv8)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n16', 'mv8'],n16)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (['n16', ['mv8', 'n16']],n6)
+ts1: [tc_, [tc_, tc_]]
+ts2: tc_
+START
+pair: (n6,mv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n6', 'mv6'],n6)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n6,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,dv3)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv3,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n3', 'n9'],n12)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n12,dv18)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv18,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,dv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv16,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n7', 'n5'],n16)
+ts1: [tc_, tc_]
+ts2: tc_0
+START
+pair: (n16,dv16)
+ts1: tc_0
+ts2: tc_
+START
+pair: (dv16,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n18', 'n6'],dv5)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv5,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv5', 'n19'],n1)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n1,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n1', 'n12'],dv7)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv7,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,dv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv5,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,dv15)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n20', 'dv15'],n16)
+ts1: [tc_, tc_]
+ts2: tc_0
+START
+pair: (n16,n20)
+ts1: tc_0
+ts2: tc_
+START
+pair: (n20,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,dv11)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv11,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n14', 'n6'],n6)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n6,mv19)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv19,n16)
+ts1: tc_
+ts2: tc_0
+START
+pair: (n16,n7)
+ts1: tc_0
+ts2: tc_
+START
+pair: (['n16', 'n7'],dv5)
+ts1: [tc_0, tc_]
+ts2: tc_
+START
+pair: (dv5,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,dv9)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv9,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,dv18)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv18,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv18', 'n1'],n19)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n19,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n19', 'n5'],mv10)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv10,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n9', 'n9'],mv8)
+ts1: [tc_, tc_]
+ts2: tc_0\0/0
+START
+pair: (mv8,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n11', 'n3'],mv3)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv3,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,dv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv20,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,dv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv14,n16)
+ts1: tc_
+ts2: tc_0
+START
+pair: (['dv14', 'n16'],n17)
+ts1: [tc_, tc_0]
+ts2: tc_0
+START
+pair: (n17,n2)
+ts1: tc_0
+ts2: tc_
+START
+pair: (['n17', 'n2'],dv7)
+ts1: [tc_0, tc_]
+ts2: tc_
+START
+pair: (dv7,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,dv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv7,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,mv9)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv9,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv9', 'n17'],n5)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n5,dv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv2,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n5', 'n6'],mv20)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: ([['n5', 'n6'], 'mv20'],n15)
+ts1: [[tc_, tc_], tc_]
+ts2: tc_
+START
+pair: (n15,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,dv15)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n4', 'dv15'],n16)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n16,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,mv13)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n14', 'mv13'],n10)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n10,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,mv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv4,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,mv19)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n2', 'mv19'],n3)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n3,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,dv13)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv13,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n2', 'n14'],n8)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n8,dv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv14,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n3', 'n17'],mv17)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv17,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,dv8)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv8,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,mv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv16,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n14', 'n4'],dv2)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv2,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,dv1)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n15', 'dv1'],n18)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n18,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n18', 'n12'],n13)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n13,dv1)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv1,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n20', 'n14'],n19)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n19,dv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv16,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,mv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv20,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,dv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv20,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n6', 'n17'],n17)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n17,dv11)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv11,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,mv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv14,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n12', 'n15'],dv14)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv14,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,mv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n14', 'mv5'],n20)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n20,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,mv10)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv10,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,mv8)
+ts1: tc_0
+ts2: tc_0\0/0
+both sides fully typed
+t1,  tc_0
+t2 tc_0\0/0
+t2 expectations
+Good match
+START
+pair: (mv8,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,mv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv4,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv4', 'n10'],n2)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: ([['mv4', 'n10'], 'n2'],mv20)
+ts1: [[tc_, tc_], tc_]
+ts2: tc_
+START
+pair: ([['mv4', 'n10'], ['n2', 'mv20']],n5)
+ts1: [[tc_, tc_], [tc_, tc_]]
+ts2: tc_
+START
+pair: (n5,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n5', 'n13'],mv15)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv15,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,mv8)
+ts1: tc_0
+ts2: tc_0\0/0
+both sides fully typed
+t1,  tc_0
+t2 tc_0\0/0
+t2 expectations
+Good match
+START
+pair: (mv8,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv8', 'n4'],n15)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n15,dv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv5,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n11', 'n6'],mv12)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv12,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n19', 'n18'],mv8)
+ts1: [tc_, tc_]
+ts2: tc_0\0/0
+START
+pair: (mv8,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,dv9)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv9,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,dv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv6,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n11', 'n1'],n6)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n6,dv18)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv18,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,mv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv14,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n11', 'n4'],mv12)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv12,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,mv3)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv3,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n5', 'n20'],mv16)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv16,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,mv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n20', 'mv5'],n8)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n8,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,dv17)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv17,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n1', 'n15'],n15)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: ([['n1', 'n15'], 'n15'],mv12)
+ts1: [[tc_, tc_], tc_]
+ts2: tc_
+START
+pair: (mv12,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,dv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv16,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n6', 'n19'],n14)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n14,dv1)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv1,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv1', 'n5'],n6)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n6,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,mv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv5,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv5', 'n9'],n15)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n15,mv3)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv3,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,dv17)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n8', 'dv17'],n10)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n10,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,dv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv4,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,mv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv6,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n13', 'n9'],dv7)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv7,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n18', 'n11'],mv20)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv20,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,dv10)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv10,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n9', 'n13'],n9)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n9,mv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv5,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,mv1)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv1,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n17', 'n17'],mv1)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv1,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,dv13)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv13,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,mv18)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n9', 'mv18'],n13)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n13,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n13', 'n4'],dv13)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv13,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n15', 'n11'],n3)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n3,dv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv7,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,mv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv6,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv6', 'n19'],n8)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n8,mv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n8', 'mv6'],n1)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n1,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n1', 'n6'],dv7)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv7,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n19', 'n14'],mv10)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv10,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,mv3)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv3,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n6', 'n2'],mv4)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv4,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,mv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv6,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n4', 'n3'],mv14)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv14,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n11', 'n17'],dv11)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv11,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n18', 'n19'],n10)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n10,dv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv20,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n20', 'n16'],mv4)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv4,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,dv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv4,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,dv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv20,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,mv11)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv11,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n4', 'n3'],mv12)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv12,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,mv13)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv13,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,mv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv4,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n8', 'n14'],mv17)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv17,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n6', 'n3'],dv14)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv14,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n9', 'n9'],n17)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n17,dv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv20,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv20', 'n19'],n12)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n12,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,dv9)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n10', 'dv9'],n6)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n6,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n2', 'n17'],dv12)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv12,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,dv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n15', 'dv20'],n6)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n6,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n6', 'n15'],n12)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n12,mv7)
+ts1: tc_
+ts2: tc_0/0
+START
+pair: (mv7,n16)
+ts1: tc_0/0
+ts2: tc_0
+both sides fully typed
+t1,  tc_0/0
+t2 tc_0
+t1 expectation
+Good match
+START
+pair: (['mv7', 'n16'],n3)
+ts1: [tc_0/0, tc_0]
+ts2: tc_0
+both sides fully typed
+reduced t1 tc_0
+t2 tc_0
+START
+pair: (n3,dv12)
+ts1: tc_0
+ts2: tc_
+START
+pair: (dv12,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n13', 'n9'],n13)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (['n13', ['n9', 'n13']],mv6)
+ts1: [tc_, [tc_, tc_]]
+ts2: tc_
+START
+pair: (mv6,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv6', 'n4'],n16)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n16,dv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n16', 'dv4'],n16)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n16,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,dv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv16,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv16', 'n17'],n8)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (['dv16', ['n17', 'n8']],n12)
+ts1: [tc_, [tc_, tc_]]
+ts2: tc_
+START
+pair: (['dv16', [['n17', 'n8'], 'n12']],dv2)
+ts1: [tc_, [[tc_, tc_], tc_]]
+ts2: tc_
+START
+pair: (dv2,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n8', 'n13'],n15)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n15,mv18)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv18,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,mv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv14,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n13', 'n7'],mv17)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv17,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,dv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv2,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv2', 'n4'],n3)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n3,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,dv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv5,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,mv11)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv11,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,mv12)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv12,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n14', 'n18'],dv1)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv1,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n15', 'n12'],dv20)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv20,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n11', 'n10'],n11)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n11,dv8)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv8,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n10', 'n18'],n1)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n1,mv10)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv10,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv10', 'n6'],n10)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n10,mv10)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv10,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,mv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv6,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv6', 'n17'],n19)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (['mv6', ['n17', 'n19']],mv8)
+ts1: [tc_, [tc_, tc_]]
+ts2: tc_0\0/0
+START
+pair: (['mv6', ['n17', ['n19', 'mv8']]],n8)
+ts1: [tc_, [tc_, [tc_, tc_0\0/0]]]
+ts2: tc_0\0/0
+START
+pair: (n8,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,mv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv14,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n6', 'n8'],dv2)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv2,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,dv3)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv3,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,mv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv6,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv6', 'n10'],n14)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n14,dv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv2,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n14', 'n6'],n17)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n17,mv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv14,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,dv3)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n12', 'dv3'],n15)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (['n12', ['dv3', 'n15']],n6)
+ts1: [tc_, [tc_, tc_]]
+ts2: tc_
+START
+pair: (n6,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,dv10)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv10,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,mv19)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv19,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,mv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv4,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n1', 'n1'],mv8)
+ts1: [tc_, tc_]
+ts2: tc_0\0/0
+START
+pair: (mv8,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv8', 'n11'],n2)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n2,dv12)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n2', 'dv12'],n11)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (['n2', ['dv12', 'n11']],n18)
+ts1: [tc_, [tc_, tc_]]
+ts2: tc_
+START
+pair: (n18,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,mv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv5,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n13', 'n20'],dv6)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv6,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,dv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv5,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv5', 'n15'],n19)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n19,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,mv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv7,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n3', 'n6'],mv8)
+ts1: [tc_, tc_]
+ts2: tc_0\0/0
+START
+pair: (mv8,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv8', 'n10'],n14)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n14,mv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv16,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv16', 'n7'],n9)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (['mv16', ['n7', 'n9']],mv13)
+ts1: [tc_, [tc_, tc_]]
+ts2: tc_
+START
+pair: (mv13,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv13', 'n3'],n4)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n4,mv10)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n4', 'mv10'],n14)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n14,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,mv3)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv3,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n16', 'n10'],dv12)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv12,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,dv11)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n2', 'dv11'],n10)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n10,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,mv19)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv19,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv19', 'n18'],n16)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n16,dv3)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv3,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,mv8)
+ts1: tc_0
+ts2: tc_0\0/0
+both sides fully typed
+t1,  tc_0
+t2 tc_0\0/0
+t2 expectations
+Good match
+START
+pair: (mv8,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,dv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n13', 'dv14'],n8)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (['n13', ['dv14', 'n8']],n13)
+ts1: [tc_, [tc_, tc_]]
+ts2: tc_
+START
+pair: (n13,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n13', 'n5'],mv4)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv4,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv4', 'n7'],n12)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n12,mv9)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv9,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,dv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n12', 'dv2'],n12)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n12,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,mv1)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv1,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,mv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv2,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,dv12)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv12,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n1', 'n9'],n20)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n20,dv11)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n20', 'dv11'],n9)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n9,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,mv9)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv9,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,mv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv6,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,mv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv20,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,mv15)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n20', 'mv15'],n8)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n8,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,mv8)
+ts1: tc_0
+ts2: tc_0\0/0
+both sides fully typed
+t1,  tc_0
+t2 tc_0\0/0
+t2 expectations
+Good match
+START
+pair: (mv8,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv8', 'n8'],n8)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n8,mv9)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv9,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n10', 'n15'],mv4)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv4,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n4', 'n2'],mv19)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv19,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,dv10)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv10,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n12', 'n2'],n10)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n10,dv10)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv10,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,mv11)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv11,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv11', 'n8'],n10)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n10,dv8)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv8,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,mv1)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv1,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,dv3)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv3,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,dv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv6,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n5', 'n7'],n3)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n3,dv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv16,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv16', 'n12'],n8)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n8,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n8', 'n20'],mv17)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv17,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,dv9)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv9,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n16', 'n1'],dv18)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv18,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n4', 'n2'],dv5)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: ([['n4', 'n2'], 'dv5'],n1)
+ts1: [[tc_, tc_], tc_]
+ts2: tc_
+START
+pair: ([['n4', 'n2'], ['dv5', 'n1']],n14)
+ts1: [[tc_, tc_], [tc_, tc_]]
+ts2: tc_
+START
+pair: ([['n4', 'n2'], [['dv5', 'n1'], 'n14']],n8)
+ts1: [[tc_, tc_], [[tc_, tc_], tc_]]
+ts2: tc_
+START
+pair: ([['n4', 'n2'], [['dv5', 'n1'], ['n14', 'n8']]],mv1)
+ts1: [[tc_, tc_], [[tc_, tc_], [tc_, tc_]]]
+ts2: tc_
+START
+pair: (mv1,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,mv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv2,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,dv9)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv9,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n13', 'n6'],dv11)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv11,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,mv8)
+ts1: tc_0
+ts2: tc_0\0/0
+both sides fully typed
+t1,  tc_0
+t2 tc_0\0/0
+t2 expectations
+Good match
+START
+pair: (mv8,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv8', 'n3'],n2)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n2,mv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv7,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,dv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv6,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv6', 'n6'],n19)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n19,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,dv15)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv15,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n9', 'n8'],mv16)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv16,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,mv9)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv9,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n6', 'n20'],mv6)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (['n6', ['n20', 'mv6']],n19)
+ts1: [tc_, [tc_, tc_]]
+ts2: tc_
+START
+pair: (n19,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,mv18)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv18,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,dv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n5', 'dv4'],n17)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n17,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n13', 'n13'],mv6)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (['n13', ['n13', 'mv6']],n3)
+ts1: [tc_, [tc_, tc_]]
+ts2: tc_
+START
+pair: (n3,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,dv13)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n18', 'dv13'],n1)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n1,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n1', 'n7'],n10)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (['n1', ['n7', 'n10']],mv12)
+ts1: [tc_, [tc_, tc_]]
+ts2: tc_
+START
+pair: (mv12,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n16', 'n5'],dv13)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv13,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv13', 'n15'],n11)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n11,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n11', 'n18'],mv17)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv17,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n2', 'n16'],dv9)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv9,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv9', 'n12'],n10)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n10,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,dv10)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv10,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n17', 'n13'],n12)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n12,dv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n12', 'dv14'],n15)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n15,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n15', 'n19'],n19)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n19,dv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv5,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,dv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv5,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,dv17)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n3', 'dv17'],n13)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n13,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n13', 'n9'],n5)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n5,dv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv4,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n14', 'n15'],n3)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n3,dv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv5,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n2', 'n7'],mv14)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv14,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv14', 'n17'],n4)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (['mv14', ['n17', 'n4']],dv8)
+ts1: [tc_, [tc_, tc_]]
+ts2: tc_
+START
+pair: (dv8,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,mv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv4,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,dv13)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv13,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,dv17)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv17,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,mv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n12', 'mv7'],n12)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n12,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n12', 'n15'],dv3)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv3,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,dv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv2,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv2', 'n19'],n11)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n11,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n11', 'n15'],mv17)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv17,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,mv8)
+ts1: tc_0
+ts2: tc_0\0/0
+both sides fully typed
+t1,  tc_0
+t2 tc_0\0/0
+t2 expectations
+Good match
+START
+pair: (['n13', 'mv8'],n11)
+ts1: [tc_0, tc_0\0/0]
+ts2: tc_0\0/0
+both sides fully typed
+reduced t1 tc_0/0
+t2 tc_0\0/0
+Incompatible typing at step 1415
+START
+pair: ([['n13', 'mv8'], 'n11'],n8)
+ts1: [[tc_0, tc_0\0/0], tc_0\0/0]
+ts2: tc_0\0/0
+both sides fully typed
+ts1 is complex and does not reduce
+START
+pair: (n8,dv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv7,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n13)
+ts1: tc_
+ts2: tc_0/0
+START
+pair: (['n16', 'n13'],n7)
+ts1: [tc_, tc_0/0]
+ts2: tc_0/0
+START
+pair: (n7,dv20)
+ts1: tc_0/0
+ts2: tc_0
+both sides fully typed
+t1,  tc_0/0
+t2 tc_0
+t1 expectation
+Good match
+START
+pair: (['n7', 'dv20'],n3)
+ts1: [tc_0/0, tc_0]
+ts2: tc_0
+both sides fully typed
+reduced t1 tc_0
+t2 tc_0
+START
+pair: (n3,n10)
+ts1: tc_0
+ts2: tc_
+START
+pair: (n10,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n10', 'n20'],dv10)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv10,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n12', 'n8'],n1)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n1,mv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n1', 'mv14'],n15)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n15,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,dv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n5', 'dv2'],n2)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n2,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,mv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv2,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,mv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n4', 'mv16'],n13)
+ts1: [tc_, tc_]
+ts2: tc_0/0
+START
+pair: (n13,n9)
+ts1: tc_0/0
+ts2: tc_0
+both sides fully typed
+t1,  tc_0/0
+t2 tc_0
+t1 expectation
+Good match
+START
+pair: (n9,dv20)
+ts1: tc_0
+ts2: tc_
+START
+pair: (['n9', 'dv20'],n19)
+ts1: [tc_0, tc_]
+ts2: tc_
+START
+pair: (n19,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,mv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv7,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,mv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv4,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv4', 'n1'],n17)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n17,dv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv14,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n10', 'n14'],dv12)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv12,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv12', 'n16'],n17)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (['dv12', ['n16', 'n17']],n1)
+ts1: [tc_, [tc_, tc_]]
+ts2: tc_
+START
+pair: (['dv12', ['n16', ['n17', 'n1']]],dv17)
+ts1: [tc_, [tc_, [tc_, tc_]]]
+ts2: tc_
+START
+pair: (dv17,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv17', 'n14'],n14)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n14,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n14', 'n1'],mv15)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv15,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,dv15)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv15,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n11)
+ts1: tc_0
+ts2: tc_0\0
+both sides fully typed
+t1,  tc_0
+t2 tc_0\0
+t2 expectations
+Good match
+START
+pair: (['n8', 'n11'],n7)
+ts1: [tc_0, tc_0\0]
+ts2: tc_0\0
+both sides fully typed
+reduced t1 tc_0
+t2 tc_0\0
+t2 expectations
+Good match
+START
+pair: (['n8', ['n11', 'n7']],mv6)
+ts1: [tc_0, [tc_0\0, tc_0\0]]
+ts2: tc_0\0
+both sides fully typed
+reduced t1 tc_0
+t2 tc_0\0
+t2 expectations
+Good match
+START
+pair: (mv6,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,dv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv2,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n13)
+ts1: tc_
+ts2: tc_0/0
+START
+pair: (n13,mv9)
+ts1: tc_0/0
+ts2: tc_0
+both sides fully typed
+t1,  tc_0/0
+t2 tc_0
+t1 expectation
+Good match
+START
+pair: (mv9,n19)
+ts1: tc_0
+ts2: tc_
+START
+pair: (n19,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,dv1)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n18', 'dv1'],n14)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n14,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,mv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n1', 'mv7'],n15)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n15,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,mv3)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv3,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,dv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv5,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n8', 'n1'],n2)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n2,mv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv6,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,dv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n12', 'dv7'],n14)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n14,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n12', 'n19'],mv11)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv11,n13)
+ts1: tc_
+ts2: tc_0/0
+START
+pair: (n13,n13)
+ts1: tc_0/0
+ts2: tc_0/0
+both sides fully typed
+t1,  tc_0/0
+t2 tc_0/0
+t1 expectation
+Bad match
+[4;33mReloaded modules[24m: TypeNew, SChunk, RawInput, Population, grammars, Learner[0m
+START
+pair: (n2,dv15)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv15,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv15', 'n20'],n17)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n17,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,dv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv7,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,dv15)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv15,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n13', 'n11'],mv14)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv14,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,mv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv16,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv16', 'n19'],n8)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n8,dv19)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv19,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,dv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv6,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,dv3)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv3,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,dv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv16,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv16', 'n14'],n3)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n3,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,mv15)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv15,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n11', 'n18'],mv16)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv16,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,dv1)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv1,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,dv15)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv15,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,dv17)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n12', 'dv17'],n16)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n16,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,dv8)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv8,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,mv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv14,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,dv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv6,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,dv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv2,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,dv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv2,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,mv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv2,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,mv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n3', 'mv2'],n9)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n9,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,dv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv7,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n19', 'n7'],mv18)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv18,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n1', 'n6'],mv8)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv8,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,dv3)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv3,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv3', 'n18'],n17)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (['dv3', ['n18', 'n17']],n10)
+ts1: [tc_, [tc_, tc_]]
+ts2: tc_
+START
+pair: (n10,dv12)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv12,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n5', 'n20'],n16)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n16,mv18)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv18,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,dv3)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv3,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,mv10)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n16', 'mv10'],n3)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n3,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,dv12)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n14', 'dv12'],n7)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n7,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n19', 'n13'],dv18)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv18,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,dv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv2,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,dv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv7,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n19', 'n1'],n1)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n1,mv17)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv17,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,mv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n15', 'mv16'],n11)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n11,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n11', 'n15'],dv18)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv18,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n2', 'n15'],dv19)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv19,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n15', 'n7'],dv13)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv13,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,dv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv6,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv6', 'n18'],n18)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: ([['dv6', 'n18'], 'n18'],n3)
+ts1: [[tc_, tc_], tc_]
+ts2: tc_
+START
+pair: (n3,dv11)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv11,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,mv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n17', 'mv5'],n9)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n9,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,mv15)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv15,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,mv3)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n19', 'mv3'],n16)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n16,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,mv19)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv19,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,mv1)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv1,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,mv9)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv9,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,dv10)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv10,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,mv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv4,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,mv3)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv3,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv3', 'n2'],n4)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n4,dv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv5,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,dv3)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv3,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,mv19)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv19,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,dv19)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv19,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,dv10)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv10,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,mv15)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv15,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n13', 'n4'],dv13)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: ([['n13', 'n4'], 'dv13'],n3)
+ts1: [[tc_, tc_], tc_]
+ts2: tc_
+START
+pair: (n3,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,mv18)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv18,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n15', 'n1'],mv17)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv17,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv17', 'n9'],n10)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n10,dv8)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv8,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,dv15)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv15,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,dv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv16,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n13', 'n4'],dv7)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv7,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n3', 'n10'],n14)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n14,dv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv14,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,mv13)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv13,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,mv1)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv1,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,dv19)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n4', 'dv19'],n19)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n19,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,mv15)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n10', 'mv15'],n13)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n13,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,dv10)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv10,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,mv3)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv3,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n1', 'n3'],mv17)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv17,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,dv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv5,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,dv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv4,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,dv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv14,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,dv18)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv18,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n3', 'n12'],mv10)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv10,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv10', 'n3'],n9)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n9,dv12)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv12,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,mv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv2,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,mv11)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv11,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,mv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n18', 'mv6'],n20)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n20,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,mv10)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv10,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv10', 'n5'],n7)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n7,mv18)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv18,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,mv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv14,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,mv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv16,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,mv10)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv10,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,dv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv14,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,dv9)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv9,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,dv19)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv19,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv19', 'n15'],n5)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n5,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,mv12)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv12,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,mv18)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv18,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,dv10)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv10,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv10', 'n1'],n5)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n5,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,dv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv4,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,mv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv6,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,dv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv20,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,dv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv20,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv20', 'n8'],n6)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n6,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,mv17)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv17,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv17', 'n15'],n12)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (['mv17', ['n15', 'n12']],mv16)
+ts1: [tc_, [tc_, tc_]]
+ts2: tc_
+START
+pair: (mv16,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,dv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv4,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,mv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv5,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n20', 'n5'],mv7)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv7,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,dv15)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n3', 'dv15'],n13)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n13,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,mv1)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv1,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n19', 'n13'],mv14)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv14,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,dv9)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n20', 'dv9'],n16)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n16,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,dv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv16,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,dv8)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv8,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv8', 'n20'],n20)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n20,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,dv11)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv11,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,dv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv2,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,mv12)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv12,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n8', 'n17'],mv1)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (['n8', ['n17', 'mv1']],n15)
+ts1: [tc_, [tc_, tc_]]
+ts2: tc_
+START
+pair: (n15,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,mv10)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv10,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,dv8)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv8,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n10', 'n4'],mv15)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv15,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv15', 'n16'],n1)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n1,dv1)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n1', 'dv1'],n4)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (['n1', ['dv1', 'n4']],n5)
+ts1: [tc_, [tc_, tc_]]
+ts2: tc_
+START
+pair: (n5,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,dv15)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n10', 'dv15'],n4)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n4,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,mv11)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv11,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,mv19)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv19,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,mv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv14,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,dv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv7,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,dv13)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv13,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,mv9)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv9,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv9', 'n6'],n4)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n4,dv1)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv1,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv1', 'n20'],n2)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n2,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,mv9)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv9,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,dv1)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv1,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n16', 'n11'],dv4)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv4,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n18', 'n14'],dv9)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv9,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,mv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv6,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv6', 'n15'],n10)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n10,mv9)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv9,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,mv9)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv9,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,dv17)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv17,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,dv19)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n19', 'dv19'],n11)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n11,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n11', 'n9'],n5)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n5,mv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv16,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv16', 'n12'],n9)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n9,dv18)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv18,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,dv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv5,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n9', 'n15'],n10)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n10,mv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv2,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,dv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv16,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n13', 'n19'],dv8)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv8,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,dv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv7,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,mv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv14,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,dv11)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv11,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n2', 'n4'],n2)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n2,dv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv16,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n20', 'n5'],dv20)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv20,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,dv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv5,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n8', 'n6'],n13)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n13,dv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv7,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,dv18)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv18,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,dv10)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n9', 'dv10'],n12)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n12,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,mv9)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv9,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,dv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv5,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n9', 'n8'],n11)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n11,dv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv14,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n15', 'n10'],dv5)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv5,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,dv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv7,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,dv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv4,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv4', 'n2'],n8)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n8,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,dv19)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv19,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,dv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n7', 'dv7'],n11)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n11,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n11', 'n5'],n8)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n8,dv18)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv18,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv18', 'n11'],n16)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (['dv18', ['n11', 'n16']],n9)
+ts1: [tc_, [tc_, tc_]]
+ts2: tc_
+START
+pair: (['dv18', [['n11', 'n16'], 'n9']],dv15)
+ts1: [tc_, [[tc_, tc_], tc_]]
+ts2: tc_
+START
+pair: (dv15,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n5', 'n6'],n17)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n17,mv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n17', 'mv2'],n2)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n2,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,mv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv20,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,mv12)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv12,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,dv18)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n15', 'dv18'],n10)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n10,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n5', 'n14'],dv12)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv12,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n16', 'n9'],dv15)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv15,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,dv19)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv19,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv19', 'n8'],n18)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: ([['dv19', 'n8'], 'n18'],n18)
+ts1: [[tc_, tc_], tc_]
+ts2: tc_
+START
+pair: (n18,mv13)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv13,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,mv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv7,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,mv11)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv11,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv11', 'n3'],n13)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n13,mv15)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv15,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,dv1)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv1,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n8', 'n11'],dv16)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv16,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n15', 'n11'],dv19)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv19,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,mv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv20,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,mv9)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n10', 'mv9'],n19)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n19,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,mv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n12', 'mv6'],n4)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n4,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,mv10)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv10,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,dv10)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv10,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv10', 'n8'],n14)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n14,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,dv12)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv12,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,mv1)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv1,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n1', 'n10'],dv7)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv7,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n2', 'n20'],dv15)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv15,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv15', 'n16'],n1)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n1,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n1', 'n2'],mv1)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv1,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n10', 'n1'],mv2)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv2,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,dv11)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv11,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n4', 'n15'],n16)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n16,mv10)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv10,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,mv15)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv15,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,mv11)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv11,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,mv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv16,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,mv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv6,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n9', 'n3'],mv18)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv18,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,mv3)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv3,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,mv17)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv17,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv17', 'n20'],n15)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n15,dv17)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv17,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,dv19)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv19,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n19', 'n2'],n9)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n9,dv13)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv13,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,mv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv4,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,mv12)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv12,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n10', 'n19'],mv16)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv16,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,mv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv7,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,dv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv6,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n9', 'n4'],n13)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n13,dv8)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv8,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,mv8)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv8,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,mv17)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv17,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,dv12)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv12,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv12', 'n8'],n18)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n18,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n18', 'n16'],mv19)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv19,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,dv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv6,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,dv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv16,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,mv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv4,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n16', 'n13'],dv9)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv9,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,dv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv20,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,dv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv7,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,dv12)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n9', 'dv12'],n19)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n19,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n18', 'n10'],mv16)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv16,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n3', 'n8'],dv20)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv20,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,dv13)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n17', 'dv13'],n20)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n20,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n20', 'n10'],n15)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n15,dv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n15', 'dv20'],n14)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n14,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,dv12)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv12,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n7', 'n16'],dv11)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv11,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,dv13)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv13,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n19', 'n10'],n20)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n20,mv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv16,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv16', 'n15'],n12)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n12,dv18)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv18,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n5', 'n1'],n11)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (['n5', ['n1', 'n11']],mv13)
+ts1: [tc_, [tc_, tc_]]
+ts2: tc_
+START
+pair: (mv13,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,mv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n16', 'mv5'],n14)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n14,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,mv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv2,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,dv19)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv19,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv19', 'n19'],n11)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n11,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,dv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv16,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv16', 'n12'],n10)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n10,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,mv8)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv8,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,mv8)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n10', 'mv8'],n18)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n18,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,dv10)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv10,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n8', 'n11'],dv15)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv15,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n14', 'n10'],mv4)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv4,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,mv19)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv19,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,mv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv20,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,dv13)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv13,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n8', 'n10'],n10)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n10,dv10)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv10,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,dv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv5,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n19', 'n11'],n2)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n2,dv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv16,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,mv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv4,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,dv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv2,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n3', 'n10'],n7)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n7,dv15)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv15,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,dv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv2,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n8', 'n1'],dv1)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv1,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,dv1)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n5', 'dv1'],n17)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n17,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,dv1)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv1,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n5', 'n9'],n1)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n1,dv8)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv8,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv8', 'n15'],n11)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: ([['dv8', 'n15'], 'n11'],n8)
+ts1: [[tc_, tc_], tc_]
+ts2: tc_
+START
+pair: (n8,dv8)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n8', 'dv8'],n4)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n4,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n4', 'n11'],n10)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n10,dv9)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n10', 'dv9'],n12)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n12,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,mv3)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv3,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv3', 'n14'],n6)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n6,dv3)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n6', 'dv3'],n19)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n19,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,dv17)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv17,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n16', 'n1'],dv1)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv1,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n2', 'n7'],n15)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: ([['n2', 'n7'], 'n15'],dv17)
+ts1: [[tc_, tc_], tc_]
+ts2: tc_
+START
+pair: (dv17,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,mv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv16,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,mv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv5,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,dv19)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv19,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,mv3)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv3,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,mv11)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv11,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,mv18)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv18,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n5', 'n12'],mv5)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv5,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,mv9)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv9,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv9', 'n14'],n11)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n11,dv17)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv17,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,dv10)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n15', 'dv10'],n11)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n11,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,dv1)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv1,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,mv8)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv8,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n20', 'n15'],mv11)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv11,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,dv1)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv1,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv1', 'n17'],n1)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n1,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,dv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv20,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,dv1)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv1,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv1', 'n7'],n18)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (['dv1', ['n7', 'n18']],n9)
+ts1: [tc_, [tc_, tc_]]
+ts2: tc_
+START
+pair: (['dv1', [['n7', 'n18'], 'n9']],dv6)
+ts1: [tc_, [[tc_, tc_], tc_]]
+ts2: tc_
+START
+pair: (dv6,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n12', 'n9'],n14)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n14,dv8)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv8,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n20', 'n16'],n2)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n2,mv12)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv12,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,mv8)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv8,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,mv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n9', 'mv4'],n19)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n19,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,dv8)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv8,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,dv10)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv10,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,mv12)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv12,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n11', 'n13'],mv9)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv9,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,dv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n4', 'dv7'],n11)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n11,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,dv1)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv1,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv1', 'n20'],n6)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n6,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,dv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv2,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n1', 'n2'],n20)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n20,mv19)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n20', 'mv19'],n16)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n16,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,dv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv7,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,dv15)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n15', 'dv15'],n8)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n8,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n8', 'n9'],n14)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (['n8', ['n9', 'n14']],dv9)
+ts1: [tc_, [tc_, tc_]]
+ts2: tc_
+START
+pair: (dv9,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,mv9)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n17', 'mv9'],n10)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n10,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n10', 'n10'],mv19)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv19,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n14', 'n15'],dv19)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv19,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n6', 'n17'],n19)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (['n6', ['n17', 'n19']],mv6)
+ts1: [tc_, [tc_, tc_]]
+ts2: tc_
+START
+pair: ([['n6', ['n17', 'n19']], 'mv6'],n15)
+ts1: [[tc_, [tc_, tc_]], tc_]
+ts2: tc_
+START
+pair: (n15,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,dv19)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n9', 'dv19'],n11)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (['n9', ['dv19', 'n11']],n4)
+ts1: [tc_, [tc_, tc_]]
+ts2: tc_
+START
+pair: (n4,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,mv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n10', 'mv4'],n14)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n14,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,dv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv4,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n11', 'n20'],mv6)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv6,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n2', 'n6'],dv14)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (['n2', ['n6', 'dv14']],n20)
+ts1: [tc_, [tc_, tc_]]
+ts2: tc_
+START
+pair: (n20,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,mv10)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n4', 'mv10'],n7)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n7,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,mv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n9', 'mv7'],n5)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n5,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,mv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv14,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,dv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv14,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n11', 'n14'],dv16)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (['n11', ['n14', 'dv16']],n7)
+ts1: [tc_, [tc_, tc_]]
+ts2: tc_
+START
+pair: (n7,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,dv1)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv1,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n10', 'n15'],n14)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n14,dv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv16,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n7', 'n2'],n4)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n4,mv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv6,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n19', 'n3'],dv15)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv15,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv15', 'n19'],n7)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n7,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,mv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv16,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,dv9)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv9,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n7', 'n9'],n18)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n18,mv11)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n18', 'mv11'],n5)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n5,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,mv1)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv1,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,dv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv6,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv6', 'n14'],n12)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (['dv6', ['n14', 'n12']],n10)
+ts1: [tc_, [tc_, tc_]]
+ts2: tc_
+START
+pair: (n10,mv18)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv18,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv18', 'n16'],n18)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n18,dv3)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv3,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,dv10)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv10,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv10', 'n16'],n16)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n16,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n16', 'n1'],mv5)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv5,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv5', 'n20'],n7)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: ([['mv5', 'n20'], 'n7'],dv8)
+ts1: [[tc_, tc_], tc_]
+ts2: tc_
+START
+pair: (dv8,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,mv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv2,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,mv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv6,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,dv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv4,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,mv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv20,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,dv19)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv19,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv19', 'n10'],n3)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n3,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,dv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv6,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n7', 'n4'],n16)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n16,mv10)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv10,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n20', 'n13'],dv13)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv13,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n14', 'n6'],n16)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n16,mv17)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv17,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv17', 'n12'],n11)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n11,dv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv6,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n2', 'n13'],mv16)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (['n2', ['n13', 'mv16']],n3)
+ts1: [tc_, [tc_, tc_]]
+ts2: tc_
+START
+pair: (n3,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,mv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv14,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n6', 'n17'],dv11)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv11,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n18', 'n2'],n13)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (['n18', ['n2', 'n13']],dv20)
+ts1: [tc_, [tc_, tc_]]
+ts2: tc_
+START
+pair: (dv20,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv20', 'n14'],n11)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n11,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,dv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv5,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n9', 'n10'],mv1)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv1,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv1', 'n1'],n18)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n18,dv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv5,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv5', 'n4'],n10)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n10,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,mv17)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n1', 'mv17'],n18)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n18,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,dv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv7,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,dv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv5,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n4', 'n10'],mv12)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv12,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,dv3)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv3,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv3', 'n19'],n1)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n1,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,mv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv16,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n7', 'n10'],dv18)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv18,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n4', 'n13'],n20)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n20,mv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n20', 'mv20'],n10)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n10,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n10', 'n5'],mv3)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv3,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv3', 'n18'],n2)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n2,dv13)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n2', 'dv13'],n17)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n17,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n19)
+ts1: tc_
+ts2: tc_
+START
+pair: (n19,mv12)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n19', 'mv12'],n4)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (['n19', ['mv12', 'n4']],n5)
+ts1: [tc_, [tc_, tc_]]
+ts2: tc_
+START
+pair: (n5,dv19)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv19,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n10', 'n17'],n2)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n2,dv15)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv15,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,mv19)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv19,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,mv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv5,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n10', 'n3'],dv11)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv11,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n18', 'n5'],dv18)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv18,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,mv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv16,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,mv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv14,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv14', 'n16'],n7)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n7,mv9)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv9,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv9', 'n10'],n6)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n6,mv15)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv15,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv15', 'n11'],n4)
+ts1: [tc_, tc_]
+ts2: tc_0
+START
+pair: (n4,dv9)
+ts1: tc_0
+ts2: tc_
+START
+pair: (dv9,n4)
+ts1: tc_
+ts2: tc_0
+START
+pair: (n4,n16)
+ts1: tc_0
+ts2: tc_
+START
+pair: (n16,n4)
+ts1: tc_
+ts2: tc_0
+START
+pair: (['n16', 'n4'],mv18)
+ts1: [tc_, tc_0]
+ts2: tc_0
+START
+pair: (mv18,n18)
+ts1: tc_0
+ts2: tc_
+START
+pair: (n18,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,mv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n11', 'mv20'],n10)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n10,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n10', 'n2'],mv17)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv17,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n19)
+ts1: tc_
+ts2: tc_0/0
+START
+pair: (['n2', 'n19'],dv9)
+ts1: [tc_, tc_0/0]
+ts2: tc_0/0
+START
+pair: (dv9,n6)
+ts1: tc_0/0
+ts2: tc_0
+both sides fully typed
+t1,  tc_0/0
+t2 tc_0
+t1 expectation
+Good match
+START
+pair: (n6,n1)
+ts1: tc_0
+ts2: tc_
+START
+pair: (n1,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,mv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv2,n4)
+ts1: tc_
+ts2: tc_0
+START
+pair: (n4,n5)
+ts1: tc_0
+ts2: tc_
+START
+pair: (n5,dv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n5', 'dv7'],n20)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n20,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n20', 'n11'],n17)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n17,mv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv20,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,mv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv6,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,mv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv4,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,mv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv14,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n11', 'n2'],dv14)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv14,n19)
+ts1: tc_
+ts2: tc_0/0
+START
+pair: (n19,n9)
+ts1: tc_0/0
+ts2: tc_0
+both sides fully typed
+t1,  tc_0/0
+t2 tc_0
+t1 expectation
+Good match
+START
+pair: (['n19', 'n9'],n13)
+ts1: [tc_0/0, tc_0]
+ts2: tc_0
+both sides fully typed
+reduced t1 tc_0
+t2 tc_0
+START
+pair: (['n19', ['n9', 'n13']],mv17)
+ts1: [tc_0/0, [tc_0, tc_0]]
+ts2: tc_0
+both sides fully typed
+ts1 is complex and does not reduce
+START
+pair: (mv17,n11)
+ts1: tc_0
+ts2: tc_
+START
+pair: (n11,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,dv17)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv17,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n1', 'n4'],mv10)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv10,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n4', 'n8'],dv2)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv2,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,dv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv6,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n15', 'n14'],mv9)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv9,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,mv3)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv3,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,mv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n15', 'mv16'],n14)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n14,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,mv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv7,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv7', 'n7'],n3)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n3,mv11)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n3', 'mv11'],n11)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n11,n19)
+ts1: tc_
+ts2: tc_0/0
+START
+pair: (n19,dv15)
+ts1: tc_0/0
+ts2: tc_0
+both sides fully typed
+t1,  tc_0/0
+t2 tc_0
+t1 expectation
+Good match
+START
+pair: (dv15,n9)
+ts1: tc_0
+ts2: tc_
+START
+pair: (['dv15', 'n9'],n14)
+ts1: [tc_0, tc_]
+ts2: tc_
+START
+pair: ([['dv15', 'n9'], 'n14'],n20)
+ts1: [[tc_0, tc_], tc_]
+ts2: tc_
+START
+pair: (n20,dv17)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv17,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,dv19)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv19,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,mv17)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n1', 'mv17'],n13)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n13,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,dv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv20,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n11', 'n20'],n14)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n14,dv8)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n14', 'dv8'],n16)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n16,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n5', 'n10'],mv16)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv16,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,dv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv7,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n13', 'n1'],n12)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n12,mv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv20,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv20', 'n4'],n8)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n8,mv13)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv13,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,mv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv4,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,mv18)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv18,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,mv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv16,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n18', 'n14'],mv11)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv11,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,mv18)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv18,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n3', 'n13'],dv9)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv9,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv9', 'n12'],n1)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n1,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n1', 'n5'],dv9)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv9,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,dv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv14,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,dv17)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n8', 'dv17'],n3)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n3,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,mv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n20', 'mv7'],n16)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n16,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,mv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n17', 'mv14'],n8)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n8,n19)
+ts1: tc_
+ts2: tc_0/0
+START
+pair: (['n8', 'n19'],mv2)
+ts1: [tc_, tc_0/0]
+ts2: tc_0/0
+START
+pair: (mv2,n1)
+ts1: tc_0/0
+ts2: tc_0
+both sides fully typed
+t1,  tc_0/0
+t2 tc_0
+t1 expectation
+Good match
+START
+pair: (n1,n1)
+ts1: tc_0
+ts2: tc_
+START
+pair: (n1,dv20)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv20,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n6', 'n16'],n17)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n17,mv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv2,n19)
+ts1: tc_
+ts2: tc_0/0
+START
+pair: (n19,n17)
+ts1: tc_0/0
+ts2: tc_0
+both sides fully typed
+t1,  tc_0/0
+t2 tc_0
+t1 expectation
+Good match
+START
+pair: (n17,dv8)
+ts1: tc_0
+ts2: tc_
+START
+pair: (['n17', 'dv8'],n13)
+ts1: [tc_0, tc_]
+ts2: tc_
+START
+pair: (n13,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,dv18)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv18,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv18', 'n20'],n15)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n15,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n15', 'n16'],dv14)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv14,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n4', 'n2'],mv16)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv16,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv16', 'n20'],n7)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n7,mv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv7,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,mv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n18', 'mv7'],n18)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n18,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,mv6)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv6,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,dv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv5,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n6', 'n9'],dv11)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: ([['n6', 'n9'], 'dv11'],n2)
+ts1: [[tc_, tc_], tc_]
+ts2: tc_
+START
+pair: (n2,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (n1,dv18)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv18,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n18', 'n12'],n2)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n2,dv9)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv9,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n16', 'n16'],mv16)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv16,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (n2,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,mv16)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv16,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,mv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv5,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n4', 'n14'],mv16)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv16,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,mv18)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv18,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n18', 'n3'],mv18)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv18,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,dv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv5,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv5', 'n3'],n2)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n2,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n2', 'n9'],dv11)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv11,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,dv8)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv8,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (n12,n10)
+ts1: tc_
+ts2: tc_
+START
+pair: (n10,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,dv9)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv9,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,mv13)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv13,n2)
+ts1: tc_
+ts2: tc_
+START
+pair: (['mv13', 'n2'],n17)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n17,mv12)
+ts1: tc_
+ts2: tc_0/0
+START
+pair: (mv12,n2)
+ts1: tc_0/0
+ts2: tc_0
+both sides fully typed
+t1,  tc_0/0
+t2 tc_0
+t1 expectation
+Good match
+START
+pair: (n2,n1)
+ts1: tc_0
+ts2: tc_
+START
+pair: (n1,mv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv2,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n19)
+ts1: tc_
+ts2: tc_0/0
+START
+pair: (['n4', 'n19'],dv11)
+ts1: [tc_, tc_0/0]
+ts2: tc_0/0
+START
+pair: (dv11,n18)
+ts1: tc_0/0
+ts2: tc_0
+both sides fully typed
+t1,  tc_0/0
+t2 tc_0
+t1 expectation
+Good match
+START
+pair: (n18,n7)
+ts1: tc_0
+ts2: tc_
+START
+pair: (n7,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,mv12)
+ts1: tc_
+ts2: tc_0/0
+START
+pair: (['n17', 'mv12'],n1)
+ts1: [tc_, tc_0/0]
+ts2: tc_0/0
+START
+pair: (n1,n18)
+ts1: tc_0/0
+ts2: tc_0
+both sides fully typed
+t1,  tc_0/0
+t2 tc_0
+t1 expectation
+Good match
+START
+pair: (n18,dv13)
+ts1: tc_0
+ts2: tc_
+START
+pair: (dv13,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n15', 'n13'],n20)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n20,mv8)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv8,n11)
+ts1: tc_
+ts2: tc_
+START
+pair: (n11,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n11', 'n17'],dv20)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (dv20,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n19)
+ts1: tc_
+ts2: tc_0/0
+START
+pair: (n19,n14)
+ts1: tc_0/0
+ts2: tc_0
+both sides fully typed
+t1,  tc_0/0
+t2 tc_0
+t1 expectation
+Good match
+START
+pair: (n14,dv3)
+ts1: tc_0
+ts2: tc_
+START
+pair: (dv3,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n17)
+ts1: tc_
+ts2: tc_
+START
+pair: (n17,mv12)
+ts1: tc_
+ts2: tc_0/0
+START
+pair: (mv12,n16)
+ts1: tc_0/0
+ts2: tc_0
+both sides fully typed
+t1,  tc_0/0
+t2 tc_0
+t1 expectation
+Good match
+START
+pair: (n16,n14)
+ts1: tc_0
+ts2: tc_
+START
+pair: (n14,dv11)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv11,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv11', 'n6'],n17)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: ([['dv11', 'n6'], 'n17'],n9)
+ts1: [[tc_, tc_], tc_]
+ts2: tc_
+START
+pair: (n9,dv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv5,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n7', 'n3'],mv8)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv8,n3)
+ts1: tc_
+ts2: tc_
+START
+pair: (n3,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,dv15)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv15,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,dv7)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv7,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n14)
+ts1: tc_
+ts2: tc_
+START
+pair: (n14,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,dv12)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv12,n6)
+ts1: tc_
+ts2: tc_
+START
+pair: (n6,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (n8,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (n9,dv12)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n9', 'dv12'],n4)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n4,n9)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n4', 'n9'],n17)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n17,mv14)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n17', 'mv14'],n7)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n7,n5)
+ts1: tc_
+ts2: tc_
+START
+pair: (n5,dv2)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv2,n13)
+ts1: tc_
+ts2: tc_
+START
+pair: (n13,n20)
+ts1: tc_
+ts2: tc_
+START
+pair: (n20,n1)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n20', 'n1'],mv18)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (mv18,n19)
+ts1: tc_
+ts2: tc_0/0
+START
+pair: (['mv18', 'n19'],n3)
+ts1: [tc_, tc_0/0]
+ts2: tc_0/0
+START
+pair: (['mv18', ['n19', 'n3']],mv8)
+ts1: [tc_, [tc_0/0, tc_0/0]]
+ts2: tc_0/0
+START
+pair: (mv8,n17)
+ts1: tc_0/0
+ts2: tc_0
+both sides fully typed
+t1,  tc_0/0
+t2 tc_0
+t1 expectation
+Good match
+START
+pair: (n17,n9)
+ts1: tc_0
+ts2: tc_
+START
+pair: (['n17', 'n9'],dv6)
+ts1: [tc_0, tc_]
+ts2: tc_
+START
+pair: (dv6,n8)
+ts1: tc_
+ts2: tc_
+START
+pair: (['dv6', 'n8'],n15)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (['dv6', ['n8', 'n15']],n13)
+ts1: [tc_, [tc_, tc_]]
+ts2: tc_
+START
+pair: (n13,mv17)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv17,n15)
+ts1: tc_
+ts2: tc_
+START
+pair: (n15,n7)
+ts1: tc_
+ts2: tc_
+START
+pair: (n7,dv5)
+ts1: tc_
+ts2: tc_
+START
+pair: (dv5,n16)
+ts1: tc_
+ts2: tc_
+START
+pair: (n16,n12)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n16', 'n12'],n11)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: (n11,dv4)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n11', 'dv4'],n5)
+ts1: [tc_, tc_]
+ts2: tc_
+START
+pair: ([['n11', 'dv4'], 'n5'],n9)
+ts1: [[tc_, tc_], tc_]
+ts2: tc_
+START
+pair: ([[['n11', 'dv4'], 'n5'], 'n9'],n8)
+ts1: [[[tc_, tc_], tc_], tc_]
+ts2: tc_
+START
+pair: (n8,mv10)
+ts1: tc_
+ts2: tc_
+START
+pair: (mv10,n4)
+ts1: tc_
+ts2: tc_
+START
+pair: (n4,n18)
+ts1: tc_
+ts2: tc_
+START
+pair: (n18,mv19)
+ts1: tc_
+ts2: tc_
+START
+pair: (['n18', 'mv19'],n11)
+ts1: [tc_, tc_]
+ts2: tc_0/0
+START
+pair: (n11,n11)
+ts1: tc_0/0
+ts2: tc_0/0
+both sides fully typed
+t1,  tc_0/0
+t2 tc_0/0
+t1 expectation
+Bad match
