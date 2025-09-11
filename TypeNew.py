@@ -499,7 +499,7 @@ class TChunk():
         if self.is_consistent() and self.reduce().is_expecting_after():
             list_of_types = self.remove_structure2()
             #print(f'list of types: {list_of_types}')
-            chunktree = ChunkTree.from_tchunk(self)
+            #chunktree = ChunkTree.from_tchunk(self)
             #print(f'list of types after chunktree creation: {list_of_types}')
             (index, old_type) = self.find_type_to_modify()
             #print(f'the old type is {old_type}')

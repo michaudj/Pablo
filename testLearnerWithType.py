@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 # Consider using the typatory to keep the number of types to a minimum.
 
 
-n_trial = 20000
+n_trial = 30000
 alpha = 0.1
 alpha_v = 1
 beta = 1.
@@ -58,12 +58,12 @@ config = LearnerConfig(n_trials=n_trial,
 
 learner = Learner(config)
 
-learner.learn(create_stimuliNVN())
+learner.learn(create_stimuliMD())
 ma = learner.history.plot_moving_average(100)
 
 learner_t = Learner(config_t)
 
-learner_t.learn(create_stimuliNVN())
+learner_t.learn(create_stimuliMD())
 ma_t = learner_t.history.plot_moving_average(100)
 
 

@@ -386,7 +386,7 @@ class WorkingMemory():
         pair = ChunkPair((s1,s2))
         self.learner.ltm.update_repertoire(pair)
         
-        self.type_assigner.assign_type(pair) # self.ts1 is a TChunk, while ts2 is a TChunk 
+        self.type_assigner.assign_type2(pair) # self.ts1 is a TChunk, while ts2 is a TChunk 
 
         
         # Check if the structure of ts1 and ts2 are useful as a support for decisions
@@ -639,7 +639,7 @@ class WorkingMemory():
         for i in range(len(list_right_types)):
             t1 = list_right_types[i]
             if t1.is_compatible(t2):
-                pass
+                #pass
                 # print('Support for chunking')
                 z[i+1]=right_values[i]
         return z
@@ -770,6 +770,36 @@ class TypeAssigner():
         self.tau = config.tau
         pass
     
+    def assign_type2(self, pair: ChunkPair):
+        # Do type assignment taking into account the values associated to chunk and types
+        left_candidates = self.extract_good_starting_types(pair.s1)
+        right_candidates = self.extract_good_types(pair.s2)
+        
+        # Softmax a type for s2
+        if right_candidates:
+            choice = softmax_choice(right_candidates,tau = self.tau)
+            self.learner.wm.ts2 = TChunk(choice)
+         
+        # s1 simple: assign type if not already done
+        if not isinstance(self.learner.wm.ts1.structure,list): # s1 simple
+            if self.learner.wm.ts1.has_empty_elements(): # not typed
+                if left_candidates: # types available
+                    choice = softmax_choice(left_candidates,tau = self.tau)
+                    self.learner.wm.ts1 = TChunk(choice)
+            else: # already typed, need to check whether it works at the start of a sentence
+                if not self.learner.wm.ts1.structure.is_start():
+                    if left_candidates:
+                        choice = softmax_choice(left_candidates,tau = self.tau)
+                        self.learner.wm.ts1 = TChunk(choice)
+                    else:
+                        self.learner.wm.ts1 = TChunk(Type.EMPTY)
+                   
+        self.fill_empty_types(pair)
+        
+        self.correct_typings(pair)
+            
+
+    
     def assign_type(self, pair: ChunkPair):
         # Do type assignment taking into account the values associated to chunk and types
         left_candidates = self.extract_good_starting_types(pair.s1)
@@ -777,13 +807,14 @@ class TypeAssigner():
         
         
         if self.learner.wm.ts1.has_empty_elements():
+            # s1 not well-typed
             if isinstance(self.learner.wm.ts1.structure,list):
                 #print('bad TCHUNK... Assign ts2 to its best candidate (in case it is used as the beginning of the next sentence)')
                 if right_candidates:
                     choice = softmax_choice(right_candidates,tau = self.tau)
                     self.learner.wm.ts2 = TChunk(choice)
-            else:
-                #print('Here I should try to assign t1 and t2 jointly')
+            else: # s1 is not complex and untyped...
+                #print('Here I should try to assign t1 and t2 jointly') But I do that independently...
                 if right_candidates:
                     # Here I need to check for consistency
                     choice = softmax_choice(right_candidates,tau = self.tau)
@@ -796,11 +827,11 @@ class TypeAssigner():
         else:
             #print('s1 typed')
             if right_candidates:
-                # Here I need to check for consistency
+                # Here I need to check for consistency. Here, I softmax a type for s2
                 choice = softmax_choice(right_candidates,tau = self.tau)
                 self.learner.wm.ts2 = TChunk(choice)
-            if not isinstance(self.learner.wm.ts1.structure,list):
-                if not self.learner.wm.ts1.structure.is_start():
+            if not isinstance(self.learner.wm.ts1.structure,list): # s1 is simple
+                if not self.learner.wm.ts1.structure.is_start(): # If the type is not a starting type, retype
                     # Here I need to check for consistency
                     if left_candidates:
                         choice = softmax_choice(left_candidates,tau = self.tau)
@@ -833,6 +864,48 @@ class TypeAssigner():
             # Special cases, only s1 has good types or only s2 have good types. 
             # In that case, chose randomly a type for s1 or s2, if it expects something in the other position, fullfil expectation otherwise failure to type
         #self.learner.wm.ts2 = TChunk(Type.EMPTY)
+        
+    def fill_empty_types(self, pair: ChunkPair):
+        
+        if not isinstance(self.learner.wm.ts1.structure, list): # ts1 is not complex
+            bad_t1 = self.extract_bad_types(pair.s1)
+            if self.learner.wm.ts1.has_empty_elements() and not self.learner.wm.ts2.has_empty_elements() and self.learner.wm.ts2.structure.is_expecting_before():  
+                # I need to check whether new_ts1 is bad for s1, otherwise, I will assign a bad type!
+                new_ts1 = Type(self.learner.wm.ts2.structure.left_type())
+                if new_ts1 not in bad_t1:
+                    self.learner.wm.ts1 = TChunk(new_ts1)
+
+            elif not self.learner.wm.ts1.has_empty_elements() and self.learner.wm.ts1.structure.is_expecting_after() and self.learner.wm.ts2.has_empty_elements():
+                # Same here, new_ts2 should not be bad for s2! Otherwise, I will assign a bad type!
+                bad_t2 = self.extract_bad_types(pair.s2)
+                new_ts2 = Type(self.learner.wm.ts1.structure.right_type())
+                if new_ts2 not in bad_t2:
+                    self.learner.wm.ts2 = TChunk(new_ts2)
+        elif self.learner.wm.ts1.is_consistent():
+            reduced_type = self.learner.wm.ts1.reduce()
+            if reduced_type.is_expecting_after() and self.learner.wm.ts2.has_empty_elements():
+                print('This case applies')
+                new_ts2 = Type(reduced_type.right_type())
+                # Here, I also need to check that new_ts2 is not bad for s2!
+                bad_t2 = self.extract_bad_types(pair.s2)
+                if new_ts2 not in bad_t2:
+                    self.learner.wm.ts2 = TChunk(new_ts2)
+        elif not self.learner.wm.ts2.has_empty_elements() and self.learner.wm.ts2.structure.is_expecting_before():
+            new_ts1 = Type(self.learner.wm.ts2.structure.left_type())
+            # s1 complex and not well-typed and s2 expecting before, should retype the complex s1...
+            pass
+                
+        #elif ts1 is not consistent but there are expectations lower down the structure?
+        #else ts1 inconsistent and no expectations, if ts2 is expecting before, it should type s1 using a similar procedure than when a sentence is typed for the first time...
+        # This is one way to change the head of type...
+
+
+            
+            # if ts1 not a list and empty and ts2 non empty and expecting before
+            # assign expectation to ts1
+            # elif ts1 is consistent and expecting after and ts2 empty
+            # assign expectation to ts2
+
 
     def correct_typings(self, pair: ChunkPair):
         if not self.learner.wm.ts1.has_empty_elements() and not self.learner.wm.ts2.has_empty_elements():
@@ -840,6 +913,7 @@ class TypeAssigner():
                 # print('Both non complex')
                 t1 = self.learner.wm.ts1.structure
                 t2 = self.learner.wm.ts2.structure
+                # Should I use the compatibility check from the type class here?
                 if t1.is_expecting_after() and not t2.is_expecting_before():
                     # print('t1 expectations')
                     # Check compatibility and correct if needed
@@ -1039,30 +1113,6 @@ class TypeAssigner():
         else:
             return {}
         
-    def fill_empty_types(self, pair):
-        if not isinstance(self.learner.wm.ts1.structure, list): # ts1 is not complex
-            if self.learner.wm.ts1.has_empty_elements() and not self.learner.wm.ts2.has_empty_elements() and self.learner.wm.ts2.structure.is_expecting_before():                
-                new_ts1 = Type(self.learner.wm.ts2.structure.left_type())
-                self.learner.wm.ts1 = TChunk(new_ts1)
-
-            elif not self.learner.wm.ts1.has_empty_elements() and self.learner.wm.ts1.structure.is_expecting_after() and self.learner.wm.ts2.has_empty_elements():
-                new_ts2 = Type(self.learner.wm.ts1.structure.right_type())
-                self.learner.wm.ts2 = TChunk(new_ts2)
-        elif self.learner.wm.ts1.is_consistent():
-            reduced_type = self.learner.wm.ts1.reduce()
-            if reduced_type.is_expecting_after() and self.learner.wm.ts2.has_empty_elements():
-                print('This case applies')
-                new_ts2 = Type(reduced_type.right_type())
-                self.learner.wm.ts2 = TChunk(new_ts2)
-            # Here I need to check whether the reduced ts1 is expecting something and at which level.
-            # Will be implemented later. I may use the full reduction as a first step.
-            pass
-
-        
-        # if ts1 not a list and empty and ts2 non empty and expecting before
-        # assign expectation to ts1
-        # elif ts1 is consistent and expecting after and ts2 empty
-        # assign expectation to ts2
 
 
 
