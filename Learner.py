@@ -890,9 +890,15 @@ class TypeAssigner():
                 bad_t2 = self.extract_bad_types(pair.s2)
                 if new_ts2 not in bad_t2:
                     self.learner.wm.ts2 = TChunk(new_ts2)
-        elif not self.learner.wm.ts2.has_empty_elements() and self.learner.wm.ts2.structure.is_expecting_before():
+        elif not self.learner.wm.ts2.has_empty_elements() and self.learner.wm.ts2.structure.is_expecting_before() and self.learner.wm.ts1.has_empty_elements():
+            #print('Retyping complex s1 when s2 expects before and s1 badly typed')
             new_ts1 = Type(self.learner.wm.ts2.structure.left_type())
+            #print(f"Expected type is {new_ts1}")
             # s1 complex and not well-typed and s2 expecting before, should retype the complex s1...
+            leaf_types = self.infer_leaf_types(pair.s1, new_ts1)
+            #print(f"The list of types at the leaves are: {leaf_types}")
+            responses = self.learner.wm.get_responses()
+            self.learner.wm.ts1 = TChunk.from_list_and_responses(leaf_types, responses)
             pass
                 
         #elif ts1 is not consistent but there are expectations lower down the structure?
@@ -1081,7 +1087,22 @@ class TypeAssigner():
                 return False
         else:
             return False
-        
+      
+    def infer_leaf_types(self, s: SChunk, current_type: Type):
+        if not isinstance(s.structure, list):
+            # It's a leaf
+            return [current_type]
+    
+        # It's a binary structure: get children
+        left_s = s.get_left()
+        right_s = s.get_right()
+    
+        # Decide the left and right types this current_type splits into
+        left_type, right_type = self.choose_types(current_type, left_s, right_s)
+    
+        # Recurse down and collect all leaf types
+        return self.infer_leaf_types(left_s, left_type) + self.infer_leaf_types(right_s, right_type)
+
     
     def extract_bad_types(self, chunk: SChunk):
         def filter_dict_below_threshold(data,threshold):
