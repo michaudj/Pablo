@@ -128,8 +128,8 @@ def create_stimuliMD(n_sentences=80000):
     number_of_relpron = 1
     number_of_det = 1
     number_of_prep = 1
-    number_of_monotransitive_verbs = 20
-    number_of_ditransitive_verbs = 20
+    number_of_monotransitive_verbs = 10
+    number_of_ditransitive_verbs = 10
 
     #verbs = ['v' + str(i) for i in range(1, number_of_verbs+1)]
     nouns = ['n' + str(i) for i in range(1, number_of_nouns+1)]

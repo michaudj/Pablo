@@ -1028,7 +1028,7 @@ class TypeAssigner(): #här ska jag vara för att fixa
                            value_ts2 = 0
                        #print("value 2",value_ts2)
                        candidates = {'s1': value_ts1,'s2': value_ts2}
-                       dominant_side = softmax_choice(candidates, tau=1.0)
+                       dominant_side = softmax_choice(candidates, tau=self.tau)
                        #print("dominant side",dominant_side)
                        
                        bad_t2 = self.extract_bad_types(pair.s2)
@@ -1064,7 +1064,7 @@ class TypeAssigner(): #här ska jag vara för att fixa
                            value_ts2 = 0
                        #print("value 2",value_ts2)
                        candidates = {'s1': value_ts1,'s2': value_ts2}
-                       dominant_side = softmax_choice(candidates, tau=1.0)
+                       dominant_side = softmax_choice(candidates, tau=self.tau)
                        #print("dominant side",dominant_side)
                        bad_t1 = self.extract_bad_types(pair.s1)
                        good_t1 = self.extract_good_types(pair.s1)
@@ -1122,7 +1122,7 @@ class TypeAssigner(): #här ska jag vara för att fixa
                            value_ts2 = 0
                        #print("value 2",value_ts2)
                        candidates = {'s1': competing_t1_value,'s2': value_ts2}
-                       dominant_side = softmax_choice(candidates, tau=1.0)
+                       dominant_side = softmax_choice(candidates, tau=self.tau)
                        #print("dominant side",dominant_side)
                        bad_t2 = self.extract_bad_types(pair.s2)
                        good_t2 = self.extract_good_types(pair.s2)

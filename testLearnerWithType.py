@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 # Consider using the typatory to keep the number of types to a minimum.
 
 
-n_trial = 30000
+n_trial = 40000
 alpha = 0.1
 alpha_v = 1
 beta = 1.
