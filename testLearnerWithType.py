@@ -7,7 +7,7 @@ Created on Thu May 22 14:22:47 2025
 
 from Learner import Learner,LearnerConfig
 from Population import Population
-from grammars import create_stimuliNVN, create_stimuliRCP,create_stimuliMD
+from grammars import *
 import matplotlib.pyplot as plt
 
 # Things to try, only reinforce types for non-complex SChunk.
@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 # Consider using the typatory to keep the number of types to a minimum.
 
 
-n_trial = 20000
+n_trial = 10000
 alpha = 0.1
 alpha_v = 1
 beta = 1.
@@ -34,7 +34,7 @@ config_t = LearnerConfig(n_trials=n_trial,
                        RW=RW,
                        chaining = False,
                        bad_type_threshold = 0.,
-                       good_type_threshold = 0., 
+                       good_type_threshold = 5., 
                        tau = 0.1,
                        type_on = True)
 
@@ -58,12 +58,12 @@ config = LearnerConfig(n_trials=n_trial,
 
 learner = Learner(config)
 
-learner.learn(create_stimuliMD())
+learner.learn(create_stimuli_rel())
 ma = learner.history.plot_moving_average(100)
 
 learner_t = Learner(config_t)
 
-learner_t.learn(create_stimuliMD())
+learner_t.learn(create_stimuli_rel())
 ma_t = learner_t.history.plot_moving_average(100)
 
 
