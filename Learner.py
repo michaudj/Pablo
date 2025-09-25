@@ -1032,9 +1032,9 @@ class TypeAssigner():
                    # print(f't1 {t1} is expecting after {Type(t1.right_type())} and t2 is {t2}')
                    t1_r = Type(t1.right_type())
                    if not t1.is_compatible(t2):
-                       print('correct typings here (case 1)')
-                       print(self.learner.wm.ts1)
-                       print(self.learner.wm.ts2)
+                       # print('correct typings here (case 1)')
+                       # print(self.learner.wm.ts1)
+                       # print(self.learner.wm.ts2)
                        self.learner.ltm.update_chunk_type_associations(pair.s1, t1)
                        self.learner.ltm.update_chunk_type_associations(pair.s2, t2)
                        value_ts1 = self.learner.ltm.chunk_type_associations[pair.s1][t1]
@@ -1055,9 +1055,9 @@ class TypeAssigner():
                        else:
                            self.learner.wm.ts2 = TChunk(t1_r)
                            
-                       print('new types')
-                       print(self.learner.wm.ts1)
-                       print(self.learner.wm.ts2)
+                       # print('new types')
+                       # print(self.learner.wm.ts1)
+                       # print(self.learner.wm.ts2)
                    
                        
                elif not t1.is_expecting_after() and t2.is_expecting_before():
@@ -1067,9 +1067,9 @@ class TypeAssigner():
                    t2_l = Type(t2.left_type())
                    
                    if not t1.is_compatible(t2):
-                       print('correct typings here (case 2)')
-                       print(self.learner.wm.ts1)
-                       print(self.learner.wm.ts2)
+                       # print('correct typings here (case 2)')
+                       # print(self.learner.wm.ts1)
+                       # print(self.learner.wm.ts2)
                        self.learner.ltm.update_chunk_type_associations(pair.s1, t1)
                        self.learner.ltm.update_chunk_type_associations(pair.s2, t2)
                        value_ts1 = self.learner.ltm.chunk_type_associations[pair.s1][t1]
@@ -1089,9 +1089,9 @@ class TypeAssigner():
                        else:
                            self.learner.wm.ts1 = TChunk(t2_l)
                            
-                       print('new types')
-                       print(self.learner.wm.ts1)
-                       print(self.learner.wm.ts2)
+                       # print('new types')
+                       # print(self.learner.wm.ts1)
+                       # print(self.learner.wm.ts2)
                    
                elif t2.is_expecting_before() and t1.is_expecting_after():
                    # Incompatible types! Try to find a compatible pairing
@@ -1109,7 +1109,8 @@ class TypeAssigner():
                        print('ts1 complex')
                        print('old types')
                        print(reduced_type)
-                       print(t2)
+                       print(self.learner.wm.ts1)
+                       print(self.learner.wm.ts2)
                    
                    # if rt_r == t2:
                    #     pass
@@ -1121,15 +1122,16 @@ class TypeAssigner():
                        #print("type to modify",type_to_modify)
                        #print("t1",self.learner.wm.ts1.structure,"det indexet jobbar på!",self.learner.wm.ts1.remove_structure2())#type to modify",skiti)                    
                        right_types = self.learner.wm.ts1.right_types()
-                       #print("right types",right_types)
+                       print("right types",right_types)
                        for i,t in enumerate(right_types):
                            if t.is_expecting_after():
                                valueindex = i
-                       #print("value index",valueindex)        
+                               
+                       print("value index",valueindex)        
                        right_values = self.learner.wm.get_right_values(pair)
-                       #print("right values" ,right_values)
+                       print("right values" ,right_values)
                        competing_t1_value = right_values[valueindex] 
-                       #print("competing value", competing_t1_value)
+                       print("competing value", competing_t1_value)
                        #print("pair",pair, "s2",pair.s2)
                        #print("reduced type",reduced_type)
                        #print("chunk-type-associations for s2",self.learner.ltm.chunk_type_associations[pair.s2])
