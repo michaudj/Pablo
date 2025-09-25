@@ -451,7 +451,17 @@ class TChunk():
             for i, t in enumerate(self.right_types()):
                 
                 if t.is_expecting_after() and Type(t.right_type())==expected_type:
-                    return i, self.remove_structure2()[-(i+1)]
+                    return i
+                
+    def find_type_to_modify_previous_expectation(self):
+        if self.is_consistent() and self.reduce().is_expecting_before():
+            expected_type = Type(self.reduce().left_type())
+            print(f'expected_type {expected_type}')
+            print(self.right_types())
+            for i, t in enumerate(self.right_types()): 
+                if t.is_expecting_before() and Type(t.left_type())==expected_type:
+                    return i
+                
                 
     def modified_element(self,new_expectation):
         if self.is_consistent() and self.reduce().is_expecting_after():
@@ -498,10 +508,12 @@ class TChunk():
     def retype_expectation(self,typ,responses):
         if self.is_consistent() and self.reduce().is_expecting_after():
             list_of_types = self.remove_structure2()
+            # I NEED TO FIND A BETTER WAY TO DO THIS.
+            
             #print(f'list of types: {list_of_types}')
             #chunktree = ChunkTree.from_tchunk(self)
             #print(f'list of types after chunktree creation: {list_of_types}')
-            (index, old_type) = self.find_type_to_modify()
+            index = self.find_type_to_modify()
             #print(f'the old type is {old_type}')
             new_type = self.modified_element(typ)
             #print(f'Should be replaced by {new_type}')
@@ -510,6 +522,77 @@ class TChunk():
             #print(f'new list of types: {list_of_types}')
             #new_ts1 = chunktree.apply_types(list_of_types) # The apply_types function only works for ts1 of length 2, more complex structure fail to construct a TChunk with the correct internal structure
             return new_ts1
+        
+    def retype_expectation2(self, typ, responses):
+
+        """
+        Locate the leaf that carries the global expectation, construct the
+        new Type to put there (based on `typ`), and reconstruct a new TChunk.
+    
+        Returns the new TChunk or None if nothing could be done.
+        """
+    
+        # Preconditions
+        if not (self.is_consistent() and self.reduce().is_expecting_after()):
+            return None
+    
+        # global expected primitive (Type)
+        expected_type = Type(self.reduce().right_type())
+        print(expected_type)
+    
+        # flattened leaves (list_of_types)
+        overall_leaves = self.remove_structure2()  # list of Type objects
+    
+        # get the right-subchunks from root -> ... -> deepest
+        subchunks = self.get_right_subchunks(self.depth)  # [C0 (root), C1, ..., Ck (deepest)]
+        
+    
+        # Find the deepest subchunk whose reduction expects AFTER and whose right_type matches expected_type
+        target_subchunk = None
+        reduced_target = None
+    
+        for sub in reversed(subchunks):   # search deepest first (most local)
+            r = sub.reduce()
+            if r.is_expecting_after() and Type(r.right_type()) == expected_type:
+                target_subchunk = sub
+                reduced_target = r
+                break
+
+    
+        if target_subchunk is None:
+            return None
+    
+        # The leaf that delimits that subchunk is its last leaf
+        last_leaf = target_subchunk.remove_structure2()[-1]
+    
+        # Find the rightmost index in overall_leaves that is the same leaf object
+        pos = None
+        for i in range(len(overall_leaves) - 1, -1, -1):
+            if overall_leaves[i] is last_leaf:    # identity compare is important given your interned Types
+                pos = i
+                break
+    
+        if pos is None:
+            # should not happen for a well-formed TChunk, but fail-safe
+            return None
+    
+        # Build the new Type to insert at that leaf position.
+        # `typ` may be a Type instance or something convertible to one.
+        prim_type = typ if isinstance(typ, Type) else Type(str(typ))
+    
+        # Combine the reduced subchunk with the expected_type and then split to produce the new local type
+        # (this mirrors the logic in modified_element: combined = t + expected_type ; [new_left, _] = combined.split(pu=0, prim=prim_type))
+        combined = reduced_target + expected_type
+        new_left, _ = combined.split(pu=0, prim=prim_type)
+     
+        # Replace the rightmost occurrence with the newly constructed Type and reconstruct the TChunk
+        new_list = overall_leaves[:]   # shallow copy
+        
+        
+        new_list[pos] = new_left
+        new_ts1 = TChunk.from_list_and_responses(new_list, responses)
+    
+        return new_ts1
         
 class VChunk():
     
@@ -673,50 +756,50 @@ class ChunkTree:
 #           Tests
 #
 ###############################################################################
-tests = False
+tests = True
 
 v1 = VChunk(2.)
 v2 = VChunk(3.)
 v3 = VChunk(0.2)
 
 if tests:    
-    a = Type(r"aufubocodd")
-    print(a)
-    print(a.formula)
-    print(re.findall(r"o"+a.right_type()+"$",a.formula))
-    print(re.findall(r"^"+a.left_type()+"u",a.formula))
-    #print(a.right_compatible_chunks2())
-    #print(a.left_compatible_chunks2())
+    # a = Type(r"aufubocodd")
+    # print(a)
+    # print(a.formula)
+    # print(re.findall(r"o"+a.right_type()+"$",a.formula))
+    # print(re.findall(r"^"+a.left_type()+"u",a.formula))
+    # #print(a.right_compatible_chunks2())
+    # #print(a.left_compatible_chunks2())
     
-    b = Type(r"aufubocodd")
-    print(b.left_type())
-    print(b.right_type())
-    print(b.get_primitives())
+    # b = Type(r"aufubocodd")
+    # print(b.left_type())
+    # print(b.right_type())
+    # print(b.get_primitives())
     
     
-    print('-------------------------------')
-    d = Type(r"ddoe")
-    e = Type(r"dd")
-    f = Type(r"a")
-    g = Type(r"auf")
-    h = Type(r"buauf")
-    #print(f.right_compatible_chunks2())
-    #print(f.left_compatible_chunks2())
-    print(f.right_compatible_chunks())
-    print(f.left_compatible_chunks())
-    print(b.is_primitive())
-    print(d.is_primitive())
-    print(e.is_primitive())
-    print(f.is_primitive())
-    print(h.is_primitive())
-    print(h.is_compatible(g))
-    print('Compatibility check for ghost types')
+    # print('-------------------------------')
+    # d = Type(r"ddoe")
+    # e = Type(r"dd")
+    # f = Type(r"a")
+    # g = Type(r"auf")
+    # h = Type(r"buauf")
+    # #print(f.right_compatible_chunks2())
+    # #print(f.left_compatible_chunks2())
+    # print(f.right_compatible_chunks())
+    # print(f.left_compatible_chunks())
+    # print(b.is_primitive())
+    # print(d.is_primitive())
+    # print(e.is_primitive())
+    # print(f.is_primitive())
+    # print(h.is_primitive())
+    # print(h.is_compatible(g))
+    # print('Compatibility check for ghost types')
     
-    print(str(a)+'+'+str(d)+'='+str(a+d))
-    print(str(a)+'+'+str(e)+'='+str(a+e))
-    print(str(f)+'+'+str(a)+'='+str(f+a))
-    #print(str(g)+'+'+str(a)+'='+str(g+a))
-    #print(str(h)+'+'+str(a)+'='+str(h+a))
+    # print(str(a)+'+'+str(d)+'='+str(a+d))
+    # print(str(a)+'+'+str(e)+'='+str(a+e))
+    # print(str(f)+'+'+str(a)+'='+str(f+a))
+    # #print(str(g)+'+'+str(a)+'='+str(g+a))
+    # #print(str(h)+'+'+str(a)+'='+str(h+a))
     
     
     
@@ -754,23 +837,23 @@ if tests:
         # return the remaining type
         return remaining_types
     
-    t1 = Type("1o3")
-    t3 = Type("3")
-    t2 = Type("1u0o2")
-    t5 = Type("dd")
-    t4 = Type("4u2o3")
-    ttt = Type('')
-    print(t1.is_primitive())
-    print(t2.is_primitive())
-    print(t3.is_primitive())
-    print(t4.is_primitive())
-    print(t5.is_primitive())
-    print(ttt.is_primitive())
-    print(ttt.is_empty())
+    # t1 = Type("1o3")
+    # t3 = Type("3")
+    # t2 = Type("1u0o2")
+    # t5 = Type("dd")
+    # t4 = Type("4u2o3")
+    # ttt = Type('')
+    # print(t1.is_primitive())
+    # print(t2.is_primitive())
+    # print(t3.is_primitive())
+    # print(t4.is_primitive())
+    # print(t5.is_primitive())
+    # print(ttt.is_primitive())
+    # print(ttt.is_empty())
     
     print('???????????????????????????????')
     
-    tt = Type("0")
+    tt = Type("1u0o2")
     types = tt.split(pu=0.5)
     print(types)
     ttypes= types[0].split(pu=0.5,prim='New') + types[1].split(pu=0.5)
@@ -782,6 +865,8 @@ if tests:
     tttc =tctypes[0].chunk_at_depth(tctypes[1])
     tttc2 = tctypes[2].chunk_at_depth(tctypes[3])
     tchunk = tttc.chunk_at_depth(tttc2)
+    
+    print(tchunk.find_type_to_modify_previous_expectation())
     print(tchunk)
     reduce_types(ttypes)
     print('Reduced?')
@@ -790,71 +875,71 @@ if tests:
     #print(types[0].split())
     #print(types[1].split())
     
-    #result = reduce_types([t1,t3, t2,t5, t4,t3])
-    #print(result)  # prints "a\\b\\c\\d"
+    # #result = reduce_types([t1,t3, t2,t5, t4,t3])
+    # #print(result)  # prints "a\\b\\c\\d"
     
-    tc =TChunk(b)
-    print(tc)
-    tcc = TChunk(t5)
-    print(tcc)
-    new_tc =TChunk([tc.structure,tcc.structure])
-    print(new_tc)
-    if new_tc.is_consistent():
-        print(new_tc.reduce())
-    else:
-        print('incompatible types')
-    #print(new_tc.is_consistent())
-    print('---------------------')
+    # tc =TChunk(b)
+    # print(tc)
+    # tcc = TChunk(t5)
+    # print(tcc)
+    # new_tc =TChunk([tc.structure,tcc.structure])
+    # print(new_tc)
+    # if new_tc.is_consistent():
+    #     print(new_tc.reduce())
+    # else:
+    #     print('incompatible types')
+    # #print(new_tc.is_consistent())
+    # print('---------------------')
     
-    print(tchunk)
-    print('right types')
-    print(tchunk)
-    print(tchunk.right_types())
-    print('Test remove structure')
-    print(tchunk.remove_structure())
-    print(tchunk.get_right_subchunks(tchunk.depth))
-    #print(reduce_types(tchunk.remove_structure()))
-    list_of_reduced_types = reduce_types(tchunk.remove_structure())
-    for chunk in tchunk.get_right_subchunks(tchunk.depth):
-        if type(chunk.structure) is not Type:
-            #print(chunk.structure[0]+chunk.structure[1])
-            list_of_reduced_types.append(chunk.structure[0]+chunk.structure[1])
-        else:
-            list_of_reduced_types.append(chunk.structure)
-            #print(chunk.structure)
-    list_of_reduced_types.reverse()
-    print(list_of_reduced_types)
+    # print(tchunk)
+    # print('right types')
+    # print(tchunk)
+    # print(tchunk.right_types())
+    # print('Test remove structure')
+    # print(tchunk.remove_structure())
+    # print(tchunk.get_right_subchunks(tchunk.depth))
+    # #print(reduce_types(tchunk.remove_structure()))
+    # list_of_reduced_types = reduce_types(tchunk.remove_structure())
+    # for chunk in tchunk.get_right_subchunks(tchunk.depth):
+    #     if type(chunk.structure) is not Type:
+    #         #print(chunk.structure[0]+chunk.structure[1])
+    #         list_of_reduced_types.append(chunk.structure[0]+chunk.structure[1])
+    #     else:
+    #         list_of_reduced_types.append(chunk.structure)
+    #         #print(chunk.structure)
+    # list_of_reduced_types.reverse()
+    # print(list_of_reduced_types)
     
     
-    print('===================================')
-    tt = Type("0")
-    types = tt.split(pu=0.5)
-    print(types)
-    bad_s1 = {Type('0'):-1,Type('1'):-2}
-    bad_s2 = {Type('0'):-1,Type('1'):-2,Type('2'):-2}
-    ttypes= types[0].split(pu=0.5,prim='New',bad_s1=bad_s1,bad_s2=bad_s2) + types[1].split(pu=0.5)
-    print(ttypes)
-    tctypes = []
-    for ttt in ttypes:
-        tctypes.append(TChunk(ttt))
+    # print('===================================')
+    # tt = Type("0")
+    # types = tt.split(pu=0.5)
+    # print(types)
+    # bad_s1 = {Type('0'):-1,Type('1'):-2}
+    # bad_s2 = {Type('0'):-1,Type('1'):-2,Type('2'):-2}
+    # ttypes= types[0].split(pu=0.5,prim='New',bad_s1=bad_s1,bad_s2=bad_s2) + types[1].split(pu=0.5)
+    # print(ttypes)
+    # tctypes = []
+    # for ttt in ttypes:
+    #     tctypes.append(TChunk(ttt))
         
-    tttc =tctypes[0].chunk_at_depth(tctypes[1])
-    tttc2 = tctypes[2].chunk_at_depth(tctypes[3])
-    tchunk = tttc.chunk_at_depth(tttc2)
-    print(ttypes)
-    reduce_types(ttypes)
-    print('Reduced?')
-    print(Type.reduce(ttypes))
-    print(Type.is_sentence(ttypes))
+    # tttc =tctypes[0].chunk_at_depth(tctypes[1])
+    # tttc2 = tctypes[2].chunk_at_depth(tctypes[3])
+    # tchunk = tttc.chunk_at_depth(tttc2)
+    # print(ttypes)
+    # reduce_types(ttypes)
+    # print('Reduced?')
+    # print(Type.reduce(ttypes))
+    # print(Type.is_sentence(ttypes))
     
-    print('===================================')
-    print(tchunk)
-    print(tchunk.get_right_subchunks(tchunk.depth))
-    #print(tchunk.is_consistent())
-    #print(tchunk)
-    #print(tchunk.reduce())
-    #print(tchunk)
-    print('right types version 1')
-    print(tchunk.right_types())
+    # print('===================================')
+    # print(tchunk)
+    # print(tchunk.get_right_subchunks(tchunk.depth))
+    # #print(tchunk.is_consistent())
+    # #print(tchunk)
+    # #print(tchunk.reduce())
+    # #print(tchunk)
+    # print('right types version 1')
+    # print(tchunk.right_types())
     
-    #TChunk(2)
+    # #TChunk(2)
