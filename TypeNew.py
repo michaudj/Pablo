@@ -317,6 +317,14 @@ class TChunk():
             right_subchunks.append(TChunk(nested_list))
         return right_subchunks
     
+    def get_left_subchunks(self, depth):
+        right_subchunks = [self]
+        nested_list = self.structure[:]
+        for d in range(depth):
+            nested_list = nested_list[0]
+            right_subchunks.append(TChunk(nested_list))
+        return right_subchunks
+    
     @staticmethod
     def from_list_and_responses(list_of_types, responses):
         if len(list_of_types) != len(responses)+1:
@@ -523,76 +531,71 @@ class TChunk():
             #new_ts1 = chunktree.apply_types(list_of_types) # The apply_types function only works for ts1 of length 2, more complex structure fail to construct a TChunk with the correct internal structure
             return new_ts1
         
-    def retype_expectation2(self, typ, responses):
-
+    def get_new_type_and_path(self,typ,path=[],ttype=None):
+        if not isinstance(self.structure, list):
+            # print(f'the chosen type is {typ}')
+            return typ, path
+        
+        reduced_type = self.reduce()
+        rc = self.get_right_subchunks(1)[1]
+        trc= rc.reduce()
+        lc = self.get_left_subchunks(1)[1]
+        tlc = lc.reduce()
+        new_left_type = Type(typ.formula+'o'+trc.formula)
+        new_right_type = Type(tlc.formula+'u'+typ.formula)
+        
+        if new_left_type.is_compatible(trc):
+            # print('propagate on the left')
+            path.append(0)
+            return lc.get_new_type_and_path(new_left_type,path=path)
+        elif tlc.is_compatible(new_right_type):
+            # print('propagate on the right')
+            path.append(1)
+            return rc.get_new_type_and_path(new_right_type,path=path)
+        
+    def path_to_index(self, path):
         """
-        Locate the leaf that carries the global expectation, construct the
-        new Type to put there (based on `typ`), and reconstruct a new TChunk.
-    
-        Returns the new TChunk or None if nothing could be done.
+        Given a TChunk and a path (list of 0/1),
+        return the index of the leaf in flatten(structure).
         """
+        def helper(structure, path, offset):
+            # Leaf case
+            if not isinstance(structure, list):
+                if path:  # should not happen: too deep
+                    raise ValueError("Path too long for structure")
+                return offset
+            
+            left, right = structure
     
-        # Preconditions
-        if not (self.is_consistent() and self.reduce().is_expecting_after()):
-            return None
+            if path[0] == 0:  # go left
+                return helper(left, path[1:], offset)
+            elif path[0] == 1:  # go right
+                # count how many leaves are in left branch
+                left_leaves = len(flatten([left]))
+                return helper(right, path[1:], offset + left_leaves)
+            else:
+                raise ValueError("Path must contain only 0 or 1")
     
-        # global expected primitive (Type)
-        expected_type = Type(self.reduce().right_type())
-        print(expected_type)
-    
-        # flattened leaves (list_of_types)
-        overall_leaves = self.remove_structure2()  # list of Type objects
-    
-        # get the right-subchunks from root -> ... -> deepest
-        subchunks = self.get_right_subchunks(self.depth)  # [C0 (root), C1, ..., Ck (deepest)]
-        
-    
-        # Find the deepest subchunk whose reduction expects AFTER and whose right_type matches expected_type
-        target_subchunk = None
-        reduced_target = None
-    
-        for sub in reversed(subchunks):   # search deepest first (most local)
-            r = sub.reduce()
-            if r.is_expecting_after() and Type(r.right_type()) == expected_type:
-                target_subchunk = sub
-                reduced_target = r
-                break
+        return helper(self.structure, path, 0)
 
-    
-        if target_subchunk is None:
-            return None
-    
-        # The leaf that delimits that subchunk is its last leaf
-        last_leaf = target_subchunk.remove_structure2()[-1]
-    
-        # Find the rightmost index in overall_leaves that is the same leaf object
-        pos = None
-        for i in range(len(overall_leaves) - 1, -1, -1):
-            if overall_leaves[i] is last_leaf:    # identity compare is important given your interned Types
-                pos = i
-                break
-    
-        if pos is None:
-            # should not happen for a well-formed TChunk, but fail-safe
-            return None
-    
-        # Build the new Type to insert at that leaf position.
-        # `typ` may be a Type instance or something convertible to one.
-        prim_type = typ if isinstance(typ, Type) else Type(str(typ))
-    
-        # Combine the reduced subchunk with the expected_type and then split to produce the new local type
-        # (this mirrors the logic in modified_element: combined = t + expected_type ; [new_left, _] = combined.split(pu=0, prim=prim_type))
-        combined = reduced_target + expected_type
-        new_left, _ = combined.split(pu=0, prim=prim_type)
-     
-        # Replace the rightmost occurrence with the newly constructed Type and reconstruct the TChunk
-        new_list = overall_leaves[:]   # shallow copy
+            
+    def retype_root(self, typ, responses):
+        if self.is_consistent():
+            new_type,path = self.get_new_type_and_path(typ,path=[])
+            index = self.path_to_index(path)
+            # print(new_type)
+            # print(index)
+            
+            list_of_types = self.remove_structure2()
+            list_of_types[index] = new_type
+            return TChunk.from_list_and_responses(list_of_types, responses)
         
         
-        new_list[pos] = new_left
-        new_ts1 = TChunk.from_list_and_responses(new_list, responses)
-    
-        return new_ts1
+        
+        
+        
+        
+
         
 class VChunk():
     
@@ -864,14 +867,14 @@ if tests:
         
     tttc =tctypes[0].chunk_at_depth(tctypes[1])
     tttc2 = tctypes[2].chunk_at_depth(tctypes[3])
-    tchunk = tttc.chunk_at_depth(tttc2)
+    chunk = tttc.chunk_at_depth(tttc2)
     
-    print(tchunk.find_type_to_modify_previous_expectation())
-    print(tchunk)
-    reduce_types(ttypes)
-    print('Reduced?')
-    print(Type.reduce(ttypes))
-    print(Type.is_sentence(ttypes))
+    print(chunk)
+    new_tt = chunk.retype_root(Type('3'),(1,2,1))
+    print(new_tt)
+    
+    #new_tchunk = tchunk.retype_root(Type('6'),(1,2,1))
+    #print(new_tchunk)
     #print(types[0].split())
     #print(types[1].split())
     
