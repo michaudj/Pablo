@@ -790,7 +790,7 @@ class TypeAssigner(): #här ska jag vara för att fixa
         
         
         if self.learner.wm.ts1.has_empty_elements():
-            if isinstance(self.learner.wm.ts1.structure,list): #if the structure of ts1 is a list, it is complex
+            if isinstance(self.learner.wm.ts1.structure,list): #if the structure of ts1 is a list, it is a compound, thus s1 is inherited
                 #print('bad TCHUNK... Assign ts2 to its best candidate (in case it is used as the beginning of the next sentence)')
                 if right_candidates:
                     choice = softmax_choice(right_candidates,tau = self.tau) #this is only for using in the next round
@@ -808,15 +808,18 @@ class TypeAssigner(): #här ska jag vara för att fixa
 
         else:
             #print('s1 typed')
-            # if isinstance(self.learner.wm.ts1.structure,list):
-            vchunk_s1=self.learner.wm.get_value_chunk(pair)
-           
-            value_s1 = vchunk_s1.reduce()
+            # if isinstance(self.learner.wm.ts1.structure,list): #if s1 is inherited and typed
+            #     #this part made by Anna gets the recursively averaged value of the reduced type for compound s1 and puts them in right candidates
+            #     vchunk_s1=self.learner.wm.get_value_chunk(pair.s1) #I added .s1 after talking to jerome, it makes no sense to me to work with the entire pair?
+            #     value_ts1 = vchunk_s1.reduce()
+                
             
             if right_candidates:
                 # Here I need to check for consistency
                 choice = softmax_choice(right_candidates,tau = self.tau)
                 self.learner.wm.ts2 = TChunk(choice)
+            
+            
             if not isinstance(self.learner.wm.ts1.structure,list):
                 if not self.learner.wm.ts1.structure.is_start():
                     # Here I need to check for consistency
@@ -853,22 +856,52 @@ class TypeAssigner(): #här ska jag vara för att fixa
         #self.learner.wm.ts2 = TChunk(Type.EMPTY)
 
     def correct_typings(self, pair: ChunkPair):
-        if not self.learner.wm.ts1.has_empty_elements() and not self.learner.wm.ts2.has_empty_elements():
-            if not isinstance(self.learner.wm.ts1.structure,list) and not isinstance(self.learner.wm.ts2.structure, list):
+        ts1 = self.learner.wm.ts1
+        ts2 = self.learner.wm.ts2
+        
+        if not ts1.has_empty_elements() and not ts2.has_empty_elements():
+            #if not isinstance(self.learner.wm.ts1.structure,list) and not isinstance(self.learner.wm.ts2.structure, list):
                 # print('Both non complex')
-                t1 = self.learner.wm.ts1.structure
-                t2 = self.learner.wm.ts2.structure
-                if t1.is_expecting_after() and not t2.is_expecting_before():
-                    # print('t1 expectations')
-                    # Check compatibility and correct if needed
-                    # print(f't1 {t1} is expecting after {Type(t1.right_type())} and t2 is {t2}')
-                    t1_r = Type(t1.right_type())
-                    if t1_r == t2:
-                        pass
-                        # print('Good match')
+            t1 = ts1.reduce() if isinstance(ts1.structure, list) else ts1.structure
+            t2 = ts2.structure
+            if t1.is_expecting_after() and not t2.is_expecting_before():
+                # print('t1 expectations')
+                # Check compatibility and correct if needed
+                # print(f't1 {t1} is expecting after {Type(t1.right_type())} and t2 is {t2}')
+                t1_r = Type(t1.right_type())
+                if t1_r == t2:
+                    pass
+                    # print('Good match')
+                else:
+                    # print('Bad match')
+                    # Check if expectation is a bad match for t2
+                    z_values = self.get_z_values_type(pair)
+                    z_dict = {i: z for i, z in enumerate(z_values)}
+                    winner_index = softmax_choice(z_dict, tau=1.0)
+                    winner_value = z_values[winner_index]
+                    value_ts2 = self.learner.ltm.chunk_type_associations[SChunk(pair.s2)][ts2.structure]
+                    candidates = {'s1': winner_value,'s2': value_ts2}
+                    dominant_side = softmax_choice(candidates, tau=1.0)
+                    if dominant_side == 's2':
+                        t1_r = Type(t1.right_type())
+                        # Assign ts2 type as the expectation for s1
+                        new_t1 = t1 + t2
+                        # Split at top level using ts2 type as the primary
+                        [new_t1, _] = new_t1.split(pu=0, prim=t2)
+                        if isinstance(ts1.structure, list):
+                            # Flatten the structure to get all leaves
+                            list_types = ts1.remove_structure2()
+                            
+                            # Replace top-level type with new_t1, keep the rest
+                            list_types[-1] = new_t1  # top node is the last in right_types
+                            # Rebuild TChunk with correct internal structure
+                            responses = self.get_responses()
+                            self.learner.wm.ts1 = TChunk.from_list_and_responses(list_types, responses)
+                        else:
+                            self.learner.wm.ts1 = TChunk(new_t1)   
+                        
                     else:
-                        # print('Bad match')
-                        # Check if expectation is a bad match for t2
+                    
                         bad_t2 = self.extract_bad_types(pair.s2)
                         good_t2 = self.extract_good_types(pair.s2)
                         if t1_r in bad_t2: # or t1_r has not been used for that element
@@ -880,38 +913,38 @@ class TypeAssigner(): #här ska jag vara för att fixa
                         else:
                             self.learner.wm.ts2 = TChunk(t1_r)
                         # retype here
-                elif not t1.is_expecting_after() and t2.is_expecting_before():
-                    # print('t2 expectations')
-                    # print(f't2 {t2} is expecting before {Type(t2.left_type())} and t1 is {t1}')
-                    # Check compatibility and correct if needed
-                    t2_l = Type(t2.left_type())
-                    if t2_l == t1:
-                        pass
-                        #print('Good match')
-                    else:
-                        # print('Bad match')
-                        # Check if expectation is a bad type for t1
-                        bad_t1 = self.extract_bad_types(pair.s1)
-                        good_t1 = self.extract_good_types(pair.s1)
-                        if t2_l in bad_t1:
-                            # print('Should retype expectation')
-                            new_t2 = t2_l+t2
-                            [t1,new_t2] = new_t2.split(pu=1,prim=t1)
-                            self.learner.wm.ts2 = TChunk(new_t2)
-                            self.learner.wm.ts1 = TChunk(t1)
-                        else:
-                            self.learner.wm.ts1 = TChunk(t2_l)
-                            # print(t1)
-                            # print(new_t2)
-                            # add t2 to is left type and split it using t1
-                        # retype here
+            elif not t1.is_expecting_after() and t2.is_expecting_before():
+                # print('t2 expectations')
+                # print(f't2 {t2} is expecting before {Type(t2.left_type())} and t1 is {t1}')
+                # Check compatibility and correct if needed
+                t2_l = Type(t2.left_type())
+                if t2_l == t1:
                     pass
-                elif t2.is_expecting_before() and t1.is_expecting_after():
-                    # Incompatible types! Try to find a compatible pairing
-                    print(f'Incompatible typing at step {self.learner.n_reinf}')
+                    #print('Good match')
+                else:
+                    # print('Bad match')
+                    # Check if expectation is a bad type for t1
+                    bad_t1 = self.extract_bad_types(pair.s1)
+                    good_t1 = self.extract_good_types(pair.s1)
+                    if t2_l in bad_t1:
+                        # print('Should retype expectation')
+                        new_t2 = t2_l+t2
+                        [t1,new_t2] = new_t2.split(pu=1,prim=t1)
+                        self.learner.wm.ts2 = TChunk(new_t2)
+                        self.learner.wm.ts1 = TChunk(t1)
+                    else:
+                        self.learner.wm.ts1 = TChunk(t2_l)
+                        # print(t1)
+                        # print(new_t2)
+                        # add t2 to is left type and split it using t1
                     # retype here
+                pass
+            elif t2.is_expecting_before() and t1.is_expecting_after():
+                # Incompatible types! Try to find a compatible pairing
+                print(f'Incompatible typing at step {self.learner.n_reinf}')
+                # retype here
                 
-            elif self.learner.wm.ts1.is_consistent():
+            elif self.learner.wm.ts1.is_consistent(): # gammal kod
                 #print(self.learner.wm.get_responses())
                 # print('ts1 complex')
                 reduced_type = self.learner.wm.ts1.reduce()
@@ -990,35 +1023,6 @@ class TypeAssigner(): #här ska jag vara för att fixa
             chosen_pair = _dominant_type(typ,left_candidates,right_candidates,s1,s2)
             
         return chosen_pair
-    
-    # def choose_types_greedy(self, typ, s1, s2):
-    #     left_candidates = self.extract_good_types(s1)
-    #     right_candidates = self.extract_good_types(s2)
-    
-    #     while left_candidates or right_candidates:
-    #         # pick dominant type probabilistically across both sides
-    #         side, dominant_type = merged_softmax_choice(left_candidates, right_candidates, tau=self.tau)
-            
-    #         if side == 'left':
-    #             right_matches = {rt: w for rt, w in right_candidates.items() 
-    #                              if dominant_type.is_compatible(rt)}
-    #             if right_matches:
-    #                 _, match_type = merged_softmax_choice({}, right_matches, tau=self.tau)
-    #                 return dominant_type, match_type
-    #             else:
-    #                 left_candidates.pop(dominant_type, None)
-            
-    #         else:  # side == 'right'
-    #             left_matches = {lt: w for lt, w in left_candidates.items() 
-    #                             if dominant_type.is_compatible(lt)}
-    #             if left_matches:
-    #                 _, match_type = merged_softmax_choice(left_matches, {}, tau=self.tau)
-    #                 return match_type, dominant_type
-    #             else:
-    #                 right_candidates.pop(dominant_type, None)
-    
-    #     # fallback: no compatible pair found
-    #     return self.choose_types(typ, s1, s2)
     
     
     
