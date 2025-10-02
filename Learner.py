@@ -1158,7 +1158,7 @@ class TypeAssigner():
                
                reduced_type = self.learner.wm.ts1.reduce()             
                
-               if reduced_type.is_expecting_before:
+               if reduced_type.is_expecting_before():
                    print("error: inherited type1 is expecting before:",reduced_type)
 
                t2 = self.learner.wm.ts2.structure
