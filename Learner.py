@@ -1103,6 +1103,11 @@ class TypeAssigner():
                            
                        else: #means none of conditions t2_l in bad t1 or dominant side is s1, i.e. dominant side is s2 do it should assign it's expectation to t1. done already below.
                            self.learner.wm.ts1 = TChunk(t2_l)
+                   else:
+                       pass
+                       # if t1+t2 check if expecting before retype t2
+                        
+                
                            
                            
                        # print('new types')
