@@ -1088,6 +1088,11 @@ class TypeAssigner():
                            self.learner.wm.ts1 = TChunk(t1)
                        else:
                            self.learner.wm.ts1 = TChunk(t2_l)
+                   else:
+                       pass
+                       # if t1+t2 check if expecting before retype t2
+                        
+                
                            
                        # print('new types')
                        # print(self.learner.wm.ts1)
