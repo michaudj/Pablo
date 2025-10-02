@@ -184,12 +184,12 @@ def create_stimuliMD(n_sentences=80000):
 
 def create_stimuli_rel(n_sentences=10_000_000):
     number_of_verbs = 1
-    number_of_nouns = 10
+    number_of_nouns = 20
     number_of_adj = 1
     number_of_relpron = 1
     number_of_det = 1
     number_of_prep = 1
-    number_of_monotransitive_verbs = 1
+    number_of_monotransitive_verbs = 10
     number_of_ditransitive_verbs = 1
 
     verbs = ['v' + str(i) for i in range(1, number_of_verbs+1)]

@@ -403,7 +403,7 @@ class WorkingMemory():
         self.events.append((pair,response))
         #print(self.get_responses())
         
-        if False:
+        if True:
             print(self.ts1)
             print(self.ts1.is_consistent())
             print(self.ts2)
@@ -1103,10 +1103,7 @@ class TypeAssigner():
                # I NEED TO CHECK WHETHER THE REDUCED TYPE IS A GOOD STARTING TYPE, OTHERWISE IT SHOULD BE RETYPED!
                
                reduced_type = self.learner.wm.ts1.reduce()
-               if not reduced_type.is_start():
-                   print('Reduced type is not a good starting type! Should remove previous expectation...')
-                   print(self.learner.wm.ts1)
-                   print(self.learner.wm.ts2)
+
                t2 = self.learner.wm.ts2.structure
                if reduced_type.is_expecting_after() and not t2.is_expecting_before():
                    rt_r = Type(reduced_type.right_type())
@@ -1130,24 +1127,31 @@ class TypeAssigner():
                        good_t2 = self.extract_good_types(pair.s2)
                        if rt_r in bad_t2 or dominant_side == 's2': # or t1_r has not been used for that element
 
-                           if t2.is_primitive():# and len(pair.s1) <=2:
-                               self.learner.wm.ts1 = self.learner.wm.ts1.retype_expectation(t2,self.learner.wm.get_responses())
+                           # if t2.is_primitive():# and len(pair.s1) <=2:
+                               # print(f'ts1: {self.learner.wm.ts1}')
+                               # print(f'ts2: {self.learner.wm.ts2}')
+                               new_t1 = reduced_type + rt_r
+                               [new_t1,t2] = new_t1.split(pu=0,prim=Type(t2.left_type()))
+                               # print(f'Retype to new_ts1 {new_t1} and t2 {t2}')
+                               self.learner.wm.ts1 = self.learner.wm.ts1.retype_root(new_t1,self.learner.wm.get_responses())
+                               #self.learner.wm.ts1 = self.learner.wm.ts1.retype_expectation(t2,self.learner.wm.get_responses())
 
                        else:
                            self.learner.wm.ts2 = TChunk(rt_r)
                elif not reduced_type.is_expecting_after() and t2.is_expecting_before():
+                   t2_l = Type(t2.left_type())
                    if not reduced_type.is_compatible(t2):
                        print('t2 is expecting before, so t1 should be retyped or the expectation of t2 should be changed')
-                       print(f't2 is {t2}')
-                       print(f't1 is {reduced_type}')
-                       print(f'ts1 is {self.learner.wm.ts1}')
+                       # print(f't2 is {t2}')
+                       # print(f't1 is {reduced_type}')
+                       # print(f'ts1 is {self.learner.wm.ts1}')
                        right_types = self.learner.wm.ts1.right_types()
-                       print(right_types)
+                       # print(right_types)
 
                                
  
                        right_values = self.learner.wm.get_right_values(pair)
-                       print(right_values)
+                       # print(right_values)
                        competing_t1_value = right_values[-1] 
 
                        self.learner.ltm.update_chunk_type_associations(pair.s2, t2)
@@ -1156,7 +1160,15 @@ class TypeAssigner():
                        candidates = {'s1': competing_t1_value,'s2': value_ts2}
                        dominant_side = softmax_choice(candidates, tau=self.tau)
                        print(dominant_side)
-            
+
+                       if dominant_side == "s1":
+                           # print('Should retype expectation')
+                           new_t2 = t2_l+t2
+                           [t1,new_t2] = new_t2.split(pu=1,prim=reduced_type)
+                           self.learner.wm.ts2 = TChunk(new_t2)
+                           # self.learner.wm.ts1 = TChunk(t1)
+                       else:
+                           self.learner.wm.ts1 = self.learner.wm.ts1.retype_root(t2_l,self.learner.wm.get_responses())
 
         
 

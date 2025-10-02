@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 # Consider using the typatory to keep the number of types to a minimum.
 
 
-n_trial = 30000
+n_trial = 40000
 alpha = 0.1
 alpha_v = 1
 beta = 1.
@@ -34,7 +34,7 @@ config_t = LearnerConfig(n_trials=n_trial,
                        RW=RW,
                        chaining = False,
                        bad_type_threshold = 0.,
-                       good_type_threshold = 3., 
+                       good_type_threshold = 4., 
                        tau = 0.1,
                        type_on = True)
 
@@ -55,16 +55,17 @@ config = LearnerConfig(n_trials=n_trial,
                        type_on = False)
 
 
+learner_t = Learner(config_t)
+
+learner_t.learn(create_stimuli_rel())
+ma_t = learner_t.history.plot_moving_average(100)
 
 learner = Learner(config)
 
-learner.learn(create_stimuliMD())
+learner.learn(create_stimuli_rel())
 ma = learner.history.plot_moving_average(100)
 
-learner_t = Learner(config_t)
 
-learner_t.learn(create_stimuliMD())
-ma_t = learner_t.history.plot_moving_average(100)
 
 
 plt.figure(figsize=(10, 5))
@@ -73,6 +74,6 @@ plt.plot(ma, label='Without types')
 plt.xlabel('Trial')
 plt.ylabel('Success rate')
 plt.ylim((0,1))
-plt.title('Learning Progress: MD language 10 mono, 10 ditransitive verbs, 50 nouns')
+plt.title('Learning Progress: Rel language 10 mono, 1 ditransitive verbs, 20 nouns, 1 rel')
 plt.grid(True)
 plt.legend()

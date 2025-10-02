@@ -453,44 +453,44 @@ class TChunk():
                 else:
                     return False
     
-    def find_type_to_modify(self):
-        if self.is_consistent() and self.reduce().is_expecting_after():
-            expected_type = Type(self.reduce().right_type())
-            for i, t in enumerate(self.right_types()):
+    # def find_type_to_modify(self):
+    #     if self.is_consistent() and self.reduce().is_expecting_after():
+    #         expected_type = Type(self.reduce().right_type())
+    #         for i, t in enumerate(self.right_types()):
                 
-                if t.is_expecting_after() and Type(t.right_type())==expected_type:
-                    return i
+    #             if t.is_expecting_after() and Type(t.right_type())==expected_type:
+    #                 return i
                 
-    def find_type_to_modify_previous_expectation(self):
-        if self.is_consistent() and self.reduce().is_expecting_before():
-            expected_type = Type(self.reduce().left_type())
-            print(f'expected_type {expected_type}')
-            print(self.right_types())
-            for i, t in enumerate(self.right_types()): 
-                if t.is_expecting_before() and Type(t.left_type())==expected_type:
-                    return i
+    # def find_type_to_modify_previous_expectation(self):
+    #     if self.is_consistent() and self.reduce().is_expecting_before():
+    #         expected_type = Type(self.reduce().left_type())
+    #         print(f'expected_type {expected_type}')
+    #         print(self.right_types())
+    #         for i, t in enumerate(self.right_types()): 
+    #             if t.is_expecting_before() and Type(t.left_type())==expected_type:
+    #                 return i
                 
                 
-    def modified_element(self,new_expectation):
-        if self.is_consistent() and self.reduce().is_expecting_after():
-            expected_type = Type(self.reduce().right_type())
-            right_types = self.right_types()
-            right_types.reverse()
-            #print(f'In modified element, right_types is {right_types}')
-            for i,t in enumerate(right_types):
-                if t.is_expecting_after() and Type(t.right_type()) == expected_type:
-                    new_type = t + expected_type
-                    [new_type,_] = new_type.split(pu=0, prim=new_expectation)
-                    right_types[i] = new_type
+    # def modified_element(self,new_expectation):
+    #     if self.is_consistent() and self.reduce().is_expecting_after():
+    #         expected_type = Type(self.reduce().right_type())
+    #         right_types = self.right_types()
+    #         right_types.reverse()
+    #         #print(f'In modified element, right_types is {right_types}')
+    #         for i,t in enumerate(right_types):
+    #             if t.is_expecting_after() and Type(t.right_type()) == expected_type:
+    #                 new_type = t + expected_type
+    #                 [new_type,_] = new_type.split(pu=0, prim=new_expectation)
+    #                 right_types[i] = new_type
             
-            #print(f'In modified element, modified right_types is {right_types}')
+    #         #print(f'In modified element, modified right_types is {right_types}')
             
-            # for i in range(len(right_types)-1):
-            #     if len(right_types[i+1])>len(right_types[i]):
-            #         [_,new_type]=right_types[i].split(pu=1,prim=right_types[i+1])
-            #     else:
-            #         [new_type,_]=right_types[i].split(pu=0,prim=right_types[i+1])
-            return new_type
+    #         # for i in range(len(right_types)-1):
+    #         #     if len(right_types[i+1])>len(right_types[i]):
+    #         #         [_,new_type]=right_types[i].split(pu=1,prim=right_types[i+1])
+    #         #     else:
+    #         #         [new_type,_]=right_types[i].split(pu=0,prim=right_types[i+1])
+    #         return new_type
             
     
     def right_types(self):
@@ -513,23 +513,23 @@ class TChunk():
         else:
             return False
         
-    def retype_expectation(self,typ,responses):
-        if self.is_consistent() and self.reduce().is_expecting_after():
-            list_of_types = self.remove_structure2()
-            # I NEED TO FIND A BETTER WAY TO DO THIS.
+    # def retype_expectation(self,typ,responses):
+    #     if self.is_consistent() and self.reduce().is_expecting_after():
+    #         list_of_types = self.remove_structure2()
+    #         # I NEED TO FIND A BETTER WAY TO DO THIS.
             
-            #print(f'list of types: {list_of_types}')
-            #chunktree = ChunkTree.from_tchunk(self)
-            #print(f'list of types after chunktree creation: {list_of_types}')
-            index = self.find_type_to_modify()
-            #print(f'the old type is {old_type}')
-            new_type = self.modified_element(typ)
-            #print(f'Should be replaced by {new_type}')
-            list_of_types[-(index+1)] = new_type
-            new_ts1 = TChunk.from_list_and_responses(list_of_types, responses)
-            #print(f'new list of types: {list_of_types}')
-            #new_ts1 = chunktree.apply_types(list_of_types) # The apply_types function only works for ts1 of length 2, more complex structure fail to construct a TChunk with the correct internal structure
-            return new_ts1
+    #         #print(f'list of types: {list_of_types}')
+    #         #chunktree = ChunkTree.from_tchunk(self)
+    #         #print(f'list of types after chunktree creation: {list_of_types}')
+    #         index = self.find_type_to_modify()
+    #         #print(f'the old type is {old_type}')
+    #         new_type = self.modified_element(typ)
+    #         #print(f'Should be replaced by {new_type}')
+    #         list_of_types[-(index+1)] = new_type
+    #         new_ts1 = TChunk.from_list_and_responses(list_of_types, responses)
+    #         #print(f'new list of types: {list_of_types}')
+    #         #new_ts1 = chunktree.apply_types(list_of_types) # The apply_types function only works for ts1 of length 2, more complex structure fail to construct a TChunk with the correct internal structure
+    #         return new_ts1
         
     def get_new_type_and_path(self,typ,path=[],ttype=None):
         if not isinstance(self.structure, list):
@@ -541,17 +541,36 @@ class TChunk():
         trc= rc.reduce()
         lc = self.get_left_subchunks(1)[1]
         tlc = lc.reduce()
-        new_left_type = Type(typ.formula+'o'+trc.formula)
-        new_right_type = Type(tlc.formula+'u'+typ.formula)
-        
-        if new_left_type.is_compatible(trc):
-            # print('propagate on the left')
+        if tlc.is_expecting_after() and not trc.is_expecting_before():
             path.append(0)
+            # print('left type expecting')
+            # print(f'right type {trc} not changed')
+            # print(f'left type {tlc} should be changed')
+            # print(typ)
+            if typ.is_expecting_after() and trc.is_expecting_after():
+                if typ.right_type() == trc.right_type():
+                    # print('Need to remove expectation for the type propagating on the left')
+                    typ = typ + Type(trc.right_type())
+                    # print(typ)
+            new_left_type = Type(typ.formula+'o'+trc.left_type())
             return lc.get_new_type_and_path(new_left_type,path=path)
-        elif tlc.is_compatible(new_right_type):
-            # print('propagate on the right')
+        elif not tlc.is_expecting_after() and trc.is_expecting_before():
             path.append(1)
+            # print('right type expecting')
+            # print(f'left type {tlc} not changed')
+            # print(f'right type {trc} should be changed')
+            # print(typ)
+            if typ.is_expecting_before() and tlc.is_expecting_before():
+                if typ.left_type() == tlc.left_type():
+                    # print('Need to remove expectation for the type propagating on the right')
+                    typ = Type(tlc.left_type()) + typ
+                    # print(typ)
+            new_right_type = Type(tlc.right_type()+'u'+typ.formula)
             return rc.get_new_type_and_path(new_right_type,path=path)
+        else:
+            print('problem here')
+
+            
         
     def path_to_index(self, path):
         """
@@ -581,6 +600,7 @@ class TChunk():
             
     def retype_root(self, typ, responses):
         if self.is_consistent():
+            # print(self.reduce())
             new_type,path = self.get_new_type_and_path(typ,path=[])
             index = self.path_to_index(path)
             # print(new_type)
@@ -759,7 +779,7 @@ class ChunkTree:
 #           Tests
 #
 ###############################################################################
-tests = True
+tests = False
 
 v1 = VChunk(2.)
 v2 = VChunk(3.)
@@ -872,6 +892,22 @@ if tests:
     print(chunk)
     new_tt = chunk.retype_root(Type('3'),(1,2,1))
     print(new_tt)
+    
+    t1 = Type('1')
+    t2 = Type('1u0')
+    t3 = Type('0u1')
+    t4 = Type('1u0o1')
+    
+    tc1 = TChunk(t1)
+    tc2 = TChunk(t2)
+    tc3 = TChunk(t3)
+    tc4 = TChunk(t4)
+    
+    chunk = tc1.chunk_at_depth(tc2)
+    chunk = chunk.chunk_at_depth(tc3,depth=0)
+    chunk = chunk.chunk_at_depth(tc4,depth=1)
+    print(chunk)
+    new_chunk = chunk.retype_root(Type('0o0'),(1,2,1))
     
     #new_tchunk = tchunk.retype_root(Type('6'),(1,2,1))
     #print(new_tchunk)
