@@ -241,7 +241,7 @@ class LearningHistory:
     def record(self, success_value: int, length: int):
         self.success.append(success_value)
         self.sent_len.append(length)
-        
+        print("Trial", len(self.success))
 
 
     def plot_moving_average(self, window_size=10, show=True, save_path=None):
@@ -404,9 +404,9 @@ class WorkingMemory():
         #print(self.get_responses())
         
         if True:
-            print(self.ts1)
-            print(self.ts1.is_consistent())
-            print(self.ts2)
+            print("ts1",self.ts1)
+            print("ts1 consistency =",self.ts1.is_consistent())
+            print("ts2",self.ts2)
             if response == 0:
                 print('border')
             else:
@@ -1067,10 +1067,10 @@ class TypeAssigner():
                    # Check compatibility and correct if needed
                    t2_l = Type(t2.left_type())
                    if t1.is_compatible(t2):
-                       reduced_type = t1+t2
-                       if reduced_type.is_expecting_before():
+                       reduced_t1_t2 = t1+t2
+                       if reduced_t1_t2.is_expecting_before():
                            t2_expect_too_much =True
-                           print("t2 too much")
+                           print("compatible but t2 too much")
                    
                    if not t1.is_compatible(t2) or t2_expect_too_much:
                        print("not compatible or t2 too much")
@@ -1092,7 +1092,7 @@ class TypeAssigner():
                            
                            new_t2 = t2_l+t2  #takes away backwards expectation via reduction
                            print("first reduction", t2_l, "+" , t2, "=" , new_t2)
-                           #here we can check if new t2 is a primitive, if not, we reduce again, to make sure it will only take one argument backwards to not end up wit an inherited s1 with backwards expectation
+                           #in the case of t1 being primitive and dominant, and t2 expecting too much backwards, t2 only keeps its head and is modified to expect t1 backwards. fixed below.
                            while new_t2.is_expecting_before():
                                t2_l = Type(new_t2.left_type())
                                print("next reduction", t2_l, "+" , new_t2)
@@ -1101,7 +1101,7 @@ class TypeAssigner():
                            self.learner.wm.ts2 = TChunk(new_t2)
                            self.learner.wm.ts1 = TChunk(t1)
                            
-                       else: #means none of conditions t2_l in bad t1 or dominant side is s1, i.e. dominant side is s2 do it should assign it's expectation to t1. done already below.
+                       else: #means none of conditions t2_l in bad t1 or dominant side is s1, i.e. dominant side is s2 do it should assign its expectation to t1. done already below.
                            self.learner.wm.ts1 = TChunk(t2_l)
                    else:
                        pass
@@ -1117,6 +1117,7 @@ class TypeAssigner():
                elif t2.is_expecting_before() and t1.is_expecting_after():
                    # Incompatible types! Try to find a compatible pairing
                    #print(f'Incompatible typing at step {self.learner.n_reinf}')
+                   print("both sides expecting")
                    # retype here
                    self.learner.ltm.update_chunk_type_associations(pair.s1, t1)
                    self.learner.ltm.update_chunk_type_associations(pair.s2, t2)
@@ -1151,7 +1152,6 @@ class TypeAssigner():
                        self.learner.wm.ts1 = TChunk(t1)
                        self.learner.wm.ts2 = TChunk(t2)
                            
-           #BÖRJA HÄR!!!    
            elif self.learner.wm.ts1.is_consistent():
                #print(self.learner.wm.get_responses())
                # I NEED TO CHECK WHETHER THE REDUCED TYPE IS A GOOD STARTING TYPE, OTHERWISE IT SHOULD BE RETYPED! (A: no, now solved in previous round)
@@ -1202,7 +1202,7 @@ class TypeAssigner():
                        reduced_type_both = reduced_type+t2
                        if reduced_type_both.is_expecting_before():
                            t2_expect_too_much =True
-                       print("t2 too much")
+                           print("t2 too much")
                    if not reduced_type.is_compatible(t2) or t2_expect_too_much:
                        print('t2 is expecting before, so t1 should be retyped or the expectation of t2 should be changed')
                        # print(f't2 is {t2}')
@@ -1233,8 +1233,7 @@ class TypeAssigner():
                            while new_t2.is_expecting_before():
                                t2_l = Type(new_t2.left_type())
                                print("next reduction", t2_l, "+" , new_t2)
-                               new_t2 = t2_l + new_t2
-                                                                                      
+                               new_t2 = t2_l + new_t2                                                                                      
                            [t1,new_t2] = new_t2.split(pu=1,prim=reduced_type)
                            self.learner.wm.ts2 = TChunk(new_t2)
                            # self.learner.wm.ts1 = TChunk(t1)

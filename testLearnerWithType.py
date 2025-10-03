@@ -10,6 +10,13 @@ from Population import Population
 from grammars import *
 import matplotlib.pyplot as plt
 
+import sys
+
+# Open a plain text file for writing (overwrites existing content)
+sys.stdout = open(r'C:\Users\anjo1309\Dropbox\Dokument\output3okt.txt', 'w')
+
+
+
 # Things to try, only reinforce types for non-complex SChunk.
 # Improve the assign_types function to do a greedy search especially in the case 1 0\0/0, the left zero should be retyped. Same on the right.
 # Improve the decision support implementation. Currently very crude.
