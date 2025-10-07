@@ -645,7 +645,7 @@ class VChunk():
     @staticmethod
     def from_list_and_responses(list_of_values, responses):
         if len(list_of_values) != len(responses)+1:
-            print('mismatch of length')
+            print('mismatch of length', list_of_values, responses)
         else:
             tc1 = VChunk(list_of_values[0])
             for i in range(len(responses)):

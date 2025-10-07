@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 import sys
 
 # Open a plain text file for writing (overwrites existing content)
-sys.stdout = open(r'C:\Users\anjo1309\Dropbox\Dokument\output3okt.txt', 'w')
+#sys.stdout = open(r'C:\Users\anjo1309\Dropbox\Dokument\output4october.txt', 'w')
 
 
 
