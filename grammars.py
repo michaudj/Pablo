@@ -184,12 +184,12 @@ def create_stimuliMD(n_sentences=80000):
 
 def create_stimuli_rel(n_sentences=10_000_000):
     number_of_verbs = 1
-    number_of_nouns = 30
+    number_of_nouns = 40
     number_of_adj = 1
-    number_of_relpron = 1
+    number_of_relpron = 2
     number_of_det = 1
     number_of_prep = 1
-    number_of_monotransitive_verbs = 10
+    number_of_monotransitive_verbs = 20
     number_of_ditransitive_verbs = 2
 
     verbs = ['v' + str(i) for i in range(1, number_of_verbs+1)]
@@ -223,6 +223,18 @@ def create_stimuli_rel(n_sentences=10_000_000):
         'MV': [['mv' + str(i)] for i in range(1, number_of_monotransitive_verbs+1)],
         'DV': [['dv' + str(i)] for i in range(1, number_of_ditransitive_verbs+1)]
     }
+    
+    relweight = np.array([1/(i+1) for i in range(len(relpron))])
+    relweight /= np.sum(relweight)
+
+    nweight = np.array([1/(i+1) for i in range(len(nouns))])
+    nweight /= np.sum(nweight)
+
+    mvweight = np.array([1/(i+1) for i in range(len(monotransitive_verbs))])
+    mvweight /= np.sum(mvweight)
+    
+    dvweight = np.array([1/(i+1) for i in range(len(ditransitive_verbs))])
+    dvweight /= np.sum(mvweight)
 
     weightsYP = {
         'S': [1.0],
@@ -230,14 +242,15 @@ def create_stimuli_rel(n_sentences=10_000_000):
         'VP': [.3,.2,.3,.2],
         'AP': [.5,.5 ],
         'PP': [1.0],
-        'N': [1/number_of_nouns for i in range(1, number_of_nouns+1)],
+        # 'N': [1/number_of_nouns for i in range(1, number_of_nouns+1)],
+        'N': nweight,
         'V': [1/number_of_verbs for i in range(1, number_of_verbs+1)],
         'A': [1/number_of_adj for i in range(1, number_of_adj+1)],
         'D': [1/number_of_det for i in range(1, number_of_det+1)],
         'P': [1/number_of_prep for i in range(1, number_of_prep+1)],
-        'rel': [1/number_of_relpron for i in range(1, number_of_relpron+1)],
-        'MV': [1/number_of_monotransitive_verbs for i in range(1, number_of_monotransitive_verbs+1)],
-        'DV': [1/number_of_ditransitive_verbs for i in range(1, number_of_ditransitive_verbs+1)]
+        'rel': relweight,#[1/number_of_relpron for i in range(1, number_of_relpron+1)],
+        'MV': mvweight,#[1/number_of_monotransitive_verbs for i in range(1, number_of_monotransitive_verbs+1)],
+        'DV': dvweight,#[1/number_of_ditransitive_verbs for i in range(1, number_of_ditransitive_verbs+1)]
         }
 
     cfgYPredMD = ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP,weightsYP)

@@ -238,10 +238,12 @@ class LearningHistory:
     success: List[int] = field(default_factory=list)
     sent_len: List[int] = field(default_factory=list)
 
-    def record(self, success_value: int, length: int):
+    def record(self, success_value: int, length: int, verbose=False):
         self.success.append(success_value)
         self.sent_len.append(length)
-        print("Trial", len(self.success))
+        if verbose:
+            print('----------------------')
+            print("Trial", len(self.success))
 
 
     def plot_moving_average(self, window_size=10, show=True, save_path=None):
@@ -376,7 +378,7 @@ class WorkingMemory():
   
         return new_s1, s2_index
     
-    def respond_with_type(self,stimuli_stream,s1,s2_index,reinforcement = True):
+    def respond_with_type(self,stimuli_stream,s1,s2_index,reinforcement = True,verbose=False):
         # get the s2 stimuli and make it a chunk
         try:
             s2 = SChunk(stimuli_stream.read_stimuli(s2_index))
@@ -384,10 +386,15 @@ class WorkingMemory():
             sys.exit("Index doesn't exist. End of input reached before learning is finished.")
         
         pair = ChunkPair((s1,s2))
+        
+        if verbose:
+            print("pair",pair)
+            print("types before assign, 1: " ,self.learner.wm.ts1)
         self.learner.ltm.update_repertoire(pair)
         
         self.type_assigner.assign_type2(pair) # self.ts1 is a TChunk, while ts2 is a TChunk 
-
+        if verbose:
+            print("types after assign, 1: " ,self.learner.wm.ts1, "2: " , self.learner.wm.ts2)
         
         # Check if the structure of ts1 and ts2 are useful as a support for decisions
         # If so, use them in the decision making process
@@ -403,9 +410,10 @@ class WorkingMemory():
         self.events.append((pair,response))
         #print(self.get_responses())
         
-        if True:
-            print("ts1",self.ts1)
+        if verbose:
+            # print("ts1",self.ts1)
             print("ts1 consistency =",self.ts1.is_consistent())
+            print(self.get_responses())
             print("ts2",self.ts2)
             if response == 0:
                 print('border')
@@ -424,7 +432,7 @@ class WorkingMemory():
             
             if self.is_border_correct(stimuli_stream,s2_index):
                 reward = self.pos
-                self.learner.history.record(1,sent_length)
+                self.learner.history.record(1,sent_length,verbose=True)
                 if reinforcement:
                     self.reinforcer.reinforce2(self.events,reward)
                     if not self.typing_used:
@@ -438,7 +446,7 @@ class WorkingMemory():
                         self.reinforcer.reinforce_types(self.typing_events,reward)
             else:
                 reward = self.neg
-                self.learner.history.record(0,sent_length)
+                self.learner.history.record(0,sent_length,verbose=True)
                 if reinforcement:
                     self.reinforcer.reinforce2(self.events,reward)
                     if self.typing_used and self.ts1.reduce() == Type.SENTENCE:
@@ -790,8 +798,7 @@ class TypeAssigner():
         # Do type assignment taking into account the values associated to chunk and types
         left_candidates = self.extract_good_starting_types(pair.s1)
         right_candidates = self.extract_good_types(pair.s2)
-        print("pair",pair)
-        print("types before assign, 1: " ,self.learner.wm.ts1, "2: " , self.learner.wm.ts2)
+        
         # Softmax a type for s2
         if right_candidates:
             choice = softmax_choice(right_candidates,tau = self.tau)
@@ -821,8 +828,7 @@ class TypeAssigner():
         # Do type assignment taking into account the values associated to chunk and types
         left_candidates = self.extract_good_starting_types(pair.s1)
         right_candidates = self.extract_good_types(pair.s2)
-        print("pair",pair)
-        print("types before assign, 1: " ,self.learner.wm.ts1, "2: " , self.learner.wm.ts2)
+
         if self.learner.wm.ts1.has_empty_elements():
             # s1 not well-typed
             if isinstance(self.learner.wm.ts1.structure,list):
@@ -1071,11 +1077,11 @@ class TypeAssigner():
                    reduced_t2 = t2_l+t2
                    if reduced_t2.is_expecting_before():
                        t2_expect_too_much =True
-                       print("t2 too much")
+                       # print("t2 too much")
                    
                    if not t1.is_compatible(t2) or t2_expect_too_much:
-                       print("not compatible or t2 too much")
-                       print("t1", t1, "t2", t2)
+                       # print("not compatible or t2 too much")
+                       # print("t1", t1, "t2", t2)
                        # print('correct typings here (case 2)')
                        # print(self.learner.wm.ts1)
                        # print(self.learner.wm.ts2)
@@ -1090,14 +1096,14 @@ class TypeAssigner():
                        bad_t1 = self.extract_bad_types(pair.s1)
                        good_t1 = self.extract_good_types(pair.s1)
                        if t2_l in bad_t1 or dominant_side == "s1" or t2_expect_too_much:
-                           print('Should retype expectation')
+                           # print('Should retype expectation')
                            
                            new_t2 = t2_l+t2  #takes away backwards expectation via reduction
-                           print("first reduction", t2_l, "+" , t2, "=" , new_t2)
+                           # print("first reduction", t2_l, "+" , t2, "=" , new_t2)
                            #in the case of t1 being primitive and dominant, and t2 expecting too much backwards, t2 only keeps its head and is modified to expect t1 backwards. fixed below.
                            while new_t2.is_expecting_before():
                                t2_l = Type(new_t2.left_type())
-                               print("next reduction", t2_l, "+" , new_t2)
+                               # print("next reduction", t2_l, "+" , new_t2)
                                new_t2 = t2_l + new_t2
                            [t1,new_t2] = new_t2.split(pu=1,prim=t1) #adds new expectation to t2 via split
                            self.learner.wm.ts2 = TChunk(new_t2)
@@ -1119,7 +1125,7 @@ class TypeAssigner():
                elif t2.is_expecting_before() and t1.is_expecting_after():
                    # Incompatible types! Try to find a compatible pairing
                    #print(f'Incompatible typing at step {self.learner.n_reinf}')
-                   print("both sides expecting")
+                   # print("both sides expecting")
                    # retype here
                    self.learner.ltm.update_chunk_type_associations(pair.s1, t1)
                    self.learner.ltm.update_chunk_type_associations(pair.s2, t2)
@@ -1145,11 +1151,11 @@ class TypeAssigner():
                    if reduced_t2.is_expecting_before():
                        dominant_side = "s1"
                        
-                   if dominant_side == "s1" and not t1_r in bad_t2:
+                   if dominant_side == "s1":
                        t2=t1_r
                        self.learner.wm.ts1 = TChunk(t1)
                        self.learner.wm.ts2 = TChunk(t2)
-                   elif dominant_side == "s2" and not t2_l in bad_t1:
+                   elif dominant_side == "s2":
                        t1=t2_l
                        self.learner.wm.ts1 = TChunk(t1)
                        self.learner.wm.ts2 = TChunk(t2)
@@ -1159,10 +1165,11 @@ class TypeAssigner():
                # I NEED TO CHECK WHETHER THE REDUCED TYPE IS A GOOD STARTING TYPE, OTHERWISE IT SHOULD BE RETYPED! (A: no, now solved in previous round)
                
                reduced_type = self.learner.wm.ts1.reduce() 
-               print("reduced type1", reduced_type)
+               # print("reduced type1", reduced_type)
                
-               if reduced_type.is_expecting_before():
+               if reduced_type.is_expecting_before(): 
                    print("error: inherited type1 is expecting before:",reduced_type)
+                   sys.exit("Too much expectations")
 
                t2 = self.learner.wm.ts2.structure
                
@@ -1192,13 +1199,13 @@ class TypeAssigner():
                                # print(f'ts1: {self.learner.wm.ts1}')
                                # print(f'ts2: {self.learner.wm.ts2}')
                                new_t1 = reduced_type + rt_r
-                               print("new t1", new_t1, "prim for split ", Type(t2.left_type()))
-                               [new_t1,t2] = new_t1.split(pu=0,prim=Type(t2.left_type()))
-                               print("new new t1 ", new_t1, "new t2 ", t2)
+                               # print("new t1", new_t1, "prim for split ", Type(t2.left_type()))
+                               [new_t1,_] = new_t1.split(pu=0,prim=Type(t2.left_type()))
+                               # print("new new t1 ", new_t1, "new t2 ", t2)
                                # print(f'Retype to new_ts1 {new_t1} and t2 {t2}')
                                self.learner.wm.ts1 = self.learner.wm.ts1.retype_root(new_t1,self.learner.wm.get_responses())
                                #self.learner.wm.ts1 = self.learner.wm.ts1.retype_expectation(t2,self.learner.wm.get_responses())
-                               print("final ts1", self.learner.wm.ts1)
+                               # print("final ts1", self.learner.wm.ts1)
                        else:
                            self.learner.wm.ts2 = TChunk(rt_r)
                elif not reduced_type.is_expecting_after() and t2.is_expecting_before():
@@ -1207,9 +1214,9 @@ class TypeAssigner():
                    reduced_t2 = t2_l+t2
                    if reduced_t2.is_expecting_before():
                        t2_expect_too_much =True
-                       print("t2 too much")
-                   if not reduced_type.is_compatible(t2) or t2_expect_too_much:
-                       print('t2 is expecting before, so t1 should be retyped or the expectation of t2 should be changed')
+                       # print("t2 too much")
+                   if not reduced_type.is_compatible(t2) or t2_expect_too_much: # add condition for sentence
+                       # print('t2 is expecting before, so t1 should be retyped or the expectation of t2 should be changed')
                        # print(f't2 is {t2}')
                        # print(f't1 is {reduced_type}')
                        # print(f'ts1 is {self.learner.wm.ts1}')
@@ -1227,25 +1234,25 @@ class TypeAssigner():
 
                        candidates = {'s1': competing_t1_value,'s2': value_ts2}
                        dominant_side = softmax_choice(candidates, tau=self.tau)
-                       print("dominant side", dominant_side)
+                       # print("dominant side", dominant_side)
                        if dominant_side == "s1" or t2_expect_too_much:
                            # print('Should retype expectation')
                            
                            new_t2 = t2_l+t2  #takes away backwards expectation via reduction
-                           print("first reduction", t2_l, "+" , t2, "=" , new_t2)
+                           # print("first reduction", t2_l, "+" , t2, "=" , new_t2)
                            #here we can check if new t2 is a primitive, if not, we reduce again, to make sure it will only take one argument backwards to not end up wit an inherited s1 with backwards expectation
                            while new_t2.is_expecting_before():
                                t2_l = Type(new_t2.left_type())
-                               print("next reduction", t2_l, "+" , new_t2)
+                               # print("next reduction", t2_l, "+" , new_t2)
                                new_t2 = t2_l + new_t2                                                                                      
-                           [t1,new_t2] = new_t2.split(pu=1,prim=reduced_type)
+                           [_,new_t2] = new_t2.split(pu=1,prim=reduced_type)
                            self.learner.wm.ts2 = TChunk(new_t2)
                            # self.learner.wm.ts1 = TChunk(t1)
                        else:
                            self.learner.wm.ts1 = self.learner.wm.ts1.retype_root(t2_l,self.learner.wm.get_responses())
                                            
                elif reduced_type.is_expecting_after() and t2.is_expecting_before():
-                   print("both sides expecting")
+                   # print("both sides expecting")
                    # retype here
                    #self.learner.ltm.update_chunk_type_associations(pair.s1, t1)
                    self.learner.ltm.update_chunk_type_associations(pair.s2, t2)
@@ -1277,7 +1284,7 @@ class TypeAssigner():
                    reduced_t2 = t2_l+t2
                    if reduced_t2.is_expecting_before():
                        dominant_side = "s1"    
-                   print("dominant side" , dominant_side)
+                   # print("dominant side" , dominant_side)
                    if dominant_side == "s1" and not t1_r in bad_t2:
                         t2=t1_r
                         #self.learner.wm.ts1 = TChunk(reduced_type)
@@ -1298,7 +1305,7 @@ class TypeAssigner():
                 if t2.is_expecting_before():
                     full_t1 = self.learner.wm.ts1
                     flattened_t1 = full_t1.remove_structure2()  
-                    print("flat list",flattened_t1)
+                    # print("flat list",flattened_t1)
                     max_reduced_t1 = Type.reduce(flattened_t1) 
                     values_ts1 = []
                     flat_s1 = pair.s1.flatten_structure()
@@ -1326,7 +1333,7 @@ class TypeAssigner():
                         t2 = Type(formula)
                         self.learner.wm.ts2 = TChunk(t2)
                     elif dominant_side == "s2":
-                        print("s2 is expecting one before and this will be assigned to the inconsistent t1")
+                        # print("s2 is expecting one before and this will be assigned to the inconsistent t1")
                         leaf_types = self.infer_leaf_types(pair.s1, t2_l)
                         #print(f"The list of types at the leaves are: {leaf_types}")
                         responses = self.learner.wm.get_responses()
@@ -1499,7 +1506,7 @@ class Learner():
         while self.n_reinf <= self.n_trials:
             if not self.chaining:
                 if self.type_on:
-                    s1, s2_index = self.wm.respond_with_type(stimuli_stream, s1, s2_index)
+                    s1, s2_index = self.wm.respond_with_type(stimuli_stream, s1, s2_index,verbose=False)
                 else:
                     s1, s2_index = self.wm.respond(stimuli_stream, s1, s2_index)
             else:

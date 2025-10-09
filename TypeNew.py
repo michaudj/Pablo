@@ -138,9 +138,30 @@ class Type:
     def is_start(self): # Checks whether the type is expecting something on the left. 
         return len(self.left_compatible_chunks()) == 0
     
+    def is_sentence(self):
+        return self == Type.SENTENCE
+    
 
     def get_primitives(self):
         return re.split(r"u|o",self.formula)
+    
+    def number_of_previous_expectations(self):
+        num_expectations = 0
+        expected_types = []
+        if not self.is_expecting_before():
+            return num_expectations, expected_types
+        else:
+            num_expectations += 1
+            left_type = Type(self.left_type())
+            expected_types.append(left_type)
+            reduced_type = left_type + self
+            while reduced_type.is_expecting_before():
+                left_type = Type(reduced_type.left_type())
+                reduced_type = left_type + reduced_type
+                num_expectations += 1 
+                expected_types.append(left_type)
+        return num_expectations, expected_types, reduced_type
+            
     
     def __len__(self):
         return len(self.get_primitives())
@@ -273,7 +294,7 @@ class Type:
         return remaining_types
     
     @staticmethod
-    def is_sentence(types):
+    def is_sentence_list(types):
         remaining_types = Type.reduce(types)
         if len(remaining_types) == 1 and remaining_types[0] == Type.SENTENCE:
             return True
@@ -537,22 +558,31 @@ class TChunk():
             return typ, path
         
         reduced_type = self.reduce()
+        # print(self)
         rc = self.get_right_subchunks(1)[1]
         trc= rc.reduce()
+        # print(f'trc is {trc}')
         lc = self.get_left_subchunks(1)[1]
         tlc = lc.reduce()
+        # print(f'tlc is {tlc}')
         if tlc.is_expecting_after() and not trc.is_expecting_before():
             path.append(0)
             # print('left type expecting')
             # print(f'right type {trc} not changed')
             # print(f'left type {tlc} should be changed')
             # print(typ)
-            if typ.is_expecting_after() and trc.is_expecting_after():
-                if typ.right_type() == trc.right_type():
+            
+            while typ.right_type() == trc.right_type():
+                if typ.is_expecting_after() and trc.is_expecting_after():
                     # print('Need to remove expectation for the type propagating on the left')
                     typ = typ + Type(trc.right_type())
-                    # print(typ)
+                    trc = trc + Type(trc.right_type())
+                else:
+                    break
+             
+            
             new_left_type = Type(typ.formula+'o'+trc.left_type())
+            # print(new_left_type)
             return lc.get_new_type_and_path(new_left_type,path=path)
         elif not tlc.is_expecting_after() and trc.is_expecting_before():
             path.append(1)
@@ -560,12 +590,17 @@ class TChunk():
             # print(f'left type {tlc} not changed')
             # print(f'right type {trc} should be changed')
             # print(typ)
-            if typ.is_expecting_before() and tlc.is_expecting_before():
-                if typ.left_type() == tlc.left_type():
+            
+            while typ.left_type() == tlc.left_type():
+                if typ.is_expecting_before() and tlc.is_expecting_before():
                     # print('Need to remove expectation for the type propagating on the right')
                     typ = Type(tlc.left_type()) + typ
-                    # print(typ)
+                    tlc = Type(tlc.left_type()) + tlc
+                else:
+                    break
+                    
             new_right_type = Type(tlc.right_type()+'u'+typ.formula)
+            # print(new_right_type)
             return rc.get_new_type_and_path(new_right_type,path=path)
         else:
             print('problem here')
@@ -599,6 +634,7 @@ class TChunk():
 
             
     def retype_root(self, typ, responses):
+        print('start retyping')
         if self.is_consistent():
             # print(self.reduce())
             new_type,path = self.get_new_type_and_path(typ,path=[])
@@ -878,9 +914,9 @@ if tests:
     
     tt = Type("1u0o2")
     types = tt.split(pu=0.5)
-    print(types)
+    # print(types)
     ttypes= types[0].split(pu=0.5,prim='New') + types[1].split(pu=0.5)
-    print(ttypes)
+    # print(ttypes)
     tctypes = []
     for ttt in ttypes:
         tctypes.append(TChunk(ttt))
@@ -889,9 +925,9 @@ if tests:
     tttc2 = tctypes[2].chunk_at_depth(tctypes[3])
     chunk = tttc.chunk_at_depth(tttc2)
     
-    print(chunk)
-    new_tt = chunk.retype_root(Type('3'),(1,2,1))
-    print(new_tt)
+    # print(chunk)
+    # new_tt = chunk.retype_root(Type('3'),(1,2,1))
+    # print(new_tt)
     
     t1 = Type('1')
     t2 = Type('1u0')
@@ -906,10 +942,30 @@ if tests:
     chunk = tc1.chunk_at_depth(tc2)
     chunk = chunk.chunk_at_depth(tc3,depth=0)
     chunk = chunk.chunk_at_depth(tc4,depth=1)
-    print(chunk)
-    new_chunk = chunk.retype_root(Type('0o0'),(1,2,1))
+    # print(chunk)
+    # print(chunk.reduce())
+    # new_chunk = chunk.retype_root(Type('3'),(1,2,1))
+    # print(new_chunk)
     
-    #new_tchunk = tchunk.retype_root(Type('6'),(1,2,1))
+    tc0 = TChunk(Type('0'))
+    tc1 = TChunk(Type('0u0o2'))
+    tc2 = TChunk(Type('2'))
+    tc3 = TChunk(Type('0u0u1'))
+    tc4 = TChunk(Type('1u0o1o1'))
+    
+    chunk = tc0.chunk_at_depth(tc0,depth=0)
+    print(chunk)
+    chunk = chunk.chunk_at_depth(tc1,depth=1)
+    print(chunk)
+    chunk = chunk.chunk_at_depth(tc2,depth=1)
+    print(chunk)
+    chunk = chunk.chunk_at_depth(tc3,depth=1)
+    print(chunk)
+    chunk = chunk.chunk_at_depth(tc4,depth=2)
+    print(chunk)
+    print(chunk.reduce())
+    new_tchunk = chunk.retype_root(Type('6'),[1,1,2,2,1])
+    print(new_tchunk)
     #print(new_tchunk)
     #print(types[0].split())
     #print(types[1].split())
