@@ -432,7 +432,7 @@ class WorkingMemory():
             
             if self.is_border_correct(stimuli_stream,s2_index):
                 reward = self.pos
-                self.learner.history.record(1,sent_length,verbose=True)
+                self.learner.history.record(1,sent_length,verbose=False)
                 if reinforcement:
                     self.reinforcer.reinforce2(self.events,reward)
                     if not self.typing_used:
@@ -446,7 +446,7 @@ class WorkingMemory():
                         self.reinforcer.reinforce_types(self.typing_events,reward)
             else:
                 reward = self.neg
-                self.learner.history.record(0,sent_length,verbose=True)
+                self.learner.history.record(0,sent_length,verbose=False)
                 if reinforcement:
                     self.reinforcer.reinforce2(self.events,reward)
                     if self.typing_used and self.ts1.reduce() == Type.SENTENCE:
@@ -892,36 +892,75 @@ class TypeAssigner():
         
         if not isinstance(self.learner.wm.ts1.structure, list): # ts1 is not complex
             bad_t1 = self.extract_bad_types(pair.s1)
-            if self.learner.wm.ts1.has_empty_elements() and not self.learner.wm.ts2.has_empty_elements() and self.learner.wm.ts2.structure.is_expecting_before():  
-                # I need to check whether new_ts1 is bad for s1, otherwise, I will assign a bad type!
-                new_ts1 = Type(self.learner.wm.ts2.structure.left_type())
-                if new_ts1 not in bad_t1:
-                    self.learner.wm.ts1 = TChunk(new_ts1)
+            if self.learner.wm.ts1.has_empty_elements() and not self.learner.wm.ts2.has_empty_elements():
+                if self.learner.wm.ts2.structure.is_expecting_before():  
+                    # I need to check whether new_ts1 is bad for s1, otherwise, I will assign a bad type!
+                    new_ts1 = Type(self.learner.wm.ts2.structure.left_type())
+                    if new_ts1 not in bad_t1:
+                        self.learner.wm.ts1 = TChunk(new_ts1)
+                elif not self.learner.wm.ts2.structure.is_expecting_before and not self.learner.wm.ts2.structure.is_sentence():
+                    t2_head = self.learner.wm.ts2.structure
+                    while t2_head.is_expecting_after:
+                        t2_head_l = Type(t2_head.left_type())
+                        t2_head = t2_head_l + t2_head
+                    new_ts1 = Type.SENTENCE
+                    print("new ts1 pre split", new_ts1, "t2 head", t2_head)
+                    [new_ts1,_] = new_ts1.split(pu=0,prim=t2_head)
+                    print("new ts1 post split", new_ts1)
+                    if new_ts1 not in bad_t1:
+                        self.learner.wm.ts1 = TChunk(new_ts1) #Jerome, jag fattar inte riktigt när man ska tchunka och varför. vi har väl inte o-t-chunkat när vi hämtat den från wm?
 
-            elif not self.learner.wm.ts1.has_empty_elements() and self.learner.wm.ts1.structure.is_expecting_after() and self.learner.wm.ts2.has_empty_elements():
-                # Same here, new_ts2 should not be bad for s2! Otherwise, I will assign a bad type!
+            elif not self.learner.wm.ts1.has_empty_elements() and self.learner.wm.ts2.has_empty_elements(): 
                 bad_t2 = self.extract_bad_types(pair.s2)
-                new_ts2 = Type(self.learner.wm.ts1.structure.right_type())
-                if new_ts2 not in bad_t2:
-                    self.learner.wm.ts2 = TChunk(new_ts2)
+                if self.learner.wm.ts1.structure.is_expecting_after(): 
+                    # Same here, new_ts2 should not be bad for s2! Otherwise, I will assign a bad type!                    
+                    new_ts2 = Type(self.learner.wm.ts1.structure.right_type())
+                    if new_ts2 not in bad_t2:
+                        self.learner.wm.ts2 = TChunk(new_ts2)
+                elif not self.learner.wm.ts1.structure.is_expecting_after() and not self.learner.wm.ts1.structure.is_sentence():
+                    new_ts2 = Type.SENTENCE
+                    print("new ts2 pre split", new_ts2, "t1", self.learner.wm.ts1.structure)
+                    [_,new_ts2] = new_ts2.split(pu=1,prim=self.learner.wm.ts1.structure)
+                    print("new ts2 post split", new_ts2)
+                    if new_ts2 not in bad_t2:
+                        self.learner.wm.ts2 = TChunk(new_ts2)
+                    
+                    
         elif self.learner.wm.ts1.is_consistent():
             reduced_type = self.learner.wm.ts1.reduce()
-            if reduced_type.is_expecting_after() and self.learner.wm.ts2.has_empty_elements():
-                print('This case applies')
-                new_ts2 = Type(reduced_type.right_type())
-                # Here, I also need to check that new_ts2 is not bad for s2!
-                bad_t2 = self.extract_bad_types(pair.s2)
-                if new_ts2 not in bad_t2:
-                    self.learner.wm.ts2 = TChunk(new_ts2)
-        elif not self.learner.wm.ts2.has_empty_elements() and self.learner.wm.ts2.structure.is_expecting_before() and self.learner.wm.ts1.has_empty_elements():
-            #print('Retyping complex s1 when s2 expects before and s1 badly typed')
-            new_ts1 = Type(self.learner.wm.ts2.structure.left_type())
-            #print(f"Expected type is {new_ts1}")
-            # s1 complex and not well-typed and s2 expecting before, should retype the complex s1...
-            leaf_types = self.infer_leaf_types(pair.s1, new_ts1)
-            #print(f"The list of types at the leaves are: {leaf_types}")
-            responses = self.learner.wm.get_responses()
-            self.learner.wm.ts1 = TChunk.from_list_and_responses(leaf_types, responses)
+            if self.learner.wm.ts2.has_empty_elements():
+                if reduced_type.is_expecting_after(): 
+                    print('This case applies')
+                    new_ts2 = Type(reduced_type.right_type())
+                    # Here, I also need to check that new_ts2 is not bad for s2!
+                    bad_t2 = self.extract_bad_types(pair.s2)
+                    if new_ts2 not in bad_t2:
+                        self.learner.wm.ts2 = TChunk(new_ts2)
+                elif not reduced_type.is_expecting_after() and not self.learner.wm.ts2.structure.is_sentence() : 
+                    new_ts2 = Type.SENTENCE
+                    print("new ts2 pre split", new_ts2, "reduced t1", reduced_type)
+                    [_,new_ts2] = new_ts2.split(pu=1,prim=reduced_type)
+                    print("new ts2 post split", new_ts2)
+                    if new_ts2 not in bad_t2:
+                        self.learner.wm.ts2 = TChunk(new_ts2)
+                    
+        elif not self.learner.wm.ts2.has_empty_elements() and self.learner.wm.ts1.has_empty_elements():
+            if self.learner.wm.ts2.structure.is_expecting_before(): 
+                #print('Retyping complex s1 when s2 expects before and s1 badly typed')
+                new_ts1 = Type(self.learner.wm.ts2.structure.left_type())
+                #print(f"Expected type is {new_ts1}")
+                # s1 complex and not well-typed and s2 expecting before, should retype the complex s1...
+                leaf_types = self.infer_leaf_types(pair.s1, new_ts1)
+                #print(f"The list of types at the leaves are: {leaf_types}")
+                responses = self.learner.wm.get_responses()
+                self.learner.wm.ts1 = TChunk.from_list_and_responses(leaf_types, responses)
+            elif not self.learner.wm.ts2.structure.is_expecting_before() and not self.learner.wm.ts2.structure.is_sentence():
+                t2_head = self.learner.wm.ts2.structure
+                # while t2_head.is_expecting_after:
+                #     t2_head_l = Type(t2_head.left_type())
+                #     t2_head = t2_head_l + t2_head
+                #still to do: fix that complex s1 should expect s2 and become a sentence with it
+                
             
                 
         #elif ts1 is not consistent but there are expectations lower down the structure?
