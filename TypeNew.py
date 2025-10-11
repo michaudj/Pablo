@@ -815,7 +815,7 @@ class ChunkTree:
 #           Tests
 #
 ###############################################################################
-tests = False
+tests = True
 
 v1 = VChunk(2.)
 v2 = VChunk(3.)
@@ -953,6 +953,14 @@ if tests:
     tc3 = TChunk(Type('0u0u1'))
     tc4 = TChunk(Type('1u0o1o1'))
     
+    tc0a = TChunk(Type('0o0'))
+    tc1a = TChunk(Type('0'))
+    tc2a = TChunk(Type('0u0o1'))
+    tc3a = TChunk(Type('1o1'))
+    tc4a = TChunk(Type('1'))
+    t6 = Type('6')
+    to6 = Type('0o6')
+    
     chunk = tc0.chunk_at_depth(tc0,depth=0)
     print(chunk)
     chunk = chunk.chunk_at_depth(tc1,depth=1)
@@ -963,9 +971,11 @@ if tests:
     print(chunk)
     chunk = chunk.chunk_at_depth(tc4,depth=2)
     print(chunk)
+    
     print(chunk.reduce())
-    new_tchunk = chunk.retype_root(Type('6'),[1,1,2,2,1])
+    new_tchunk = chunk.retype_root(to6,[1,1,2,2,1])
     print(new_tchunk)
+    print(new_tchunk.reduce())
     #print(new_tchunk)
     #print(types[0].split())
     #print(types[1].split())

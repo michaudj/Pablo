@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+  # -*- coding: utf-8 -*-
 """
 Created on Wed Apr 30 13:18:18 2025
 
@@ -238,7 +238,7 @@ class LearningHistory:
     success: List[int] = field(default_factory=list)
     sent_len: List[int] = field(default_factory=list)
 
-    def record(self, success_value: int, length: int, verbose=False):
+    def record(self, success_value: int, length: int, verbose=True):
         self.success.append(success_value)
         self.sent_len.append(length)
         if verbose:
@@ -378,7 +378,7 @@ class WorkingMemory():
   
         return new_s1, s2_index
     
-    def respond_with_type(self,stimuli_stream,s1,s2_index,reinforcement = True,verbose=False):
+    def respond_with_type(self,stimuli_stream,s1,s2_index,reinforcement = True,verbose=True):
         # get the s2 stimuli and make it a chunk
         try:
             s2 = SChunk(stimuli_stream.read_stimuli(s2_index))
@@ -389,7 +389,7 @@ class WorkingMemory():
         
         if verbose:
             print("pair",pair)
-            print("types before assign, 1: " ,self.learner.wm.ts1)
+            print("type 1 before assign: " ,self.learner.wm.ts1)
         self.learner.ltm.update_repertoire(pair)
         
         self.type_assigner.assign_type2(pair) # self.ts1 is a TChunk, while ts2 is a TChunk 
@@ -411,9 +411,9 @@ class WorkingMemory():
         #print(self.get_responses())
         
         if verbose:
-            # print("ts1",self.ts1)
+            print("ts1",self.ts1)
             print("ts1 consistency =",self.ts1.is_consistent())
-            print(self.get_responses())
+           # print(self.get_responses())
             print("ts2",self.ts2)
             if response == 0:
                 print('border')
@@ -432,7 +432,7 @@ class WorkingMemory():
             
             if self.is_border_correct(stimuli_stream,s2_index):
                 reward = self.pos
-                self.learner.history.record(1,sent_length,verbose=False)
+                self.learner.history.record(1,sent_length,verbose=True)
                 if reinforcement:
                     self.reinforcer.reinforce2(self.events,reward)
                     if not self.typing_used:
@@ -446,7 +446,7 @@ class WorkingMemory():
                         self.reinforcer.reinforce_types(self.typing_events,reward)
             else:
                 reward = self.neg
-                self.learner.history.record(0,sent_length,verbose=False)
+                self.learner.history.record(0,sent_length,verbose=True)
                 if reinforcement:
                     self.reinforcer.reinforce2(self.events,reward)
                     if self.typing_used and self.ts1.reduce() == Type.SENTENCE:
@@ -817,11 +817,13 @@ class TypeAssigner():
                         self.learner.wm.ts1 = TChunk(choice)
                     else:
                         self.learner.wm.ts1 = TChunk(Type.EMPTY)
+        print("types after first assignment 1: ", self.learner.wm.ts1, "2: ",self.learner.wm.ts2) #ta bort sen
                    
         self.fill_empty_types(pair)
+        print("types after fill empty types 1: ", self.learner.wm.ts1, "2: ",self.learner.wm.ts2) #ta bort sen
         
         self.correct_typings2(pair)
-            
+        print("types after correct typings 1: ", self.learner.wm.ts1, "2: ",self.learner.wm.ts2)   #ta bort sen 
 
     
     def assign_type(self, pair: ChunkPair):
@@ -955,13 +957,19 @@ class TypeAssigner():
                 responses = self.learner.wm.get_responses()
                 self.learner.wm.ts1 = TChunk.from_list_and_responses(leaf_types, responses)
             elif not self.learner.wm.ts2.structure.is_expecting_before() and not self.learner.wm.ts2.structure.is_sentence():
-                t2_head = self.learner.wm.ts2.structure
-                # while t2_head.is_expecting_after:
-                #     t2_head_l = Type(t2_head.left_type())
-                #     t2_head = t2_head_l + t2_head
-                #still to do: fix that complex s1 should expect s2 and become a sentence with it
+                #s1 should expect head of s2 and reduce to sentence with it
+                print ("fill compound empty type 1 to expect t2 head") #ta bort sen
+                t2_head = Type(self.learner.wm.ts2.structure.left_type())
+                #while t2_head.is_expecting_after:
+                #    t2_head_r = Type(t2_head.right_type())
+                #    t2_head = t2_head + t2_head_r
+                new_ts1 = Type.SENTENCE    
+                [new_ts1,_] = new_ts1.split(pu=0,prim=t2_head)
+                leaf_types = self.infer_leaf_types(pair.s1, new_ts1)
+                responses = self.learner.wm.get_responses() 
+                self.learner.wm.ts1 = TChunk.from_list_and_responses(leaf_types, responses)
+                print("filled compound type 1 ",new_ts1 )
                 
-            
                 
         #elif ts1 is not consistent but there are expectations lower down the structure?
         #else ts1 inconsistent and no expectations, if ts2 is expecting before, it should type s1 using a similar procedure than when a sentence is typed for the first time...
@@ -1291,7 +1299,7 @@ class TypeAssigner():
                            self.learner.wm.ts1 = self.learner.wm.ts1.retype_root(t2_l,self.learner.wm.get_responses())
                                            
                elif reduced_type.is_expecting_after() and t2.is_expecting_before():
-                   # print("both sides expecting")
+                   print("t1 complex, both sides expecting")
                    # retype here
                    #self.learner.ltm.update_chunk_type_associations(pair.s1, t1)
                    self.learner.ltm.update_chunk_type_associations(pair.s2, t2)
@@ -1323,16 +1331,19 @@ class TypeAssigner():
                    reduced_t2 = t2_l+t2
                    if reduced_t2.is_expecting_before():
                        dominant_side = "s1"    
-                   # print("dominant side" , dominant_side)
+                   print("dominant side" , dominant_side)
                    if dominant_side == "s1" and not t1_r in bad_t2:
                         t2=t1_r
                         #self.learner.wm.ts1 = TChunk(reduced_type)
                         self.learner.wm.ts2 = TChunk(t2)
+                        print("corrected t2: ",self.learner.wm.ts2)
                    elif dominant_side == "s2": # and not t2_l in bad_t1:
                        #here the expectation of s2 should be assigned as the head of s1. 
                        #s1 is axepectring, does not reduce to a primitive, cannot use retype root?
-                       self.learner.wm.ts1 = self.learner.wm.ts1.retype_root(t2_l,self.learner.wm.get_responses())
-                       #leaf_types = self.infer_leaf_types(pair.s1, t2_l)
+                        self.learner.wm.ts1 = self.learner.wm.ts1.retype_root(t2_l,self.learner.wm.get_responses())
+                        print("input retype root: ",t2_l)
+                        print("corrected t1: ",self.learner.wm.ts1)
+                        #leaf_types = self.infer_leaf_types(pair.s1, t2_l)
                        #print(f"The list of types at the leaves are: {leaf_types}")
                        #responses = self.learner.wm.get_responses()
                        #print(leaf_types, responses)
@@ -1545,7 +1556,7 @@ class Learner():
         while self.n_reinf <= self.n_trials:
             if not self.chaining:
                 if self.type_on:
-                    s1, s2_index = self.wm.respond_with_type(stimuli_stream, s1, s2_index,verbose=False)
+                    s1, s2_index = self.wm.respond_with_type(stimuli_stream, s1, s2_index,verbose=True)
                 else:
                     s1, s2_index = self.wm.respond(stimuli_stream, s1, s2_index)
             else:
