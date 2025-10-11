@@ -1252,7 +1252,9 @@ class TypeAssigner():
                                # print(f'Retype to new_ts1 {new_t1} and t2 {t2}')
                                self.learner.wm.ts1 = self.learner.wm.ts1.retype_root(new_t1,self.learner.wm.get_responses())
                                #self.learner.wm.ts1 = self.learner.wm.ts1.retype_expectation(t2,self.learner.wm.get_responses())
-                               # print("final ts1", self.learner.wm.ts1)
+                               # print("final ts1", self.learner.wm.ts1)                                                             
+                               if self.learner.wm.ts1.reduce() != new_t1:
+                                   print("error in retype root")
                        else:
                            self.learner.wm.ts2 = TChunk(rt_r)
                elif not reduced_type.is_expecting_after() and t2.is_expecting_before():
@@ -1297,7 +1299,8 @@ class TypeAssigner():
                            # self.learner.wm.ts1 = TChunk(t1)
                        else:
                            self.learner.wm.ts1 = self.learner.wm.ts1.retype_root(t2_l,self.learner.wm.get_responses())
-                                           
+                           if self.learner.wm.ts1.reduce() != t2_l:
+                              print("error in retype root")                   
                elif reduced_type.is_expecting_after() and t2.is_expecting_before():
                    print("t1 complex, both sides expecting")
                    # retype here
@@ -1341,8 +1344,9 @@ class TypeAssigner():
                        #here the expectation of s2 should be assigned as the head of s1. 
                        #s1 is axepectring, does not reduce to a primitive, cannot use retype root?
                         self.learner.wm.ts1 = self.learner.wm.ts1.retype_root(t2_l,self.learner.wm.get_responses())
-                        print("input retype root: ",t2_l)
-                        print("corrected t1: ",self.learner.wm.ts1)
+                        if self.learner.wm.ts1.reduce() != t2_l:
+                           print("error in retype root")
+                        
                         #leaf_types = self.infer_leaf_types(pair.s1, t2_l)
                        #print(f"The list of types at the leaves are: {leaf_types}")
                        #responses = self.learner.wm.get_responses()
