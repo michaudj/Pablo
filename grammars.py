@@ -239,7 +239,7 @@ def create_stimuli_rel(n_sentences=10_000_000):
     weightsYP = {
         'S': [1.0],
         'NP': [1.],
-        'VP': [.3,.2,.3,.2],
+        'VP': [.4,.2,.3,.1],
         'AP': [.5,.5 ],
         'PP': [1.0],
         # 'N': [1/number_of_nouns for i in range(1, number_of_nouns+1)],
@@ -248,7 +248,7 @@ def create_stimuli_rel(n_sentences=10_000_000):
         'A': [1/number_of_adj for i in range(1, number_of_adj+1)],
         'D': [1/number_of_det for i in range(1, number_of_det+1)],
         'P': [1/number_of_prep for i in range(1, number_of_prep+1)],
-        'rel': relweight,#[1/number_of_relpron for i in range(1, number_of_relpron+1)],
+        'rel': [1/number_of_relpron for i in range(1, number_of_relpron+1)],
         'MV': mvweight,#[1/number_of_monotransitive_verbs for i in range(1, number_of_monotransitive_verbs+1)],
         'DV': dvweight,#[1/number_of_ditransitive_verbs for i in range(1, number_of_ditransitive_verbs+1)]
         }

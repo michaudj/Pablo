@@ -901,15 +901,15 @@ class TypeAssigner():
                     if new_ts1 not in bad_t1:
                         self.learner.wm.ts1 = TChunk(new_ts1)
                 elif not self.learner.wm.ts2.structure.is_expecting_before and not self.learner.wm.ts2.structure.is_sentence():
-                    t2_head = self.learner.wm.ts2.structure
-                    while t2_head.is_expecting_after:
-                        t2_head_l = Type(t2_head.left_type())
-                        t2_head = t2_head_l + t2_head
-                    new_ts1 = Type.SENTENCE
-                    print("new ts1 pre split", new_ts1, "t2 head", t2_head)
-                    [new_ts1,_] = new_ts1.split(pu=0,prim=t2_head)
-                    print("new ts1 post split", new_ts1)
-                    if new_ts1 not in bad_t1:
+                    t2_head = Type(self.learner.wm.ts2.structure.left_type()) # what if t2_head is a sentence?????
+                    # while t2_head.is_expecting_after:
+                    #     t2_head_l = Type(t2_head.left_type())
+                    #     t2_head = t2_head_l + t2_head
+                    new_ts1 = Type(Type.SENTENCE.FORMULA + 'o' + t2_head.formula)
+                    # print("new ts1 pre split", new_ts1, "t2 head", t2_head)
+                    # [new_ts1,_] = new_ts1.split(pu=0,prim=t2_head)
+                    # print("new ts1 post split", new_ts1)
+                    if new_ts1 not in bad_t1 and not t2_head.is_sentence():
                         self.learner.wm.ts1 = TChunk(new_ts1) #Jerome, jag fattar inte riktigt när man ska tchunka och varför. vi har väl inte o-t-chunkat när vi hämtat den från wm?
 
             elif not self.learner.wm.ts1.has_empty_elements() and self.learner.wm.ts2.has_empty_elements(): 
@@ -919,17 +919,20 @@ class TypeAssigner():
                     new_ts2 = Type(self.learner.wm.ts1.structure.right_type())
                     if new_ts2 not in bad_t2:
                         self.learner.wm.ts2 = TChunk(new_ts2)
-                elif not self.learner.wm.ts1.structure.is_expecting_after() and not self.learner.wm.ts1.structure.is_sentence():
-                    new_ts2 = Type.SENTENCE
-                    print("new ts2 pre split", new_ts2, "t1", self.learner.wm.ts1.structure)
-                    [_,new_ts2] = new_ts2.split(pu=1,prim=self.learner.wm.ts1.structure)
-                    print("new ts2 post split", new_ts2)
+                elif not self.learner.wm.ts1.structure.is_sentence() and not self.learner.wm.ts1.structure.is_expecting_before():
+                    new_ts2 = Type(self.learner.wm.ts1.structure.formula+'u'+Type.SENTENCE.formula)
+                    # print("new ts2 pre split", new_ts2, "t1", self.learner.wm.ts1.structure)
+                    # [_,new_ts2] = new_ts2.split(pu=1,prim=self.learner.wm.ts1.structure)
+                    # print("new ts2 post split", new_ts2)
                     if new_ts2 not in bad_t2:
                         self.learner.wm.ts2 = TChunk(new_ts2)
                     
                     
         elif self.learner.wm.ts1.is_consistent():
             reduced_type = self.learner.wm.ts1.reduce()
+            if reduced_type.is_expecting_before():
+                print('bad s1')
+                sys.exit('bad complex s1')
             if self.learner.wm.ts2.has_empty_elements():
                 if reduced_type.is_expecting_after(): 
                     print('This case applies')
@@ -938,11 +941,11 @@ class TypeAssigner():
                     bad_t2 = self.extract_bad_types(pair.s2)
                     if new_ts2 not in bad_t2:
                         self.learner.wm.ts2 = TChunk(new_ts2)
-                elif not reduced_type.is_expecting_after() and not self.learner.wm.ts2.structure.is_sentence() : 
-                    new_ts2 = Type.SENTENCE
-                    print("new ts2 pre split", new_ts2, "reduced t1", reduced_type)
-                    [_,new_ts2] = new_ts2.split(pu=1,prim=reduced_type)
-                    print("new ts2 post split", new_ts2)
+                elif not reduced_type.is_expecting_after() and not reduced_type.is_sentence() : 
+                    new_ts2 = Type(reduced_type.formula + 'u' + Type.SENTENCE.formula)
+                    # print("new ts2 pre split", new_ts2, "reduced t1", reduced_type)
+                    # [_,new_ts2] = new_ts2.split(pu=1,prim=reduced_type)
+                    # print("new ts2 post split", new_ts2)
                     if new_ts2 not in bad_t2:
                         self.learner.wm.ts2 = TChunk(new_ts2)
                     
@@ -956,19 +959,21 @@ class TypeAssigner():
                 #print(f"The list of types at the leaves are: {leaf_types}")
                 responses = self.learner.wm.get_responses()
                 self.learner.wm.ts1 = TChunk.from_list_and_responses(leaf_types, responses)
-            elif not self.learner.wm.ts2.structure.is_expecting_before() and not self.learner.wm.ts2.structure.is_sentence():
+            elif not self.learner.wm.ts2.structure.is_expecting_before():
                 #s1 should expect head of s2 and reduce to sentence with it
                 print ("fill compound empty type 1 to expect t2 head") #ta bort sen
                 t2_head = Type(self.learner.wm.ts2.structure.left_type())
                 #while t2_head.is_expecting_after:
                 #    t2_head_r = Type(t2_head.right_type())
                 #    t2_head = t2_head + t2_head_r
-                new_ts1 = Type.SENTENCE    
-                [new_ts1,_] = new_ts1.split(pu=0,prim=t2_head)
-                leaf_types = self.infer_leaf_types(pair.s1, new_ts1)
-                responses = self.learner.wm.get_responses() 
-                self.learner.wm.ts1 = TChunk.from_list_and_responses(leaf_types, responses)
-                print("filled compound type 1 ",new_ts1 )
+                new_ts1 = Type(Type.SENTENCE.formula + 'o' + Type.SENTENCE.formula)    
+                # [new_ts1,_] = new_ts1.split(pu=0,prim=t2_head)
+                 
+                if not t2_head.is_sentence():
+                    leaf_types = self.infer_leaf_types(pair.s1, new_ts1)
+                    responses = self.learner.wm.get_responses()
+                    self.learner.wm.ts1 = TChunk.from_list_and_responses(leaf_types, responses)
+                    print("filled compound type 1 ",new_ts1 )
                 
                 
         #elif ts1 is not consistent but there are expectations lower down the structure?
@@ -1008,7 +1013,7 @@ class TypeAssigner():
                             new_t1 = t1 + t1_r
                             [new_t1,t2] = new_t1.split(pu=0,prim=t2)
                             self.learner.wm.ts1 = TChunk(new_t1)
-                            self.learner.wm.ts2 = TChunk(t2)
+                            #self.learner.wm.ts2 = TChunk(t2)
                         else:
                             self.learner.wm.ts2 = TChunk(t1_r)
                         # retype here
@@ -1030,7 +1035,7 @@ class TypeAssigner():
                             new_t2 = t2_l+t2
                             [t1,new_t2] = new_t2.split(pu=1,prim=t1)
                             self.learner.wm.ts2 = TChunk(new_t2)
-                            self.learner.wm.ts1 = TChunk(t1)
+                            #self.learner.wm.ts1 = TChunk(t1)
                         else:
                             self.learner.wm.ts1 = TChunk(t2_l)
                             # print(t1)
@@ -1058,8 +1063,9 @@ class TypeAssigner():
                         # print(f'ts1 is {self.learner.wm.ts1} and ts2 is {self.learner.wm.ts2}')
                         if t2.is_primitive():# and len(pair.s1) <=2:
                             # print(f't2 {t2} is a primitive type')
-                            
-                            self.learner.wm.ts1 = self.learner.wm.ts1.retype_expectation(t2,self.learner.wm.get_responses())
+                            new_reduced = Type(reduced_type.formula + 'o' + t2.formula)
+                            self.learner.wm.ts1 = self.learner.wm.ts1.retype_root(new_reduced,self.learner.wm.get_responses())
+                            # self.learner.wm.ts1 = self.learner.wm.ts1.retype_expectation(t2,self.learner.wm.get_responses())
                             # print(f'ts1 consistent after changing expectation: {self.learner.wm.ts1.is_consistent()}')
 
                         # print('retyping')
@@ -1103,9 +1109,9 @@ class TypeAssigner():
                        if t1_r in bad_t2 or dominant_side == "s2": # or t1_r has not been used for that element
                            # print('Should retype expectation')
                            new_t1 = t1 + t1_r
-                           [new_t1,t2] = new_t1.split(pu=0,prim=t2)
+                           [new_t1,t2] = new_t1.split(pu=0,prim=Type(t2.left_type()))
                            self.learner.wm.ts1 = TChunk(new_t1)
-                           self.learner.wm.ts2 = TChunk(t2)
+                           # self.learner.wm.ts2 = TChunk(t2)
                        else:
                            self.learner.wm.ts2 = TChunk(t1_r)
                            
@@ -1154,13 +1160,13 @@ class TypeAssigner():
                                new_t2 = t2_l + new_t2
                            [t1,new_t2] = new_t2.split(pu=1,prim=t1) #adds new expectation to t2 via split
                            self.learner.wm.ts2 = TChunk(new_t2)
-                           self.learner.wm.ts1 = TChunk(t1)
+                           #self.learner.wm.ts1 = TChunk(t1)
                            
                        else: #means none of conditions t2_l in bad t1 or dominant side is s1, i.e. dominant side is s2 do it should assign its expectation to t1. done already below.
                            self.learner.wm.ts1 = TChunk(t2_l)
-                   else:
-                       pass
-                       # if t1+t2 check if expecting before retype t2
+                   # else:
+                   #     pass
+                   #     # if t1+t2 check if expecting before retype t2
                         
                 
                            

@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 import sys
 
 # Open a plain text file for writing (overwrites existing content)
-sys.stdout = open(r'C:\Users\anjo1309\Dropbox\Dokument\output4october.txt', 'w')
+sys.stdout = open(r'C:\Users\jmd01\Documents\GitHub\Pablo\output.txt', 'w')
 
 
 
@@ -23,7 +23,7 @@ sys.stdout = open(r'C:\Users\anjo1309\Dropbox\Dokument\output4october.txt', 'w')
 # Consider using the typatory to keep the number of types to a minimum.
 
 
-n_trial = 80000
+n_trial = 60000
 alpha = 0.1
 alpha_v = 1
 beta = 1.

@@ -149,7 +149,7 @@ class Type:
         num_expectations = 0
         expected_types = []
         if not self.is_expecting_before():
-            return num_expectations, expected_types
+            return num_expectations, expected_types, self
         else:
             num_expectations += 1
             left_type = Type(self.left_type())
@@ -161,6 +161,53 @@ class Type:
                 num_expectations += 1 
                 expected_types.append(left_type)
         return num_expectations, expected_types, reduced_type
+    
+    def number_of_following_expectations(self):
+        num_expectations = 0
+        expected_types = []
+        if not self.is_expecting_after():
+            return num_expectations, expected_types, self
+        else:
+            num_expectations += 1
+            right_type = Type(self.right_type())
+            expected_types.append(right_type)
+            reduced_type = self + right_type
+            while reduced_type.is_expecting_after():
+                right_type = Type(reduced_type.right_type())
+                reduced_type = reduced_type + right_type
+                num_expectations += 1 
+                expected_types.append(right_type)
+        return num_expectations, expected_types, reduced_type
+    
+    def get_decomposition(self):
+        num_previous_expectations, list_of_expected_before, reduced_type = self.number_of_previous_expectations()
+        num_following_expectations, list_of_expected_after, root = reduced_type.number_of_following_expectations()
+        return list_of_expected_before, root, list_of_expected_after
+    
+    @staticmethod
+    def from_decomposition(decomposition):
+        p_expectations, root, f_expectations = decomposition
+        formula = root.formula
+        for t in p_expectations[::-1]:
+            formula = t.formula+'u'+formula
+        for t in f_expectations[::-1]:
+            formula = formula + 'o' + t.formula
+        return Type(formula)
+    
+    def differ_by_root(self,other):
+        decomp = self.get_decomposition()
+        other_decomp = other.get_decomposition()
+        return decomp[0] == other_decomp[0] and decomp[2] == other_decomp[2] and not decomp[1] == other_decomp[1]
+    
+    def differ_by_last_expectation(self,other):
+        decomp = self.get_decomposition()
+        other_decomp = other.get_decomposition()
+        if decomp[0] == other_decomp[0] and decomp[1] == other_decomp[1] and decomp[2][1:] == other_decomp[2][1:]:
+            return not decomp[2][0] == other_decomp[2][0]
+        else:
+            return False
+            
+        
             
     
     def __len__(self):
@@ -557,21 +604,41 @@ class TChunk():
             # print(f'the chosen type is {typ}')
             return typ, path
         
+        # print('-------------')
         reduced_type = self.reduce()
-        # print(self)
+        reduced_decomp = reduced_type.get_decomposition()
+        typ_decomp = typ.get_decomposition()
+        # print(typ_decomp)
+        
+        same_root = reduced_decomp[1] == typ_decomp[1]
+        # print(same_root)
+        
+        # same_num_f_expectations = len(reduced_decomp[2])==len(typ_decomp[2])
+        # same_num_p_expectations = len(reduced_decomp[0])==len(typ_decomp[0])
+        
+        
+        # get the right subchunk
         rc = self.get_right_subchunks(1)[1]
         trc= rc.reduce()
-        # print(f'trc is {trc}')
+        # print(trc.get_decomposition())
+        
+        # get the left subchunk
         lc = self.get_left_subchunks(1)[1]
         tlc = lc.reduce()
+        # print(tlc.get_decomposition())
+
+
+        
         # print(f'tlc is {tlc}')
-        if tlc.is_expecting_after() and not trc.is_expecting_before():
+        if tlc.is_expecting_after() and not trc.is_expecting_before() and tlc.differ_by_root(typ):
             path.append(0)
-            # print('left type expecting')
-            # print(f'right type {trc} not changed')
-            # print(f'left type {tlc} should be changed')
-            # print(typ)
-            
+                # print('left type expecting')
+                # print('problem here')
+                # print(f'right type {trc} not changed')
+                # print(f'left type {tlc} should be changed')
+                # print(typ)
+                
+                
             while typ.right_type() == trc.right_type():
                 if typ.is_expecting_after() and trc.is_expecting_after():
                     # print('Need to remove expectation for the type propagating on the left')
@@ -579,18 +646,28 @@ class TChunk():
                     trc = trc + Type(trc.right_type())
                 else:
                     break
-             
-            
+                 
+                
             new_left_type = Type(typ.formula+'o'+trc.left_type())
+            # add safety check !!
             # print(new_left_type)
             return lc.get_new_type_and_path(new_left_type,path=path)
-        elif not tlc.is_expecting_after() and trc.is_expecting_before():
+        elif tlc.is_expecting_after() and not trc.is_expecting_before() and not tlc.differ_by_root(typ):
             path.append(1)
-            # print('right type expecting')
-            # print(f'left type {tlc} not changed')
-            # print(f'right type {trc} should be changed')
-            # print(typ)
+            right_decomposition = trc.get_decomposition()
+            index = len(right_decomposition[2])-1
+            new_decomposition = ([], right_decomposition[1],typ_decomp[2][:-index])
+            new_right_type = Type.from_decomposition(new_decomposition)
+            return rc.get_new_type_and_path(new_right_type,path=path)
+
             
+        elif not tlc.is_expecting_after() and trc.is_expecting_before() and trc.differ_by_root(typ):
+            path.append(1)
+                # print('right type expecting')
+                # print(f'left type {tlc} not changed')
+                # print(f'right type {trc} should be changed')
+                # print(typ)
+                
             while typ.left_type() == tlc.left_type():
                 if typ.is_expecting_before() and tlc.is_expecting_before():
                     # print('Need to remove expectation for the type propagating on the right')
@@ -598,12 +675,20 @@ class TChunk():
                     tlc = Type(tlc.left_type()) + tlc
                 else:
                     break
-                    
+                        
             new_right_type = Type(tlc.right_type()+'u'+typ.formula)
             # print(new_right_type)
             return rc.get_new_type_and_path(new_right_type,path=path)
+        elif not tlc.is_expecting_after() and trc.is_expecting_before() and not trc.differ_by_root(typ):
+            path.append(0)
+            left_decomposition = tlc.get_decomposition()
+            index = len(left_decomposition[0])-1
+            new_decomposition = (typ_decomp[0][:-index], left_decomposition[1],[])
+            new_left_type = Type.from_decomposition(new_decomposition)
+            return lc.get_new_type_and_path(new_left_type,path=path)
         else:
             print('problem here')
+
 
             
         
@@ -637,6 +722,13 @@ class TChunk():
         print('start retyping')
         if self.is_consistent():
             # print(self.reduce())
+            reduced_type = self.reduce()
+            # if reduced_type.differ_by_root(typ):
+            #     print('Root retyping')
+            # elif reduced_type.differ_by_last_expectation(typ):
+            #     print('Expectation change')
+            # else:
+            #     print('Changing potentially too much!!! work with care!!')
             new_type,path = self.get_new_type_and_path(typ,path=[])
             index = self.path_to_index(path)
             # print(new_type)
@@ -961,24 +1053,47 @@ if tests:
     t6 = Type('6')
     to6 = Type('0o6')
     
+    print('testing retyping')
+    
     chunk = tc0.chunk_at_depth(tc0,depth=0)
-    print(chunk)
+    # print(chunk)
     chunk = chunk.chunk_at_depth(tc1,depth=1)
-    print(chunk)
+    # print(chunk)
     chunk = chunk.chunk_at_depth(tc2,depth=1)
-    print(chunk)
+    # print(chunk)
     chunk = chunk.chunk_at_depth(tc3,depth=1)
-    print(chunk)
+    # print(chunk)
     chunk = chunk.chunk_at_depth(tc4,depth=2)
     print(chunk)
     
     print(chunk.reduce())
-    new_tchunk = chunk.retype_root(to6,[1,1,2,2,1])
+    new_tchunk = chunk.retype_root(Type('0o1o2'),[1,1,2,2,1])
     print(new_tchunk)
     print(new_tchunk.reduce())
     #print(new_tchunk)
     #print(types[0].split())
     #print(types[1].split())
+    
+    print('--------------')
+    
+    chunk = tc0a.chunk_at_depth(tc0a)
+    print(chunk)
+    chunk = chunk.chunk_at_depth(tc1a,depth=1)
+    print(chunk)
+    chunk = chunk.chunk_at_depth(tc2a,depth=1)
+    print(chunk)
+    print(chunk.reduce())
+    new_chunk = chunk.retype_root(Type('0o2'),[1,1,2])
+    print(new_chunk)
+    print(new_chunk.reduce())
+    
+    t1 = TChunk(Type('1u2u3'))
+    t2 = TChunk(Type('3u4u5'))
+    chunk = t1.chunk_at_depth(t2)
+    print(chunk)
+    print(chunk.reduce())
+    new_chunk = chunk.retype_root(Type('7u8u7u6'),[1])
+    print(new_chunk)
     
     # #result = reduce_types([t1,t3, t2,t5, t4,t3])
     # #print(result)  # prints "a\\b\\c\\d"
