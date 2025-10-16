@@ -907,7 +907,7 @@ class ChunkTree:
 #           Tests
 #
 ###############################################################################
-tests = True
+tests = False
 
 v1 = VChunk(2.)
 v2 = VChunk(3.)

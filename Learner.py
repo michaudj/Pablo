@@ -150,7 +150,7 @@ class LongTermMemory():
         elements_to_clean = []
         for c in self.chunk_type_associations:
             for t in self.chunk_type_associations[c]:
-                if np.abs(self.chunk_type_associations[c][t]) < 0.5:
+                if np.abs(self.chunk_type_associations[c][t]) < 0.1:
                     elements_to_clean.append((c,t))
                     
         for (c,t) in elements_to_clean:
@@ -966,7 +966,7 @@ class TypeAssigner():
                 #while t2_head.is_expecting_after:
                 #    t2_head_r = Type(t2_head.right_type())
                 #    t2_head = t2_head + t2_head_r
-                new_ts1 = Type(Type.SENTENCE.formula + 'o' + Type.SENTENCE.formula)    
+                new_ts1 = Type(Type.SENTENCE.formula + 'o' + t2_head.formula)    
                 # [new_ts1,_] = new_ts1.split(pu=0,prim=t2_head)
                  
                 if not t2_head.is_sentence():
