@@ -1346,8 +1346,11 @@ class TypeAssigner():
                    elif dominant_side == "s2": # and not t2_l in bad_t1:
                        #here the expectation of s2 should be assigned as the head of s1. 
                        #s1 is axepectring, does not reduce to a primitive, cannot use retype root?
-                        self.learner.wm.ts1 = self.learner.wm.ts1.retype_root(t2_l,self.learner.wm.get_responses())
-                        print("input retype root: ",t2_l)
+                        leaf_types = self.infer_leaf_types(pair.s1, t2_l)
+                        responses = self.learner.wm.get_responses()
+                        self.learner.wm.ts1 = TChunk.from_list_and_responses(leaf_types, responses)
+                        #self.learner.wm.ts1 = self.learner.wm.ts1.retype_root(t2_l,self.learner.wm.get_responses())
+                        #print("input retype root: ",t2_l)
                         print("corrected t1: ",self.learner.wm.ts1)
                         #leaf_types = self.infer_leaf_types(pair.s1, t2_l)
                        #print(f"The list of types at the leaves are: {leaf_types}")
@@ -1363,38 +1366,45 @@ class TypeAssigner():
                     flattened_t1 = full_t1.remove_structure2()  
                     # print("flat list",flattened_t1)
                     max_reduced_t1 = Type.reduce(flattened_t1) 
-                    values_ts1 = []
-                    flat_s1 = pair.s1.flatten_structure()
-                    for i in range(len(flattened_t1)):
-                        self.learner.ltm.update_chunk_type_associations(flat_s1[i], flattened_t1[i])
-                        values_ts1.append(self.learner.ltm.chunk_type_associations[flat_s1[i]] [flattened_t1[i]])
-                        value_ts1 = sum(values_ts1)/len(values_ts1)
-                    self.learner.ltm.update_chunk_type_associations(pair.s2, t2)                   
-                    value_ts2 = self.learner.ltm.chunk_type_associations[pair.s2][t2]
-                    candidates = {'s1': value_ts1,'s2': value_ts2}
-                    dominant_side = softmax_choice(candidates, tau=self.tau)
-                    t2_l= Type(t2.left_type())
-                    reduced_t2 = t2_l+t2
-                    if reduced_t2.is_expecting_before():
-                        dominant_side = "s1" #temporary solution, in future we should check if number of s2 backwards expectation matches number of elements in max reduced s1
-                    
-                    if dominant_side == "s1":
-                    #first remove all backwards expectations of t2, then add all on max reduced t1
-                        while reduced_t2.is_expecting_before():
-                            reduced_t2_l = Type(reduced_t2.left_type())
-                            reduced_t2 = reduced_t2_l+reduced_t2
-                        formula = reduced_t2.formula
-                        for typ in max_reduced_t1:
-                            formula = typ.formula + 'u' + formula
-                        t2 = Type(formula)
-                        self.learner.wm.ts2 = TChunk(t2)
-                    elif dominant_side == "s2":
-                        # print("s2 is expecting one before and this will be assigned to the inconsistent t1")
-                        leaf_types = self.infer_leaf_types(pair.s1, t2_l)
-                        #print(f"The list of types at the leaves are: {leaf_types}")
-                        responses = self.learner.wm.get_responses()
-                        self.learner.wm.ts1 = TChunk.from_list_and_responses(leaf_types, responses)#gör original split på s1 med t2l som head, fråga jorpan it is fill empty types
-           
+                    all_primitives = True
+                    for typ in max_reduced_t1:
+                        if not typ.is_primitive():
+                            all_primitives = False
+                            break
+                    if all_primitives:
+                        values_ts1 = []
+                        flat_s1 = pair.s1.flatten_structure()
+                        for i in range(len(flattened_t1)):
+                            self.learner.ltm.update_chunk_type_associations(flat_s1[i], flattened_t1[i])
+                            values_ts1.append(self.learner.ltm.chunk_type_associations[flat_s1[i]] [flattened_t1[i]])
+                            value_ts1 = sum(values_ts1)/len(values_ts1)
+                        self.learner.ltm.update_chunk_type_associations(pair.s2, t2)                   
+                        value_ts2 = self.learner.ltm.chunk_type_associations[pair.s2][t2]
+                        candidates = {'s1': value_ts1,'s2': value_ts2}
+                        dominant_side = softmax_choice(candidates, tau=self.tau)
+                        t2_l= Type(t2.left_type())
+                        reduced_t2 = t2_l+t2
+                        if reduced_t2.is_expecting_before():
+                            dominant_side = "s1" #temporary solution, in future we should check if number of s2 backwards expectation matches number of elements in max reduced s1
+                        
+                        if dominant_side == "s1":
+                        #first remove all backwards expectations of t2, then add all on max reduced t1
+                            while reduced_t2.is_expecting_before():
+                                reduced_t2_l = Type(reduced_t2.left_type())
+                                reduced_t2 = reduced_t2_l+reduced_t2
+                            formula = reduced_t2.formula
+                            for typ in max_reduced_t1:
+                                formula = typ.formula + 'u' + formula
+                            t2 = Type(formula)
+                            self.learner.wm.ts2 = TChunk(t2)
+                        elif dominant_side == "s2":
+                            
+                            # print("s2 is expecting one before and this will be assigned to the inconsistent t1")
+                            leaf_types = self.infer_leaf_types(pair.s1, t2_l)
+                            #print(f"The list of types at the leaves are: {leaf_types}")
+                            responses = self.learner.wm.get_responses()
+                            self.learner.wm.ts1 = TChunk.from_list_and_responses(leaf_types, responses)#gör original split på s1 med t2l som head, fråga jorpan it is fill empty types
+               
 
     def choose_types(self, typ, s1, s2):
         def _compatible_pair(typ, left_candidates, right_candidates):
