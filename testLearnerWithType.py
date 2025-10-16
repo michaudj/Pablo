@@ -13,7 +13,8 @@ import matplotlib.pyplot as plt
 import sys
 
 # Open a plain text file for writing (overwrites existing content)
-sys.stdout = open(r'..\output.txt', 'w')
+orig_stdout = sys.stdout
+sys.stdout = open(r'..\output2.txt', 'w')
 
 
 
@@ -64,15 +65,15 @@ config = LearnerConfig(n_trials=n_trial,
 
 learner_t = Learner(config_t)
 
-learner_t.learn(create_stimuli_rel())
+learner_t.learn(create_stimuliMD())
 ma_t = learner_t.history.plot_moving_average(100)
 
 learner = Learner(config)
 
-learner.learn(create_stimuli_rel())
+learner.learn(create_stimuliMD())
 ma = learner.history.plot_moving_average(100)
 
-
+learner_t.ltm.display_typings_of_elements()
 
 
 plt.figure(figsize=(10, 5))
@@ -84,3 +85,5 @@ plt.ylim((0,1))
 plt.title('Learning Progress: Rel language 10 mono, 1 ditransitive verbs, 20 nouns, 1 rel')
 plt.grid(True)
 plt.legend()
+
+sys.stdout = orig_stdout
