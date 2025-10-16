@@ -65,7 +65,7 @@ config = LearnerConfig(n_trials=n_trial,
 
 learner_t = Learner(config_t)
 
-learner_t.learn(create_stimuliMD())
+learner_t.learn(create_stimuli_rel())
 ma_t = learner_t.history.plot_moving_average(100)
 
 learner = Learner(config)
