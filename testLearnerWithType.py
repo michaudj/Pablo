@@ -14,7 +14,7 @@ import sys
 
 # Open a plain text file for writing (overwrites existing content)
 orig_stdout = sys.stdout
-sys.stdout = open(r'..\output2.txt', 'w')
+# sys.stdout = open(r'..\output2.txt', 'w')
 
 
 
@@ -70,7 +70,7 @@ ma_t = learner_t.history.plot_moving_average(100)
 
 learner = Learner(config)
 
-learner.learn(create_stimuliMD())
+learner.learn(create_stimuli_rel())
 ma = learner.history.plot_moving_average(100)
 
 learner_t.ltm.display_typings_of_elements()

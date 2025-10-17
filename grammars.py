@@ -258,7 +258,7 @@ def create_stimuli_rel(n_sentences=10_000_000):
 
 def create_stimuli_ComplNP(n_sentences=10_000_000):
     number_of_verbs = 1
-    number_of_nouns = 5
+    number_of_nouns = 20
     number_of_adj = 1
     number_of_relpron = 1
     number_of_det = 1
@@ -300,9 +300,9 @@ def create_stimuli_ComplNP(n_sentences=10_000_000):
 
     weightsYP = {
         'S': [1.0],
-        'NP': [.25,.25,.25,.25],
+        'NP': [.75,.25/3,.25/3,.25/3],
         'VP': [.5,.5],
-        'AP': [.75,.25 ],
+        'AP': [.85,.15 ],
         'PP': [1.0],
         'N': [1/number_of_nouns for i in range(1, number_of_nouns+1)],
         'V': [1/number_of_verbs for i in range(1, number_of_verbs+1)],

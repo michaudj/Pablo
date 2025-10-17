@@ -650,7 +650,7 @@ class WorkingMemory():
                 #pass
                 # print('Support for chunking')
                 z[i+1]=right_values[i]
-                # break
+                break
         return z
 
     def get_right_values(self,couple):
