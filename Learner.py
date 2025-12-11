@@ -143,7 +143,8 @@ class LongTermMemory():
         multiplier = 0.999
         for c in self.chunk_type_associations:
             for t in self.chunk_type_associations[c]:
-                self.chunk_type_associations[c][t] *= multiplier
+                if self.chunk_type_associations[c][t] > 0:
+                    self.chunk_type_associations[c][t] *= multiplier
                 
                 
     def clean_chunk_type_associations(self):
@@ -160,6 +161,13 @@ class LongTermMemory():
         for c,d in self.chunk_type_associations.items():
             if len(c) ==1:
                 print(f'The type of {c} are {d}')
+                
+    def display_typings_of_elements2(self):
+        for c,d in self.chunk_type_associations.items():
+            if len(c) ==1:
+                for t,v in d.items():
+                    if v > 0:
+                        print(f'The type of {c} are {t} with value {v}')
             
 
 

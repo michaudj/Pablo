@@ -24,7 +24,7 @@ orig_stdout = sys.stdout
 # Consider using the typatory to keep the number of types to a minimum.
 
 
-n_trial = 60000
+n_trial = 30000
 alpha = 0.1
 alpha_v = 1
 beta = 1.
@@ -41,7 +41,7 @@ config_t = LearnerConfig(n_trials=n_trial,
                        negative_reinforcement = -10,
                        RW=RW,
                        chaining = False,
-                       bad_type_threshold = 0.,
+                       bad_type_threshold = -1.1,
                        good_type_threshold = 4., 
                        tau = 0.1,
                        type_on = True)
@@ -73,6 +73,26 @@ learner = Learner(config)
 learner.learn(create_stimuli_rel())
 ma = learner.history.plot_moving_average(100)
 
+learner_t_MD = Learner(config_t)
+
+learner_t_MD.learn(create_stimuliMD())
+ma_t_MD = learner_t_MD.history.plot_moving_average(100)
+
+learner_MD = Learner(config)
+
+learner_MD.learn(create_stimuliMD())
+ma_MD = learner_MD.history.plot_moving_average(100)
+
+learner_t_NVN = Learner(config_t)
+
+learner_t_NVN.learn(create_stimuliNVN())
+ma_t_NVN = learner_t_NVN.history.plot_moving_average(100)
+
+learner_NVN = Learner(config)
+
+learner_NVN.learn(create_stimuliNVN())
+ma_NVN = learner_NVN.history.plot_moving_average(100)
+
 learner_t.ltm.display_typings_of_elements()
 
 
@@ -82,7 +102,7 @@ plt.plot(ma, label='Without types')
 plt.xlabel('Trial')
 plt.ylabel('Success rate')
 plt.ylim((0,1))
-plt.title('Learning Progress: Rel language 10 mono, 1 ditransitive verbs, 20 nouns, 1 rel')
+plt.title('Learning Progress: Rel language 20 mono, 2 ditransitive verbs, 40 nouns, 2 rel')
 plt.grid(True)
 plt.legend()
 
