@@ -169,7 +169,28 @@ class LongTermMemory():
                     if v > 0:
                         print(f'The type of {c} are {t} with value {v}')
             
-
+    def display_grammar(self):
+        def restructure(data):
+            result = {}
+            for chunk, inner in data.items():
+                if len(chunk)==1:
+                    for typ, value in inner.items():
+                        if value > 0:                         # filter positive values
+                            result.setdefault(typ, {})[chunk] = value
+            return result
+        grammar = restructure(self.chunk_type_associations)
+        for typ, dic in grammar.items():
+            print(typ)
+            values = []
+            chunks = []
+            for c, v in dic.items():
+                values.append(dic[c])
+                chunks.append(c)
+            print(np.mean(values))
+            print(chunks)
+            print(len(chunks))
+        
+        
 
 
     def write_behaviour_repertoire_to_xlsx(self, filename="structured_output.xlsx"):
@@ -252,7 +273,11 @@ class LearningHistory:
         if verbose:
             print('----------------------')
             print("Trial", len(self.success))
-
+            
+    def reset(self):
+        """Reset the learning history."""
+        self.success.clear()
+        self.sent_len.clear()
 
     def plot_moving_average(self, window_size=10, show=True, save_path=None):
         if len(self.success) < window_size:
@@ -433,9 +458,10 @@ class WorkingMemory():
         
         if response == 0: # boundary placement
             self.learner.n_reinf += 1
-            self.learner.ltm.decay_chunk_type_values()
-            if self.learner.n_reinf % 100 == 0:
-                self.learner.ltm.clean_chunk_type_associations()
+            if reinforcement:
+                self.learner.ltm.decay_chunk_type_values()
+                if self.learner.n_reinf % 100 == 0:
+                    self.learner.ltm.clean_chunk_type_associations()
             sent_length = stimuli_stream.length_current_sent(s2_index - 1)
             
             if self.is_border_correct(stimuli_stream,s2_index):
@@ -472,6 +498,8 @@ class WorkingMemory():
             
         
         return new_s1, s2_index
+    
+    
     
     def is_border_correct(self,stimuli_stream,s2_index):
         is_border = stimuli_stream.border_before[s2_index]
@@ -627,6 +655,14 @@ class WorkingMemory():
         list_right_types = self.ts1.right_types()
         t2= self.ts2.structure 
         
+        list_types2 = self.ts2.remove_structure2()
+        list_chunk2 = couple.s2.flatten_structure()
+        list_values2 = []
+        for c,t in zip(list_chunk2,list_types2):
+            self.learner.ltm.update_chunk_type_associations(SChunk(c), t)
+            list_values2.append(self.learner.ltm.chunk_type_associations[SChunk(c)][t])
+        
+        
         list_types = self.ts1.remove_structure2()
         list_chunk = couple.s1.flatten_structure()
         list_values = []
@@ -651,14 +687,19 @@ class WorkingMemory():
         if reduced_type == Type.SENTENCE and not reduced_type.is_compatible(t2):
             # print('Support for border, s1 well-typed')
             z[0] = right_values[-1]
+            
+        if reduced_type != Type.SENTENCE:
+            z[0] = -(right_values[-1] + list_values2[0])/2
+            
         
         for i in range(len(list_right_types)):
             t1 = list_right_types[i]
             if t1.is_compatible(t2):
                 #pass
                 # print('Support for chunking')
-                z[i+1]=right_values[i]
+                z[i+1]=(right_values[i] + list_values2[0])/2
                 break
+        print(z)
         return z
 
     def get_right_values(self,couple):
@@ -1582,6 +1623,23 @@ class Learner():
             if not self.chaining:
                 if self.type_on:
                     s1, s2_index = self.wm.respond_with_type(stimuli_stream, s1, s2_index,verbose=True)
+                else:
+                    s1, s2_index = self.wm.respond(stimuli_stream, s1, s2_index)
+            else:
+                s1, s2_index = self.wm.respond_with_chaining2(stimuli_stream, s1, s2_index)
+
+        self.final_index = s2_index
+        
+    def test(self,stimuli_stream,n_test):
+        # initialize stimuli
+        s1 = SChunk(stimuli_stream.read_stimuli(0))
+        s2_index = 1
+        self.n_reinf = 0
+        #for t in range(self.n_trials):
+        while self.n_reinf <= n_test:
+            if not self.chaining:
+                if self.type_on:
+                    s1, s2_index = self.wm.respond_with_type(stimuli_stream, s1, s2_index,verbose=True,reinforcement=False)
                 else:
                     s1, s2_index = self.wm.respond(stimuli_stream, s1, s2_index)
             else:
