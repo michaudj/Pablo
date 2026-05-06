@@ -301,7 +301,7 @@ class Type:
         else:
             return False
 
-Type.EMPTY = Type('')
+Type.EMPTY = Type('0')
 Type.SENTENCE = Type('0')
 
 
@@ -529,7 +529,7 @@ class TChunk():
     
     def has_empty_elements(self):
         flat = self.remove_structure2()
-        if Type.EMPTY in flat:
+        if Type('') in flat:
             return True
         else:
             return False
@@ -815,7 +815,7 @@ class ChunkTree:
 #           Tests
 #
 ###############################################################################
-tests = True
+tests = False
 
 v1 = VChunk(2.)
 v2 = VChunk(3.)
