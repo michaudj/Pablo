@@ -338,7 +338,7 @@ def create_stimuli_rel(n_sentences=10_000_000):
     number_of_verbs = 1
     number_of_nouns = 40
     number_of_adj = 1
-    number_of_relpron = 1
+    number_of_relpron = 3
     number_of_det = 1
     number_of_prep = 1
     number_of_monotransitive_verbs = 20
@@ -431,14 +431,14 @@ def create_stimuli_rel_test(n_sentences=10_000_000):
 
 
     terminalsYP = flatten([monotransitive_verbs,ditransitive_verbs,nouns,adjs,relpron,det,prep])
-    non_terminalsYP = ['S', 'N','NP','VP','V','rel','MV','DV','AP','PP','A','D','P']
+    non_terminalsYP = ['S', 'N','NP','VP','V','rel','MV','DV','AP','PP','A','D','P','REL']
 
 
 
     production_rulesYP = {
         'S': [['NP', 'VP']],
         'NP': [['N']],#['D','N']],#['D','AP','N'],['N','PP']],
-        'VP': [['MV','NP'],['MV','NP','rel','MV','NP'],['DV','NP','NP'],['DV','NP','NP','rel','MV','NP'],['MV','NP','rel','DV','NP','NP'],['DV','NP','NP','rel','DV','NP','NP']],
+        'VP': [['MV','NP'],['MV','NP','rel','VP'],['DV','NP','NP'],['DV','NP','NP','rel','VP']],
         'AP': [['A'],['A','A' ] ],
         'PP': [['P','N']],
         'N': [['n' + str(i)] for i in range(30, number_of_nouns+30)],
@@ -466,7 +466,7 @@ def create_stimuli_rel_test(n_sentences=10_000_000):
     weightsYP = {
         'S': [1.0],
         'NP': [1.],
-        'VP': [.2,.2,.3,.1,.1,.1],
+        'VP': [.4,.2,.3,.1],
         'AP': [.5,.5 ],
         'PP': [1.0],
         # 'N': [1/number_of_nouns for i in range(1, number_of_nouns+1)],
