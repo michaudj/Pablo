@@ -266,10 +266,12 @@ class LongTermMemory():
 class LearningHistory:
     success: List[int] = field(default_factory=list)
     sent_len: List[int] = field(default_factory=list)
+    indices: List[int] = field(default_factory=list)
 
-    def record(self, success_value: int, length: int, verbose=True):
+    def record(self, success_value: int, length: int, index:int, verbose=True):
         self.success.append(success_value)
         self.sent_len.append(length)
+        self.indices.append(index)
         if verbose:
             print('----------------------')
             print("Trial", len(self.success))
@@ -278,6 +280,7 @@ class LearningHistory:
         """Reset the learning history."""
         self.success.clear()
         self.sent_len.clear()
+        self.indices.clear()
 
     def plot_moving_average(self, window_size=10, show=True, save_path=None):
         if len(self.success) < window_size:
@@ -302,6 +305,34 @@ class LearningHistory:
             plt.show()
         plt.close()
         return ma
+    
+    def gaussian_smooth_uneven_fast(self, window_size=100): 
+        x = np.asarray(self.indices, dtype=float) 
+        y = np.asarray(self.success, dtype=float) 
+        
+        half_window = window_size / 2.0 
+        sigma = window_size / 6.0 
+        
+        y_smooth = np.empty_like(y) 
+        for i, xi in enumerate(x): 
+            left = np.searchsorted(x, xi - half_window) 
+            right = np.searchsorted(x, xi + half_window, side='right') 
+            dx = x[left:right] - xi 
+            w = np.exp(-0.5 * (dx / sigma) ** 2) 
+            y_smooth[i] = np.dot(w, y[left:right]) / w.sum()
+            
+        plt.figure(figsize=(10, 5))
+        plt.plot(x,y_smooth, label=f'{window_size}-Gaussian smoothed learning curve')
+        plt.xlabel('Tokens')
+        plt.ylabel('Success rate')
+        plt.ylim((0,1))
+        plt.title('Learning Progress')
+        plt.grid(True)
+        plt.legend()
+        plt.show()
+        plt.close()
+
+        return y_smooth
         
 
     
@@ -391,13 +422,13 @@ class WorkingMemory():
             sent_length = stimuli_stream.length_current_sent(s2_index - 1)
             if self.is_border_correct(stimuli_stream,s2_index):
                 reward = self.pos
-                self.learner.history.record(1,sent_length)
+                self.learner.history.record(1,sent_length,s2_index)
                 if reinforcement:
                     self.reinforcer.reinforce2(self.events,reward)
                     #self.reinforcer.reinforce_value_hierarchical(pair.s1,reward)
             else:
                 reward = self.neg
-                self.learner.history.record(0,sent_length)
+                self.learner.history.record(0,sent_length,s2_index)
                 if reinforcement:
                     self.reinforcer.reinforce2(self.events,reward)
                     #self.reinforcer.reinforce_value(pair.s1,reward)
@@ -466,7 +497,7 @@ class WorkingMemory():
             
             if self.is_border_correct(stimuli_stream,s2_index):
                 reward = self.pos
-                self.learner.history.record(1,sent_length,verbose=True)
+                self.learner.history.record(1,sent_length,s2_index,verbose=True)
                 if reinforcement:
                     self.reinforcer.reinforce2(self.events,reward)
                     if not self.typing_used:
@@ -480,7 +511,7 @@ class WorkingMemory():
                         self.reinforcer.reinforce_types(self.typing_events,reward)
             else:
                 reward = self.neg
-                self.learner.history.record(0,sent_length,verbose=True)
+                self.learner.history.record(0,sent_length,s2_index,verbose=True)
                 if reinforcement:
                     self.reinforcer.reinforce2(self.events,reward)
                     if self.typing_used and self.ts1.reduce() == Type.SENTENCE:
@@ -578,10 +609,10 @@ class WorkingMemory():
             sent_length = stimuli_stream.length_current_sent(s2_index - 1)
             if self.is_border_correct(stimuli_stream,s2_index):
                 reward = self.pos
-                self.learner.history.record(1,sent_length)
+                self.learner.history.record(1,sent_length,s2_index)
             else:
                 reward = self.neg
-                self.learner.history.record(0,sent_length)
+                self.learner.history.record(0,sent_length,s2_index)
             
             new_s1, s2_index = self.get_new_s1(stimuli_stream,s2_index, s2)
                
@@ -619,13 +650,13 @@ class WorkingMemory():
             sent_length = stimuli_stream.length_current_sent(s2_index - 1)
             if self.is_border_correct(stimuli_stream,s2_index):
                 reward = self.pos
-                self.learner.history.record(1,sent_length)
+                self.learner.history.record(1,sent_length,s2_index)
                 if reinforcement:
                     self.reinforcer.reinforce2(event,reward)
                     self.reinforcer.reinforce_value_hierarchical(pair.s1,reward)
             else:
                 reward = self.neg
-                self.learner.history.record(0,sent_length)
+                self.learner.history.record(0,sent_length,s2_index)
                 if reinforcement:
                     self.reinforcer.reinforce2(event,reward)
                     #self.reinforcer.reinforce_value(pair.s1,reward)
