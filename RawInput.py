@@ -6,6 +6,7 @@ Created on Thu Dec 19 09:49:31 2019
 """
 from dataclasses import dataclass, field
 from typing import Iterator, List, Tuple, Union
+import csv
 import random
 random.seed()
 
@@ -46,7 +47,7 @@ class ProbabilisticGrammar:
 
         return ProbabilisticGrammar(new_terminals, new_non_terminals, new_production_rules, new_weights)
     
-    def generate_sentence(self, symbol):
+    def generate_sentence(self, symbol='S'):
         if symbol in self.terminals:
             return [symbol]
         
@@ -57,7 +58,88 @@ class ProbabilisticGrammar:
         
         return flatten([self.generate_sentence(s) for s in chosen_rule])
 
+    def to_csv(self, filename, n_sentences,start_symbol = 'S'):
+        with open(filename, "w", newline="") as f:
+            writer = csv.writer(f)
+            
+            for _ in range(n_sentences):
+                writer.writerow([' '.join(self.generate_sentence(start_symbol))])
+                #sentence = self.generate_sentence(start_symbol)
+                #writer.writerow(sentence)
+                
+@dataclass 
+class RawInput2:
+    stimuli: List[str]
+    border_before: List[bool]
+    
+    @classmethod
+    def from_csv(cls, filepath):
+        stimuli = []
+        border_before = []
 
+        with open(filepath, newline='', encoding='utf-8') as csvfile:
+            reader = csv.reader(csvfile)
+            for row in reader:
+                if not row:
+                    continue
+               
+                # If sentence is stored as one string per row
+                sentence = row[0].split()   # split into tokens
+               
+                if not sentence:
+                    continue
+                stimuli += sentence
+                
+                border = [False] * len(sentence)
+                border[0] = True
+                border_before += border
+
+        return cls(stimuli=flatten(stimuli), border_before=flatten(border_before))
+    
+    @classmethod 
+    def from_grammar(cls, grammar: ProbabilisticGrammar, n_sentences: int):
+        stimuli = []
+        border_before = []
+        
+        for _ in range(n_sentences):
+            sentence=grammar.generate_sentence()
+            if not sentence:
+                continue
+            
+            stimuli.extend(sentence)
+            border = [False] * len(sentence)
+            border[0] = True
+            border_before.extend(border)
+            
+        return cls(stimuli=stimuli, border_before=border_before)
+            
+    def next_beginning_sent(self, index: int) -> Union[Tuple[str, int], None]:
+        for i in range(index, len(self.border_before)):
+            if self.border_before[i]:
+                return (self.stimuli[i], i + 1)
+        return None
+    
+    def length_current_sent(self, index: int) -> int:
+        start = index
+        while start > 0 and not self.border_before[start]:
+            start -= 1 
+        end = index + 1
+        while end < len(self.border_before) and not self.border_before[end]:
+            end +=1 
+            
+        return end - start
+    
+    def read_stimuli(self, index: int) -> str:
+        return self.stimuli[index]
+    
+    
+    @property 
+    def number_of_words(self) -> int:
+        return len(self.stimuli)
+    
+    @property 
+    def number_of_sentences(self):
+        return sum(self.border_before)
 
 
 @dataclass
@@ -68,6 +150,28 @@ class RawInput:
     stimuli: List[str] = field(init=False, default_factory=list)
     border_before: List[bool] = field(init=False, default_factory=list)
     sentences: List[List[str]] = field(init=False, default_factory=list)
+    
+    @classmethod
+    def from_csv(cls, filepath):
+        obj = cls.__new__(cls)  # create instance without calling __init__
+        obj.stimuli = []
+        obj.border_before = []
+
+        with open(filepath, newline='', encoding='utf-8') as csvfile:
+            reader = csv.reader(csvfile)
+            for row in reader:
+                if not row:
+                    continue
+               
+                # If sentence is stored as one string per row
+                sentence = row[0].split()   # split into tokens
+               
+                obj.stimuli += sentence
+                border_before = [False] * len(sentence)
+                border_before[0] = True
+                obj.border_before += border_before
+
+        return obj
     
     def __post_init__(self):
         self.sentences = [self.grammar.generate_sentence('S') for _ in range(self.n_sentences)]
