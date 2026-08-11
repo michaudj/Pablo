@@ -75,9 +75,32 @@ config = LearnerConfig(n_trials=n_trial,
 
 # print('testing')
 
+<<<<<<< Updated upstream
 # learner_t.history.reset()
 # learner_t.test(create_stimuli_rel_test(),1000)
 # ma_t_test = learner_t.history.plot_moving_average(50)
+=======
+learner_t_MD.learn(create_stimuliMD())
+ma_t_MD = learner_t_MD.history.plot_moving_average(100)
+
+learner_MD = Learner(config)
+
+learner_MD.learn(create_stimuliMD())
+ma_MD = learner_MD.history.plot_moving_average(100)
+
+learner_t_NVN = Learner(config_t)
+
+learner_t_NVN.learn(create_stimuliNVN())
+ma_t_NVN = learner_t_NVN.history.plot_moving_average(100)
+
+learner_NVN = Learner(config)
+
+learner_NVN.learn(create_stimuliNVN())
+ma_NVN = learner_NVN.history.plot_moving_average(100)
+
+learner_t.ltm.display_typings_of_elements2()
+
+>>>>>>> Stashed changes
 
 
 # learner_t_MD = Learner(config_t)
