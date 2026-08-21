@@ -5,7 +5,7 @@ Created on Tue May  6 09:28:09 2025
 @author: jemi6917
 """
 
-from RawInput import RawInputLazy, ProbabilisticGrammar
+from RawInput import ProbabilisticGrammar
 import numpy as np
 
 
@@ -18,21 +18,17 @@ def flatten(lst):
             flat_list.append(item)
     return flat_list
 
-def create_stimuliNVN(n_sentences = 200000):
-    number_of_verbs = 20
+def NVN(
+    number_of_verbs = 20,
     number_of_nouns = 50
-    number_of_adj = 0
-    number_of_relpron = 2
-    number_of_det = 0
+    ):
     
     verbs = ['v' + str(i) for i in range(1, number_of_verbs+1)]
     nouns = ['n' + str(i) for i in range(1, number_of_nouns+1)]
-    adjs = ['a' + str(i) for i in range(1, number_of_adj+1)]
-    relpron = ['r' + str(i) for i in range(1, number_of_relpron+1)]
-    det = ['d' + str(i) for i in range(1, number_of_det+1)]
+
     
-    terminals2 = flatten([verbs,nouns,adjs,relpron,det])
-    non_terminals2 = ['S', 'N','NP','VP','V','RelCl']
+    terminals2 = flatten([verbs,nouns])
+    non_terminals2 = ['S', 'N','VP','V']
     
     # Grammatical rules
     production_rulesNVN = {
@@ -62,24 +58,19 @@ def create_stimuliNVN(n_sentences = 200000):
         'V': vweight   
         }
     
-    cfgNVN = ProbabilisticGrammar(terminals2, non_terminals2, production_rulesNVN,weightsNVNZipf)
-    return RawInputLazy(n_sentences=n_sentences, grammar=cfgNVN)
+    return ProbabilisticGrammar(terminals2, non_terminals2, production_rulesNVN,weightsNVNZipf)
 
-def create_stimuliNVN_test(n_sentences = 200000):
-    number_of_verbs = 20
-    number_of_nouns = 50
-    number_of_adj = 0
-    number_of_relpron = 2
-    number_of_det = 0
+
+def NVN_test(
+    number_of_verbs = 20,
+    number_of_nouns = 50):
     
     verbs = ['v' + str(i) for i in range(1, number_of_verbs+1)]
     nouns = ['n' + str(i) for i in range(40, number_of_nouns+40)]
-    adjs = ['a' + str(i) for i in range(1, number_of_adj+1)]
-    relpron = ['r' + str(i) for i in range(1, number_of_relpron+1)]
-    det = ['d' + str(i) for i in range(1, number_of_det+1)]
+
     
-    terminals2 = flatten([verbs,nouns,adjs,relpron,det])
-    non_terminals2 = ['S', 'N','NP','VP','V','RelCl']
+    terminals2 = flatten([verbs,nouns])
+    non_terminals2 = ['S', 'N','VP','V']
     
     # Grammatical rules
     production_rulesNVN = {
@@ -109,10 +100,10 @@ def create_stimuliNVN_test(n_sentences = 200000):
         'V': vweight   
         }
     
-    cfgNVN = ProbabilisticGrammar(terminals2, non_terminals2, production_rulesNVN,weightsNVNZipf)
-    return RawInputLazy(n_sentences=n_sentences, grammar=cfgNVN)
+    return ProbabilisticGrammar(terminals2, non_terminals2, production_rulesNVN,weightsNVNZipf)
+    #return RawInputLazy(n_sentences=n_sentences, grammar=cfgNVN)
 
-def create_stimuliVNN(n_sentences = 200000):
+def create_stimuliVNN():
     number_of_verbs = 20
     number_of_nouns = 50
     number_of_adj = 0
@@ -156,10 +147,10 @@ def create_stimuliVNN(n_sentences = 200000):
         'V': vweight   
         }
     
-    cfgNVN = ProbabilisticGrammar(terminals2, non_terminals2, production_rulesNVN,weightsNVNZipf)
-    return RawInputLazy(n_sentences=n_sentences, grammar=cfgNVN)
+    return ProbabilisticGrammar(terminals2, non_terminals2, production_rulesNVN,weightsNVNZipf)
+    #return RawInputLazy(n_sentences=n_sentences, grammar=cfgNVN)
 
-def create_stimuliNNV(n_sentences = 200000):
+def create_stimuliNNV():
     number_of_verbs = 10
     number_of_nouns = 60
     number_of_adj = 0
@@ -205,11 +196,11 @@ def create_stimuliNNV(n_sentences = 200000):
         'V': vweight   
         }
     
-    cfgNVN = ProbabilisticGrammar(terminals2, non_terminals2, production_rulesNVN,weightsNVNZipf)
-    return RawInputLazy(n_sentences=n_sentences, grammar=cfgNVN)
+    return ProbabilisticGrammar(terminals2, non_terminals2, production_rulesNVN,weightsNVNZipf)
+    #return RawInputLazy(n_sentences=n_sentences, grammar=cfgNVN)
 
 
-def create_stimuliRCP(n_sentences = 200000):
+def create_stimuliRCP():
     number_of_verbs = 5
     number_of_nouns = 5
     number_of_adj = 0
@@ -261,10 +252,10 @@ def create_stimuliRCP(n_sentences = 200000):
         }
 
     # Context free grammar
-    cfgRCP = ProbabilisticGrammar(terminals2, non_terminals2, production_rulesRCP,weightsRCPZipf)
-    return RawInputLazy(n_sentences=n_sentences, grammar=cfgRCP)
+    return ProbabilisticGrammar(terminals2, non_terminals2, production_rulesRCP,weightsRCPZipf)
+    #return RawInputLazy(n_sentences=n_sentences, grammar=cfgRCP)
 
-def create_stimuliMD(n_sentences=80000):
+def create_stimuliMD():
     number_of_verbs = 1
     number_of_nouns = 40
     number_of_adj = 1
@@ -331,20 +322,19 @@ def create_stimuliMD(n_sentences=80000):
         'DV': dvweight,#[1/number_of_ditransitive_verbs for i in range(1, number_of_ditransitive_verbs+1)]
         }
 
-    cfgNVNMD = ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP,weightsYP)
-    return RawInputLazy(n_sentences=n_sentences, grammar=cfgNVNMD)
+    return ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP,weightsYP)
+    #return RawInputLazy(n_sentences=n_sentences, grammar=cfgNVNMD)
 
-def create_stimuli_rel(n_sentences=10_000_000):
-    number_of_verbs = 1
-    number_of_nouns = 40
-    number_of_adj = 1
-    number_of_relpron = 3
-    number_of_det = 1
-    number_of_prep = 1
-    number_of_monotransitive_verbs = 20
-    number_of_ditransitive_verbs = 5
+def create_grammar_rel(
+    number_of_nouns = 40,
+    number_of_adj = 1,
+    number_of_relpron = 3,
+    number_of_det = 1,
+    number_of_prep = 1,
+    number_of_monotransitive_verbs = 20,
+    number_of_ditransitive_verbs = 5):
 
-    verbs = ['v' + str(i) for i in range(1, number_of_verbs+1)]
+    #verbs = ['v' + str(i) for i in range(1, number_of_verbs+1)]
     nouns = ['n' + str(i) for i in range(1, number_of_nouns+1)]
     adjs = ['a' + str(i) for i in range(1, number_of_adj+1)]
     relpron = ['r' + str(i) for i in range(1, number_of_relpron+1)]
@@ -367,7 +357,6 @@ def create_stimuli_rel(n_sentences=10_000_000):
         'AP': [['A'],['A','A' ] ],
         'PP': [['P','N']],
         'N': [['n' + str(i)] for i in range(1, number_of_nouns+1)],
-        'V': [['v' + str(i)] for i in range(1, number_of_verbs+1)],
         'A': [['a' + str(i)] for i in range(1, number_of_adj+1)],
         'D': [['d' + str(i)] for i in range(1, number_of_det+1)],
         'P': [['p' + str(i)] for i in range(1, number_of_prep+1)],
@@ -391,25 +380,24 @@ def create_stimuli_rel(n_sentences=10_000_000):
     weightsYP = {
         'S': [1.0],
         'NP': [1.],
-        'VP': [.3,.2,.3,.2],
+        'VP': [.4,.2,.3,.1],
         'AP': [.5,.5 ],
         'PP': [1.0],
-        # 'N': [1/number_of_nouns for i in range(1, number_of_nouns+1)],
+        #'N': [1/number_of_nouns for i in range(1, number_of_nouns+1)],
         'N': nweight,
-        'V': [1/number_of_verbs for i in range(1, number_of_verbs+1)],
         'A': [1/number_of_adj for i in range(1, number_of_adj+1)],
         'D': [1/number_of_det for i in range(1, number_of_det+1)],
         'P': [1/number_of_prep for i in range(1, number_of_prep+1)],
-        'rel': relweight,#[1/number_of_relpron for i in range(1, number_of_relpron+1)],
-        'MV': mvweight,#[1/number_of_monotransitive_verbs for i in range(1, number_of_monotransitive_verbs+1)],
-        'DV': dvweight,#[1/number_of_ditransitive_verbs for i in range(1, number_of_ditransitive_verbs+1)]
+        'rel': [1/number_of_relpron for i in range(1, number_of_relpron+1)],
+        'MV': mvweight,#[1/number_of_monotransitive_verbs for i in range(1, number_of_monotransitive_verbs+1)],#
+        'DV': dvweight,#[1/number_of_ditransitive_verbs for i in range(1, number_of_ditransitive_verbs+1)]#
         }
 
-    cfgYPredMD = ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP,weightsYP)
-    return RawInputLazy(n_sentences=n_sentences, grammar=cfgYPredMD)
+    return ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP,weightsYP)
+    #return RawInputLazy(n_sentences=n_sentences, grammar=cfgYPredMD)
 
 
-def create_stimuli_rel_test(n_sentences=10_000_000):
+def create_stimuli_rel_test():
     number_of_verbs = 1
     number_of_nouns = 40
     number_of_adj = 1
@@ -480,11 +468,11 @@ def create_stimuli_rel_test(n_sentences=10_000_000):
         'DV': dvweight,#[1/number_of_ditransitive_verbs for i in range(1, number_of_ditransitive_verbs+1)]
         }
 
-    cfgYPredMD = ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP,weightsYP)
-    return RawInputLazy(n_sentences=n_sentences, grammar=cfgYPredMD)
+    return ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP,weightsYP)
+    #return RawInputLazy(n_sentences=n_sentences, grammar=cfgYPredMD)
 
 
-def create_stimuli_ComplNP(n_sentences=10_000_000):
+def create_stimuli_ComplNP():
     number_of_verbs = 1
     number_of_nouns = 20
     number_of_adj = 1
@@ -542,5 +530,5 @@ def create_stimuli_ComplNP(n_sentences=10_000_000):
         'DV': [1/number_of_ditransitive_verbs for i in range(1, number_of_ditransitive_verbs+1)]
         }
 
-    cfgNVNMD = ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP,weightsYP)
-    return RawInputLazy(n_sentences=n_sentences, grammar=cfgNVNMD)
+    return ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP,weightsYP)
+    #return RawInputLazy(n_sentences=n_sentences, grammar=cfgNVNMD)
