@@ -23,7 +23,7 @@ from grammar_definitions import *
 # Consider using the typatory to keep the number of types to a minimum.
 
 
-n_trial = 50000
+n_trial = 15000
 alpha = 0.1
 alpha_v = 1
 beta = 1.
@@ -65,18 +65,22 @@ config = LearnerConfig(n_trials=n_trial,
 
 learner_t_rel = Learner(config_t)
 
-rel_grammar = create_grammar_rel()
-stimuli = RawInput2.from_grammar(rel_grammar,1_000_000)
+grammar = NVNadj(
+    number_of_verbs = 10,
+    number_of_nouns = 30,
+    number_of_adjectives = 5
+    ) #call the grammar you want from grammar definitions
+stimuli = RawInput2.from_grammar(grammar,1_000_000)
 
 learner_t_rel.learn(stimuli)
-ma_t_rel = learner_t_rel.history.plot_moving_average(500)
-smoothed_t = learner_t_rel.history.gaussian_smooth_uneven_fast(1500)
+ma_t_rel = learner_t_rel.history.plot_moving_average(50)
+#smoothed_t = learner_t_rel.history.gaussian_smooth_uneven_fast(1500)
 
 learner_rel = Learner(config)
 
 learner_rel.learn(stimuli)
-ma_rel = learner_rel.history.plot_moving_average(500)
-smoothed = learner_rel.history.gaussian_smooth_uneven_fast(1500)
+ma_rel = learner_rel.history.plot_moving_average(50)
+#smoothed = learner_rel.history.gaussian_smooth_uneven_fast(1500)
 
 #print('testing')
 

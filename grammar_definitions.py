@@ -19,7 +19,7 @@ def flatten(lst):
     return flat_list
 
 def NVN(
-    number_of_verbs = 20,
+    number_of_verbs = 2,
     number_of_nouns = 50
     ):
     
@@ -56,6 +56,58 @@ def NVN(
         'VP': [1],
         'N': nweight,
         'V': vweight   
+        }
+    
+    return ProbabilisticGrammar(terminals2, non_terminals2, production_rulesNVN,weightsNVNZipf)
+
+def NVNadj(
+    number_of_verbs = 20,
+    number_of_nouns = 50,
+    number_of_adjectives = 10
+    ):
+    
+    verbs = ['v' + str(i) for i in range(1, number_of_verbs+1)]
+    nouns = ['n' + str(i) for i in range(1, number_of_nouns+1)]
+    adjectives = ['a' + str(i) for i in range(1, number_of_adjectives+1)]
+    
+    terminals2 = flatten([verbs,nouns,adjectives])
+    non_terminals2 = ['S', 'N','VP','V', 'NP','A']
+    
+    # Grammatical rules
+    production_rulesNVN = {
+        'S': [['NP', 'VP','NP']],
+        'VP': [['V']], 
+        'NP': [['N'],['N','A'],['N','A','A']],
+        'N': [['n' + str(i)] for i in range(1, number_of_nouns+1)],
+        'V': [['v' + str(i)] for i in range(1, number_of_verbs+1)],
+        'A': [['a' + str(i)] for i in range(1, number_of_adjectives+1)]
+    }
+    
+    weightsNVN = {
+        'S': [1],
+        'VP': [1],
+        'NP': [.7,.25,.05],
+        'N': [1/number_of_nouns for i in range(1, number_of_nouns+1)],
+        'V': [1/number_of_verbs for i in range(1, number_of_verbs+1)],   
+        'A': [1/number_of_adjectives for i in range(1, number_of_adjectives+1)]
+        }
+    
+    nweight = np.array([1/(i+1) for i in range(len(nouns))])
+    nweight /= np.sum(nweight)
+
+    vweight = np.array([1/(i+1) for i in range(len(verbs))])
+    vweight /= np.sum(vweight)
+    
+    aweight = np.array([1/(i+1) for i in range(len(adjectives))])
+    aweight /= np.sum(aweight)
+
+    weightsNVNZipf = {
+        'S': [1 ],
+        'VP': [1],
+        'NP': [.7,.25,.05],
+        'N': nweight,
+        'V': vweight,
+        'A': aweight
         }
     
     return ProbabilisticGrammar(terminals2, non_terminals2, production_rulesNVN,weightsNVNZipf)
