@@ -145,7 +145,18 @@ class Type:
     def get_primitives(self):
         return re.split(r"u|o",self.formula)
     
-    def number_of_previous_expectations(self):
+    def number_of_previous_expectations(self): 
+        num_expectations = 0 
+        expected_types = [] 
+        reduced_type = self 
+        while reduced_type.is_expecting_before(): 
+            expected_type = Type(reduced_type.left_type()) 
+            expected_types.append(expected_type) 
+            reduced_type = expected_type + reduced_type 
+            num_expectations += 1 
+        return num_expectations, expected_types, reduced_type
+    
+    def number_of_previous_expectations2(self):
         num_expectations = 0
         expected_types = []
         if not self.is_expecting_before():
