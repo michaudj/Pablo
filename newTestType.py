@@ -23,7 +23,7 @@ from grammar_definitions import *
 # Consider using the typatory to keep the number of types to a minimum.
 
 
-n_trial = 100000
+n_trial = 70000
 alpha = 0.1
 alpha_v = 1
 beta = 1.

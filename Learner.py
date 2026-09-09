@@ -688,7 +688,7 @@ class WorkingMemory():
         z = self.Q_tilde(couple,b_range)
         z_type = self.get_z_values_type(couple)
         # combine z and z_type with some rules
-        z = (z + z_type)/2
+        z = (z + z_type)#/2
         weights = np.exp(self.beta * z)
         options = [i for i in range(b_range)]
         response = random.choices(options,weights/np.sum(weights))
@@ -903,8 +903,8 @@ class TypeAssigner():
                 elif not self.learner.wm.ts2.structure.is_expecting_before() and not self.learner.wm.ts2.structure.is_sentence():
                     t2_head = self.learner.wm.ts2.structure
                     while t2_head.is_expecting_after():
-                        t2_head_l = Type(t2_head.left_type())
-                        t2_head = t2_head_l + t2_head
+                        t2_head_r = Type(t2_head.right_type())
+                        t2_head =  t2_head +t2_head_r
                     new_ts1 = Type.SENTENCE
                     print("new ts1 pre split", new_ts1, "t2 head", t2_head)
                     [new_ts1,_] = new_ts1.split(pu=0,prim=t2_head)
@@ -1357,6 +1357,26 @@ class TypeAssigner():
            elif not self.learner.wm.ts1.is_consistent():
                 print('ts1 inconsistent')
                 t2 = self.learner.wm.ts2.structure
+                print(t2)
+                num_expectations, expected_types, reduced_type = t2.number_of_previous_expectations()
+                print(num_expectations)
+                print(expected_types)
+                print(reduced_type)
+                if num_expectations > 0:
+                    print('t2 is expecting before and retyping might be necessary')
+                    full_t1 = self.learner.wm.ts1
+                    flattened_t1 = full_t1.remove_structure2()  
+                    # print("flat list",flattened_t1)
+                    max_reduced_t1 = Type.reduce(flattened_t1) 
+                    all_primitive = True
+                    for t in max_reduced_t1:
+                        if not t.is_primitive():
+                            all_primitive = False
+                    print('Comparison between expected types and current t1 types')
+                    print(max_reduced_t1)
+                    print(expected_types)
+                    print(all_primitive)
+                    print(max_reduced_t1 == expected_types) # if this is true, nothing needs to be done, otherwise choose dominant side and retype 
                 if t2.is_expecting_before():
                     full_t1 = self.learner.wm.ts1
                     flattened_t1 = full_t1.remove_structure2()  

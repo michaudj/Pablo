@@ -214,7 +214,7 @@ class Type:
         return substrings1 + substrings2
     
     def is_empty(self):
-        return self is Type.EMPTY
+        return self is Type('')
         #return len(self.get_primitives()) == 1 and len(self.get_primitives()[0])==0
     
     
