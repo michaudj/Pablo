@@ -23,7 +23,11 @@ sys.stdout = open(r'C:\Users\anjo1309\Dropbox\Dokument\output4october.txt', 'w')
 # Consider using the typatory to keep the number of types to a minimum.
 
 
+<<<<<<< Updated upstream
 n_trial = 80000
+=======
+n_trial = 50
+>>>>>>> Stashed changes
 alpha = 0.1
 alpha_v = 1
 beta = 1.

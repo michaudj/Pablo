@@ -23,7 +23,7 @@ from grammar_definitions import *
 # Consider using the typatory to keep the number of types to a minimum.
 
 
-n_trial = 15000
+n_trial = 500
 alpha = 0.1
 alpha_v = 1
 beta = 1.
@@ -66,11 +66,11 @@ config = LearnerConfig(n_trials=n_trial,
 learner_t_rel = Learner(config_t)
 
 grammar = NVNadj(
-    number_of_verbs = 10,
-    number_of_nouns = 30,
-    number_of_adjectives = 5
+    number_of_verbs = 1,
+    number_of_nouns = 3,
+    number_of_adjectives = 2
     ) #call the grammar you want from grammar definitions
-stimuli = RawInput2.from_grammar(grammar,1_000_000)
+stimuli = RawInput2.from_grammar(grammar,1_000)
 
 learner_t_rel.learn(stimuli)
 ma_t_rel = learner_t_rel.history.plot_moving_average(50)
