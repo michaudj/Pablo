@@ -376,6 +376,63 @@ def create_stimuliMD():
 
     return ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP,weightsYP)
     #return RawInputLazy(n_sentences=n_sentences, grammar=cfgNVNMD)
+    
+def create_stimuliMDadj(
+    number_of_nouns = 40,
+    number_of_adj = 1,
+    number_of_monotransitive_verbs = 20,
+    number_of_ditransitive_verbs = 5):
+
+    #verbs = ['v' + str(i) for i in range(1, number_of_verbs+1)]
+    nouns = ['n' + str(i) for i in range(1, number_of_nouns+1)]
+    adjs = ['a' + str(i) for i in range(1, number_of_adj+1)]
+    monotransitive_verbs = ['mv' + str(i) for i in range(1, number_of_monotransitive_verbs+1)]
+    ditransitive_verbs = ['dv' + str(i) for i in range(1, number_of_ditransitive_verbs+1)]
+
+
+
+    terminalsYP = flatten([monotransitive_verbs,ditransitive_verbs,nouns,adjs])
+    non_terminalsYP = ['S', 'N','NP','VP','V','rel','MV','DV','NPV','AP','PP','R','A','D','P']
+
+
+
+    production_rulesYP = {
+        'S': [['NP', 'VP']],
+        'NP': [['N'],['N','AP']],
+        'VP': [['MV','NP'],['DV','NP','NP']],
+        'AP': [['A'],['A','A' ] ],
+        'N': [['n' + str(i)] for i in range(1, number_of_nouns+1)],
+        'A': [['a' + str(i)] for i in range(1, number_of_adj+1)],
+        'MV': [['mv' + str(i)] for i in range(1, number_of_monotransitive_verbs+1)],
+        'DV': [['dv' + str(i)] for i in range(1, number_of_ditransitive_verbs+1)]
+    }
+    
+    nweight = np.array([1/(i+1) for i in range(len(nouns))])
+    nweight /= np.sum(nweight)
+
+    mvweight = np.array([1/(i+1) for i in range(len(monotransitive_verbs))])
+    mvweight /= np.sum(mvweight)
+    
+    dvweight = np.array([1/(i+1) for i in range(len(ditransitive_verbs))])
+    dvweight /= np.sum(dvweight)
+    
+    aweight = np.array([1/(i+1) for i in range(len(adjs))])
+    aweight /= np.sum(aweight)
+    
+
+    weightsYP = {
+        'S': [1.0],
+        'NP': [.8,.2],
+        'VP': [.7,.3],
+        'AP': [.8,.2 ],
+        'N': nweight ,#[1/number_of_nouns for i in range(1, number_of_nouns+1)],
+        'A': aweight,
+        'MV': mvweight,# [1/number_of_monotransitive_verbs for i in range(1, number_of_monotransitive_verbs+1)],
+        'DV': dvweight,#[1/number_of_ditransitive_verbs for i in range(1, number_of_ditransitive_verbs+1)]
+        }
+
+    return ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP,weightsYP)
+    #return RawInputLazy(n_sentences=n_sentences, grammar=cfgNVNMD)
 
 def create_grammar_rel(
     number_of_nouns = 40,
@@ -440,6 +497,73 @@ def create_grammar_rel(
         'A': [1/number_of_adj for i in range(1, number_of_adj+1)],
         'D': [1/number_of_det for i in range(1, number_of_det+1)],
         'P': [1/number_of_prep for i in range(1, number_of_prep+1)],
+        'rel': [1/number_of_relpron for i in range(1, number_of_relpron+1)],
+        'MV': mvweight,#[1/number_of_monotransitive_verbs for i in range(1, number_of_monotransitive_verbs+1)],#
+        'DV': dvweight,#[1/number_of_ditransitive_verbs for i in range(1, number_of_ditransitive_verbs+1)]#
+        }
+
+    return ProbabilisticGrammar(terminalsYP, non_terminalsYP, production_rulesYP,weightsYP)
+    #return RawInputLazy(n_sentences=n_sentences, grammar=cfgYPredMD)
+    
+def create_grammar_rel_adj(
+    number_of_nouns = 40,
+    number_of_adj = 1,
+    number_of_relpron = 3,
+    number_of_monotransitive_verbs = 20,
+    number_of_ditransitive_verbs = 5):
+
+    #verbs = ['v' + str(i) for i in range(1, number_of_verbs+1)]
+    nouns = ['n' + str(i) for i in range(1, number_of_nouns+1)]
+    adjs = ['a' + str(i) for i in range(1, number_of_adj+1)]
+    relpron = ['r' + str(i) for i in range(1, number_of_relpron+1)]
+    monotransitive_verbs = ['mv' + str(i) for i in range(1, number_of_monotransitive_verbs+1)]
+    ditransitive_verbs = ['dv' + str(i) for i in range(1, number_of_ditransitive_verbs+1)]
+
+
+
+    terminalsYP = flatten([monotransitive_verbs,ditransitive_verbs,nouns,adjs,relpron])
+    non_terminalsYP = ['S', 'N','NP','VP','V','rel','MV','DV','AP','PP','A','D','P']
+
+
+
+    production_rulesYP = {
+        'S': [['NP', 'VP']],
+        'NP': [['N'],['N','AP']],#['D','AP','N'],['N','PP']],
+        'VP': [['MV','NP'],['MV','NP','rel','MV','NP'],['DV','NP','NP'],['DV','NP','NP','rel','MV','NP']],
+        'AP': [['A'],['A','A' ] ],
+        'PP': [['P','N']],
+        'N': [['n' + str(i)] for i in range(1, number_of_nouns+1)],
+        'A': [['a' + str(i)] for i in range(1, number_of_adj+1)],
+
+        'rel': [['r' + str(i)] for i in range(1, number_of_relpron+1)],
+        'MV': [['mv' + str(i)] for i in range(1, number_of_monotransitive_verbs+1)],
+        'DV': [['dv' + str(i)] for i in range(1, number_of_ditransitive_verbs+1)]
+    }
+    
+    relweight = np.array([1/(i+1) for i in range(len(relpron))])
+    relweight /= np.sum(relweight)
+
+    nweight = np.array([1/(i+1) for i in range(len(nouns))])
+    nweight /= np.sum(nweight)
+
+    mvweight = np.array([1/(i+1) for i in range(len(monotransitive_verbs))])
+    mvweight /= np.sum(mvweight)
+    
+    dvweight = np.array([1/(i+1) for i in range(len(ditransitive_verbs))])
+    dvweight /= np.sum(dvweight)
+    
+    aweight = np.array([1/(i+1) for i in range(len(adjs))])
+    aweight /= np.sum(aweight)
+
+    weightsYP = {
+        'S': [1.0],
+        'NP': [.8,.2],
+        'VP': [.4,.2,.3,.1],
+        'AP': [.8,.2 ],
+        'PP': [1.0],
+        #'N': [1/number_of_nouns for i in range(1, number_of_nouns+1)],
+        'N': nweight,
+        'A': aweight,
         'rel': [1/number_of_relpron for i in range(1, number_of_relpron+1)],
         'MV': mvweight,#[1/number_of_monotransitive_verbs for i in range(1, number_of_monotransitive_verbs+1)],#
         'DV': dvweight,#[1/number_of_ditransitive_verbs for i in range(1, number_of_ditransitive_verbs+1)]#
