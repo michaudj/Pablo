@@ -1,0 +1,4 @@
+condition,seed,n_trials,accuracy_last_1000
+typatory_on,17,50001,1.0
+typatory_on,18,50001,1.0
+typatory_on,19,50001,1.0

@@ -86,7 +86,7 @@ def NVNadj(
     weightsNVN = {
         'S': [1],
         'VP': [1],
-        'NP': [.7,.25,.05],
+        'NP': [.8,.2],
         'N': [1/number_of_nouns for i in range(1, number_of_nouns+1)],
         'V': [1/number_of_verbs for i in range(1, number_of_verbs+1)],   
         'A': [1/number_of_adjectives for i in range(1, number_of_adjectives+1)]
@@ -530,7 +530,7 @@ def create_grammar_rel_adj(
         'S': [['NP', 'VP']],
         'NP': [['N'],['N','AP']],#['D','AP','N'],['N','PP']],
         'VP': [['MV','NP'],['MV','NP','rel','MV','NP'],['DV','NP','NP'],['DV','NP','NP','rel','MV','NP']],
-        'AP': [['A'],['A','A' ] ],
+        'AP': [['A'],['A','A' ]],
         'PP': [['P','N']],
         'N': [['n' + str(i)] for i in range(1, number_of_nouns+1)],
         'A': [['a' + str(i)] for i in range(1, number_of_adj+1)],
@@ -559,7 +559,7 @@ def create_grammar_rel_adj(
         'S': [1.0],
         'NP': [.8,.2],
         'VP': [.4,.2,.3,.1],
-        'AP': [.8,.2 ],
+        'AP': [.8,.2],
         'PP': [1.0],
         #'N': [1/number_of_nouns for i in range(1, number_of_nouns+1)],
         'N': nweight,

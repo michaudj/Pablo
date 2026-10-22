@@ -312,7 +312,7 @@ class Type:
         else:
             return False
 
-Type.EMPTY = Type('0')
+Type.EMPTY = Type('')
 Type.SENTENCE = Type('0')
 
 
@@ -658,9 +658,225 @@ class TChunk():
             return TChunk.from_list_and_responses(list_of_types, responses)
         
         
-        
-        
-        
+    def retype_right_expectation(self, t2): # chatte wrote this function, I have tested it
+        if not self.is_consistent():
+            raise ValueError("ts1 is inconsistent")
+    
+        reduced = self.reduce()
+        if not reduced.is_expecting_after():
+            raise ValueError("ts1 has no right expectation")
+    
+        expected = t2.left_type()
+        target = Type(reduced.formula.rsplit('o', 1)[0] + 'o' + expected)
+        candidates = []
+    
+        def search(structure, path=()):
+            if isinstance(structure, list):
+                for i, child in enumerate(structure):
+                    search(child, path + (i,))
+                return
+    
+            for match in re.finditer(r'o(\d+)', structure.formula):
+                start, end = match.span(1)
+                formula = structure.formula[:start] + expected + structure.formula[end:]
+    
+                if formula == structure.formula:
+                    continue
+    
+                def copy_structure(structure):
+                    if isinstance(structure, list):
+                        return [copy_structure(child) for child in structure]
+                    return structure
+
+                new_structure = copy_structure(self.structure)
+                node = new_structure
+    
+                for i in path[:-1]:
+                    node = node[i]
+    
+                if path:
+                    node[path[-1]] = Type(formula)
+                else:
+                    new_structure = Type(formula)
+    
+                candidate = TChunk(new_structure)
+    
+                if candidate.is_consistent() and candidate.reduce() == target:
+                    candidates.append(candidate)
+    
+        search(self.structure)
+    
+        if len(candidates) != 1:
+            raise ValueError(f"Expected one valid retyping, found {len(candidates)}")
+    
+        return candidates[0]        
+    
+    def remove_right_expectations(self):
+        if not self.is_consistent():
+            raise ValueError("ts1 is inconsistent")
+    
+        def trace(structure, path=()):
+            if not isinstance(structure, list):
+                return structure, [(path, i) for i in range(len(structure.formula))]
+    
+            left, left_sources = trace(structure[0], path + (0,))
+            right, right_sources = trace(structure[1], path + (1,))
+    
+            compatible, pattern = left.is_left_compatible(right)
+    
+            if compatible:
+                pattern = pattern[:-1]
+                n = len(pattern)
+    
+                if pattern.startswith('^'):
+                    sources = right_sources[n:]
+                elif pattern.startswith('u'):
+                    sources = left_sources[:-n + 1] + right_sources[n:]
+                else:
+                    raise ValueError("Unknown left reduction")
+    
+            else:
+                compatible, pattern = left.is_right_compatible(right)
+    
+                if not compatible:
+                    raise ValueError("Inconsistent reduction")
+    
+                pattern = pattern[1:]
+                n = len(pattern)
+    
+                if pattern.endswith('$'):
+                    sources = left_sources[:-n]
+                elif pattern.endswith('o'):
+                    sources = left_sources[:-n + 1] + right_sources[n:]
+                else:
+                    raise ValueError("Unknown right reduction")
+    
+            reduced = left + right
+    
+            if len(sources) != len(reduced.formula):
+                raise ValueError("Reduction provenance mismatch")
+    
+            return reduced, sources
+    
+        def replace_at_path(structure, path, new_type):
+            if not path:
+                return new_type
+    
+            result = structure.copy()
+            i = path[0]
+            result[i] = replace_at_path(structure[i], path[1:], new_type)
+            return result
+    
+        current = self
+    
+        while current.reduce().is_expecting_after():
+            reduced, sources = trace(current.structure)
+            target = Type(reduced.formula.rsplit('o', 1)[0])
+    
+            slash_path = sources[-2][0]
+            digit_path = sources[-1][0]
+            candidates = {}
+    
+            def search(structure, path=()):
+                if isinstance(structure, list):
+                    for i, child in enumerate(structure):
+                        search(child, path + (i,))
+                    return
+    
+                for match in re.finditer(r'o\d+', structure.formula):
+                    formula = structure.formula[:match.start()] + structure.formula[match.end():]
+                    changed = replace_at_path(current.structure, path, Type(formula))
+                    candidate = TChunk(changed)
+    
+                    if candidate.is_consistent() and candidate.reduce() == target:
+                        candidates[str(candidate.structure)] = (path, candidate)
+    
+            search(current.structure)
+    
+            matches = list(candidates.values())
+    
+            if len(matches) > 1:
+                preferred = [item for item in matches if item[0] == slash_path]
+                if preferred:
+                    matches = preferred
+    
+            if len(matches) > 1:
+                preferred = [item for item in matches if item[0] == digit_path]
+                if preferred:
+                    matches = preferred
+    
+            if len(matches) != 1:
+                raise ValueError(f"Ambiguous deletion from {reduced}: {[(p, str(c)) for p, c in matches]}")
+    
+            current = matches[0][1]
+    
+        return current
+
+    
+    
+    def retype_head(self, new_head): # chatte wrote this function, I have tested it
+        if not self.is_consistent():
+            raise ValueError("ts1 is inconsistent")
+    
+        if isinstance(new_head, str):
+            new_head = Type(new_head)
+    
+        if not new_head.is_primitive():
+            raise ValueError("New head must be primitive")
+    
+        reduced = self.reduce()
+    
+        def head_span(formula):
+            match = re.match(r'^(?:\d+u)*(\d+)', formula)
+            if match is None:
+                raise ValueError(f"Cannot identify head in {formula}")
+            return match.span(1)
+    
+        def replace_head(typ, head):
+            start, end = head_span(typ.formula)
+            formula = typ.formula[:start] + head + typ.formula[end:]
+            return Type(formula)
+    
+        target = replace_head(reduced, new_head.formula)
+    
+        def replace_at_path(structure, path, new_type):
+            if not path:
+                return new_type
+    
+            new_structure = structure.copy()
+            i = path[0]
+            new_structure[i] = replace_at_path(structure[i], path[1:], new_type)
+            return new_structure
+    
+        candidates = []
+    
+        def search(structure, path=()):
+            if isinstance(structure, list):
+                for i, child in enumerate(structure):
+                    search(child, path + (i,))
+                return
+    
+            new_type = replace_head(structure, new_head.formula)
+    
+            if new_type == structure:
+                return
+    
+            new_structure = replace_at_path(self.structure, path, new_type)
+            candidate = TChunk(new_structure)
+    
+            if candidate.is_consistent() and candidate.reduce() == target:
+                candidates.append(candidate)
+    
+        if target == reduced:
+            return self
+    
+        search(self.structure)
+    
+        if len(candidates) != 1:
+            raise ValueError(f"Expected one valid head retyping, found {len(candidates)}")
+    
+        return candidates[0]
+
         
 
         

@@ -4,6 +4,8 @@ Created on Thu May 22 14:22:47 2025
 
 @author: jmd01
 """
+import sys
+from contextlib import redirect_stdout
 
 from Learner import Learner,LearnerConfig
 from RawInput import RawInput2
@@ -23,7 +25,7 @@ from grammar_definitions import *
 # Consider using the typatory to keep the number of types to a minimum.
 
 
-n_trial = 7000
+n_trial = 80000
 alpha = 0.1
 alpha_v = 1
 beta = 1.
@@ -41,7 +43,7 @@ config_t = LearnerConfig(n_trials=n_trial,
                        RW=RW,
                        chaining = False,
                        bad_type_threshold = -1.1,
-                       good_type_threshold = 3., 
+                       good_type_threshold = 2., 
                        tau = 0.1,
                        type_on = True)
 
@@ -67,9 +69,9 @@ learner_t_rel = Learner(config_t)
 
 grammar = create_grammar_rel_adj(
     number_of_nouns = 40,
-    number_of_adj = 8,
-    number_of_relpron = 2,
-    number_of_monotransitive_verbs = 14,
+    number_of_adj = 10,
+    number_of_relpron = 3,
+    number_of_monotransitive_verbs = 18,
     number_of_ditransitive_verbs = 2) #call the grammar you want from grammar definitions
 
 grammar.to_csv('rel_adj.csv', 1_000_000)
@@ -77,7 +79,9 @@ grammar.to_csv('rel_adj.csv', 1_000_000)
 stimuli = RawInput2.from_csv('rel_adj.csv')
 #stimili = RawInput2.from_grammar(grammar, 1_000_000)
 
-learner_t_rel.learn(stimuli)
+with open("learner_debug.txt", "w", encoding="utf-8") as f:
+    with redirect_stdout(f):
+        learner_t_rel.learn(stimuli)
 ma_t_rel = learner_t_rel.history.plot_moving_average(50)
 #smoothed_t = learner_t_rel.history.gaussian_smooth_uneven_fast(1500)
 
