@@ -246,6 +246,10 @@ class LearningHistory:
         if verbose:
             print('----------------------')
             print("Trial", len(self.success))
+            
+    def reset(self):
+        self.success = []
+        self.sent_len = []
 
 
     def plot_moving_average(self, window_size=10, show=True, save_path=None):
@@ -431,7 +435,8 @@ class WorkingMemory():
         
         if response == 0: # boundary placement
             self.learner.n_reinf += 1
-            self.learner.ltm.decay_chunk_type_values()
+            if reinforcement:
+                self.learner.ltm.decay_chunk_type_values()
             if self.learner.n_reinf % 100 == 0:
                 self.learner.ltm.clean_chunk_type_associations()
             sent_length = stimuli_stream.length_current_sent(s2_index - 1)
@@ -1741,6 +1746,23 @@ class Learner():
             if not self.chaining:
                 if self.type_on:
                     s1, s2_index = self.wm.respond_with_type(stimuli_stream, s1, s2_index,verbose=True)
+                else:
+                    s1, s2_index = self.wm.respond(stimuli_stream, s1, s2_index)
+            else:
+                s1, s2_index = self.wm.respond_with_chaining2(stimuli_stream, s1, s2_index)
+
+        self.final_index = s2_index
+        
+    def test(self,stimuli_stream,n_tests):
+        # initialize stimuli
+        self.n_reinf = 0
+        s1 = SChunk(stimuli_stream.read_stimuli(0))
+        s2_index = 1
+        #for t in range(self.n_trials):
+        while self.n_reinf <= n_tests:
+            if not self.chaining:
+                if self.type_on:
+                    s1, s2_index = self.wm.respond_with_type(stimuli_stream, s1, s2_index,reinforcement = False,verbose=True)
                 else:
                     s1, s2_index = self.wm.respond(stimuli_stream, s1, s2_index)
             else:
