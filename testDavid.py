@@ -25,7 +25,7 @@ from grammar_definitions import *
 # Consider using the typatory to keep the number of types to a minimum.
 
 
-n_trial = 20000
+n_trial = 180000
 alpha = 0.1
 alpha_v = 1
 beta = 1.
@@ -65,72 +65,39 @@ config = LearnerConfig(n_trials=n_trial,
 
 
 
-learner_t_rel = Learner(config_t)
 
 
-stimuli = RawInput2.from_csv('grammars/MD_1-2adj_n40a8mv14dv2/MD_1-2adj_n40a8mv14dv2_dataset/train.csv')
-#stimili = RawInput2.from_grammar(grammar, 1_000_000)
-stimuli_test = RawInput2.from_csv('grammars/MD_1-2adj_n40a8mv14dv2/MD_1-2adj_n40a8mv14dv2_dataset/test.csv')
+list_of_paths =['MD_1-2adj_n40a8mv14dv2','MD_1adj_n40a8mv14dv2','MDn40a8mv14dv2',
+                'NVN_1-2adj_n40a8v16','NVN_1adj_n40a8v16','NVN_n40a8v16',
+                'NVN_n200v40','rel_1-2adj_n40a8rp2mv14dv2','rel_1adj_n40a8rp2mv14dv2',
+                'rel_n40rp2mv14dv2']
 
-with open("learner_debug.txt", "w", encoding="utf-8") as f:
-    with redirect_stdout(f):
-        learner_t_rel.learn(stimuli)
-ma_t_rel = learner_t_rel.history.plot_moving_average(50)
-#smoothed_t = learner_t_rel.history.gaussian_smooth_uneven_fast(1500)
+for ind in [6]:
+    print(list_of_paths[ind])
+    stimuli = RawInput2.from_csv('grammars/'+list_of_paths[ind]+'/'+list_of_paths[ind]+'_dataset/train.csv')
+    #stimili = RawInput2.from_grammar(grammar, 1_000_000)
+    stimuli_test = RawInput2.from_csv('grammars/'+list_of_paths[ind]+'/'+list_of_paths[ind]+'_dataset/test.csv')
+    
+    learner_t_rel = Learner(config_t)
+    with open(list_of_paths[ind]+"train.txt", "w", encoding="utf-8") as f:
+        with redirect_stdout(f):
+            learner_t_rel.learn(stimuli)
+    ma_t_rel = learner_t_rel.history.plot_moving_average(50)
+    #smoothed_t = learner_t_rel.history.gaussian_smooth_uneven_fast(1500)
+    
+    #learner_rel = Learner(config)
+    
+    #learner_rel.learn(stimuli)
+    #ma_rel = learner_rel.history.plot_moving_average(50)
+    #smoothed = learner_rel.history.gaussian_smooth_uneven_fast(1500)
+    
+    print('testing')
+    
+    learner_t_rel.history.reset()
+    with open(list_of_paths[ind]+"test.txt", "w", encoding="utf-8") as f:
+        with redirect_stdout(f):
+            learner_t_rel.test(stimuli_test,1000)
+    ma_t_test = learner_t_rel.history.plot_moving_average(50)
+    print(np.mean(learner_t_rel.history.success))
+    print(np.std(learner_t_rel.history.success))
 
-learner_rel = Learner(config)
-
-learner_rel.learn(stimuli)
-ma_rel = learner_rel.history.plot_moving_average(50)
-#smoothed = learner_rel.history.gaussian_smooth_uneven_fast(1500)
-
-print('testing')
-
-learner_t_rel.history.reset()
-learner_t_rel.test(stimuli_test,1000)
-ma_t_test = learner_t_rel.history.plot_moving_average(50)
-
-#learner_rel.history.reset()
-#learner_rel.test(create_stimuli_rel_test(),1000)
-#ma_test = learner_rel.history.plot_moving_average(100)
-
-# learner_t.ltm.display_typings_of_elements()
-
-
-# plt.figure(figsize=(10, 5))
-# plt.plot(ma_NVN, label='Model 1')
-# plt.plot(ma_t_NVN, label='Model 2')
-
-# plt.xlabel('Episode')
-# plt.ylabel('Success rate')
-# plt.ylim((0,1))
-# plt.title('Learning Progress: NVN language: 50 nouns and 20 verbs')
-# plt.grid(True)
-# plt.legend()
-# plt.savefig('NVN.pdf',format='pdf')
-
-# plt.figure(figsize=(10, 5))
-# plt.plot(ma_MD, label='Model 1')
-# plt.plot(ma_t_MD, label='Model 2')
-
-# plt.xlabel('Episode')
-# plt.ylabel('Success rate')
-# plt.ylim((0,1))
-# plt.title('Learning Progress: MD language 20 mono, 5 ditransitive verbs, 40 nouns')
-# plt.grid(True)
-# plt.legend()
-# plt.savefig('MD.pdf',format='pdf')
-
-# plt.figure(figsize=(10, 5))
-# plt.plot(ma, label='Model 1')
-# plt.plot(ma_t, label='Model 2')
-
-# plt.xlabel('Episode')
-# plt.ylabel('Success rate')
-# plt.ylim((0,1))
-# plt.title('Learning Progress: Rel language 20 mono, 5 ditransitive verbs, 40 nouns, 1 rel')
-# plt.grid(True)
-# plt.legend()
-# plt.savefig('Rel.pdf',format='pdf')
-
-# # sys.stdout = orig_stdout

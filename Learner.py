@@ -147,6 +147,11 @@ class LongTermMemory():
             for t in self.chunk_type_associations[c]:
                 self.chunk_type_associations[c][t] *= multiplier
                 
+    def decay_typatory(self):
+        multiplier = 0.999
+        for t in self.typatory:
+            self.typatory[t] *= multiplier
+                
                 
     def clean_chunk_type_associations(self):
         elements_to_clean = []
@@ -157,11 +162,23 @@ class LongTermMemory():
                     
         for (c,t) in elements_to_clean:
             self.chunk_type_associations[c].pop(t)
+            
+    def clean_typatory(self):
+        elements_to_clean = []
+        for t in self.typatory:
+            if np.abs(self.typatory[t]) < 0.5:
+                    elements_to_clean.append(t)
+                    
+        for t in elements_to_clean:
+            self.typatory.pop(t)
         
     def display_typings_of_elements(self):
+        count = 0
         for c,d in self.chunk_type_associations.items():
             if len(c) ==1:
+                count +=1
                 print(f'The type of {c} are {d}')
+        print('number of typed elements:'+ str(count))
             
 
 
@@ -239,10 +256,12 @@ class LongTermMemory():
 class LearningHistory:
     success: List[int] = field(default_factory=list)
     sent_len: List[int] = field(default_factory=list)
+    indices: List[int] = field(default_factory=list)
 
-    def record(self, success_value: int, length: int, verbose=True):
+    def record(self, success_value: int, length: int, index: int, verbose=True):
         self.success.append(success_value)
         self.sent_len.append(length)
+        self.indices.append(index)
         if verbose:
             print('----------------------')
             print("Trial", len(self.success))
@@ -250,6 +269,7 @@ class LearningHistory:
     def reset(self):
         self.success = []
         self.sent_len = []
+        self.indices = []
 
 
     def plot_moving_average(self, window_size=10, show=True, save_path=None):
@@ -364,7 +384,7 @@ class WorkingMemory():
             sent_length = stimuli_stream.length_current_sent(s2_index - 1)
             if self.is_border_correct(stimuli_stream,s2_index):
                 reward = self.pos
-                self.learner.history.record(1,sent_length)
+                self.learner.history.record(1,sent_length,s2_index)
                 if reinforcement:
                     self.reinforcer.reinforce2(self.events,reward)
                     #self.reinforcer.reinforce_value_hierarchical(pair.s1,reward)
@@ -374,7 +394,7 @@ class WorkingMemory():
                     print("NEGATIVE REINFORCEMENT:",self.learner.n_reinf)
                     print("Events:",self.events)
                     print("Types at border:",self.ts1,self.ts2)
-                self.learner.history.record(0,sent_length)
+                self.learner.history.record(0,sent_length,s2_index)
                 if reinforcement:
                     self.reinforcer.reinforce2(self.events,reward)
                     #self.reinforcer.reinforce_value(pair.s1,reward)
@@ -437,13 +457,15 @@ class WorkingMemory():
             self.learner.n_reinf += 1
             if reinforcement:
                 self.learner.ltm.decay_chunk_type_values()
+                self.learner.ltm.decay_typatory()
             if self.learner.n_reinf % 100 == 0:
                 self.learner.ltm.clean_chunk_type_associations()
+                self.learner.ltm.clean_typatory()
             sent_length = stimuli_stream.length_current_sent(s2_index - 1)
             
             if self.is_border_correct(stimuli_stream,s2_index):
                 reward = self.pos
-                self.learner.history.record(1,sent_length,verbose=True)
+                self.learner.history.record(1,sent_length,s2_index,verbose=True)
                 if reinforcement:
                     self.reinforcer.reinforce2(self.events,reward)
                     if not self.typing_used:
@@ -457,7 +479,7 @@ class WorkingMemory():
                         self.reinforcer.reinforce_types(self.typing_events,reward)
             else:
                 reward = self.neg
-                self.learner.history.record(0,sent_length,verbose=True)
+                self.learner.history.record(0,sent_length,s2_index,verbose=True)
                 if reinforcement:
                     self.reinforcer.reinforce2(self.events,reward)
                     if self.typing_used and self.ts1.reduce() == Type.SENTENCE:
@@ -554,10 +576,10 @@ class WorkingMemory():
             sent_length = stimuli_stream.length_current_sent(s2_index - 1)
             if self.is_border_correct(stimuli_stream,s2_index):
                 reward = self.pos
-                self.learner.history.record(1,sent_length)
+                self.learner.history.record(1,sent_length,s2_index)
             else:
                 reward = self.neg
-                self.learner.history.record(0,sent_length)
+                self.learner.history.record(0,sent_length,s2_index)
             
             new_s1, s2_index = self.get_new_s1(stimuli_stream,s2_index, s2)
                
@@ -595,13 +617,13 @@ class WorkingMemory():
             sent_length = stimuli_stream.length_current_sent(s2_index - 1)
             if self.is_border_correct(stimuli_stream,s2_index):
                 reward = self.pos
-                self.learner.history.record(1,sent_length)
+                self.learner.history.record(1,sent_length,s2_index)
                 if reinforcement:
                     self.reinforcer.reinforce2(event,reward)
                     self.reinforcer.reinforce_value_hierarchical(pair.s1,reward)
             else:
                 reward = self.neg
-                self.learner.history.record(0,sent_length)
+                self.learner.history.record(0,sent_length,s2_index)
                 if reinforcement:
                     self.reinforcer.reinforce2(event,reward)
                     #self.reinforcer.reinforce_value(pair.s1,reward)
