@@ -141,17 +141,36 @@ class LongTermMemory():
         if ttype not in self.chunk_type_associations[chunk]:
             self.chunk_type_associations[chunk][ttype] = 0.0
             
-    def decay_chunk_type_values(self):
-        multiplier = 0.999
+    # def decay_chunk_type_values(self):  # procentuell decay
+    #     multiplier = 0.999
+    #     for c in self.chunk_type_associations:
+    #         for t in self.chunk_type_associations[c]:
+    #             self.chunk_type_associations[c][t] *= multiplier
+                
+    def decay_chunk_type_values(self): # linear decay
+        decay = 0.003
         for c in self.chunk_type_associations:
             for t in self.chunk_type_associations[c]:
-                self.chunk_type_associations[c][t] *= multiplier
+                v = self.chunk_type_associations[c][t]
+                self.chunk_type_associations[c][t] = (
+                    np.sign(v) * max(0.0, abs(v) - decay)
+            )
+
                 
-    def decay_typatory(self):
-        multiplier = 0.999
+    # def decay_typatory(self): #procentuell decay
+    #     multiplier = 0.999
+    #     for t in self.typatory:
+    #         self.typatory[t] *= multiplier
+            
+            
+    def decay_typatory(self): #linear decay
+        decay = 0.003
         for t in self.typatory:
-            self.typatory[t] *= multiplier
-                
+            v = self.typatory[t]
+            self.typatory[t] = (
+                np.sign(v) * max(0.0, abs(v) - decay)
+            )
+                    
                 
     def clean_chunk_type_associations(self):
         elements_to_clean = []
